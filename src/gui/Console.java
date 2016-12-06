@@ -6,15 +6,14 @@ import java.awt.Dimension;
 import javax.swing.JTextArea;
 
 public class Console extends JTextArea {
-	private final int WIDTH = 800;
-	private final int HEIGHT = 50;
 	
 	public Console(){
+		setAutoscrolls(false);
 		setBackground(Color.LIGHT_GRAY);
-		setPreferredSize(new Dimension(WIDTH, HEIGHT));
+		setRows(4);
 	}
 	
-	public void print(String str){
+	public void pr(String str){
 		this.setText(this.getText()+str);
 	}
 	

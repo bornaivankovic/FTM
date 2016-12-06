@@ -13,6 +13,7 @@ import javax.swing.JSeparator;
 import components.OpticalComponent;
 
 public class Toolbox extends JPanel {
+	//TODO dodaj JScrollPanel
 	private final int WIDTH = 100;
 	private final int HEIGHT = 600;
 	private ArrayList<OpticalComponent> komponente = new ArrayList<OpticalComponent>();

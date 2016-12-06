@@ -1,28 +1,29 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DragGestureEvent;
 import java.awt.dnd.DragGestureListener;
 import java.awt.dnd.DragSource;
-import java.util.ArrayList;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 import components.OpticalComponent;
 import components.TransferableComponent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class GUI extends JComponent implements DragGestureListener{
-	private Toolbar toolbar=new Toolbar();
-	private Toolbox toolbox=new Toolbox();
-	private Console console=new Console();
-	private Canvas canvas=new Canvas();
-	private ArrayList<OpticalComponent> komponente=new ArrayList<OpticalComponent>();
+	public Toolbar toolbar=new Toolbar();
+	public Toolbox toolbox=new Toolbox();
+	public Console console=new Console();
+	public Canvas canvas=new Canvas();
 	 
 	
 	public static void main(String[] args){
@@ -41,18 +42,20 @@ public class GUI extends JComponent implements DragGestureListener{
 		JFrame frame=new JFrame("Simulator opticke mreze");
     	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	frame.setPreferredSize(new Dimension(800, 600));
-    	frame.setLayout(new BorderLayout());
+    	frame.getContentPane().setLayout(new BorderLayout());
     	GUI gui=new GUI();
-    	frame.add(gui.toolbar,BorderLayout.NORTH);
-    	frame.add(gui.toolbox,BorderLayout.WEST);
-    	frame.add(gui.console,BorderLayout.SOUTH);
-    	frame.add(gui.canvas,BorderLayout.CENTER);
+    	frame.getContentPane().add(gui.toolbar,BorderLayout.NORTH);
+    	frame.getContentPane().add(gui.toolbox,BorderLayout.WEST);
+    	frame.getContentPane().add(new JScrollPane(gui.console,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED),BorderLayout.SOUTH);
+    	frame.getContentPane().add(gui.canvas,BorderLayout.CENTER);
+    	gui.canvas.console=gui.console;
     	DragSource ds = new DragSource();
         ds.createDefaultDragGestureRecognizer(gui.toolbox, DnDConstants.ACTION_COPY, gui);
     	new DropTargetListener(gui.canvas);
     	frame.pack();
     	frame.setLocationByPlatform(true);
         frame.setVisible(true);
+        
 	}
 
 	@Override
@@ -68,4 +71,7 @@ public class GUI extends JComponent implements DragGestureListener{
 
         event.startDrag(cursor, new TransferableComponent(component));
 	}
+	
+	
+
 }

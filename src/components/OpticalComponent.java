@@ -2,11 +2,14 @@ package components;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.image.BufferedImage;
+import java.awt.image.RescaleOp;
+import java.io.File;
 import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class OpticalComponent{
 	private double insertionLoss;
@@ -16,6 +19,7 @@ public class OpticalComponent{
 	private Point p;
 	private int height;
 	private int width;
+	private boolean selected=false;
 	
 	
 	public OpticalComponent(String str,Point p,int height,int width){
@@ -86,12 +90,43 @@ public class OpticalComponent{
 		this.width = width;
 	}
 
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
+
 	public void draw(Graphics g){
 		g.setColor(Color.BLACK);
-		g.fillRect(p.x, p.y, width, height);
+		BufferedImage img = null;
+		try {
+			img = ImageIO.read(new File("Sad_Pepe.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if(img!=null){
+			if(selected){;
+				g.drawImage(img,p.x,p.y,width,height,Color.PINK,null);
+				
+			}
+			else{
+				g.drawImage(img,p.x,p.y,width,height,null);
+			}
+		}
+		else{
+			g.fillRect(p.x, p.y, width, height);
+		}
 		if(label!=null){
 			g.setColor(Color.WHITE);
 			g.drawString(label, p.x+width/2, p.y+width/2);
 		}
+	}
+	
+	public boolean contains(Point p){
+		if(Math.abs(this.getP().x-p.x)<=width && Math.abs(this.getP().y-p.y)<=height)
+				return true;
+		else return false;
 	}
 }
