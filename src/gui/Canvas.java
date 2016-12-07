@@ -17,11 +17,13 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
+import components.Fiber;
 import components.OpticalComponent;
 
 public class Canvas extends JPanel{
 	
 	private static ArrayList<OpticalComponent> komponente;
+	private static ArrayList<Fiber> vlakna;
 
 	private Point mousePt = new Point(800 / 2, 600 / 2);
 	private Rectangle mouseRect = new Rectangle();
@@ -81,9 +83,12 @@ public class Canvas extends JPanel{
 		
 		this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DELETE"), "delete");
 		this.getActionMap().put("delete",new DeleteAction("delete"));
+		this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("C"), "connect");
+		this.getActionMap().put("connect",new ConnectAction("connect"));
 		
 		setBackground(Color.WHITE);
 		komponente=new ArrayList<OpticalComponent>();
+		vlakna=new ArrayList<Fiber>();
 	}
 	
 	public void addComponent(OpticalComponent component,Point p){
@@ -98,6 +103,9 @@ public class Canvas extends JPanel{
 		g.fillRect(0, 0, getWidth(), getHeight());
 		for (OpticalComponent opticalComponent : komponente) {
 			opticalComponent.draw(g);
+		}
+		for (Fiber f : vlakna){
+			f.draw(g);
 		}
 		if (selecting) {
             g.setColor(Color.darkGray);
@@ -165,5 +173,26 @@ public class Canvas extends JPanel{
 			repaint();
 		}
 		
+	}
+	
+	private class ConnectAction extends AbstractAction{
+		public ConnectAction(String name){
+			super(name);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			OpticalComponent c1=null,c2=null;
+			for(OpticalComponent c :komponente){
+				if(c.isSelected()){
+					if(c1==null)
+						c1=c;
+					else 
+						c2=c;
+				}
+			}
+			vlakna.add(new Fiber(c1, c2));
+			repaint();
+		}
 	}
 }
