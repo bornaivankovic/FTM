@@ -18,7 +18,6 @@ public class Popup extends JFrame {
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
-	private ArrayList<OpticalComponent> komponente;
 
 	public Popup(MouseEvent e, ArrayList<OpticalComponent> komponente) {
 		this.setLocation(e.getPoint());
@@ -29,7 +28,6 @@ public class Popup extends JFrame {
 		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		getContentPane().setLayout(gridBagLayout);
-		this.komponente = komponente;
 
 		JLabel lblNewLabel = new JLabel("Name");
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
@@ -89,6 +87,8 @@ public class Popup extends JFrame {
 				for (OpticalComponent c : komponente) {
 					if (c.isSelected()) {
 						c.setLabel(textField.getText());
+						c.setInsertionLoss(Double.parseDouble(textField_1.getText()));
+						c.setReturnLoss(Double.parseDouble(textField_2.getText()));
 					}
 				}
 			}

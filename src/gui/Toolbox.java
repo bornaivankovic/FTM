@@ -8,7 +8,6 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
 
 import components.OpticalComponent;
 

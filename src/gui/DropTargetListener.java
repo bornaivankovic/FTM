@@ -1,13 +1,10 @@
 package gui;
 
-import java.awt.Color;
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetAdapter;
 import java.awt.dnd.DropTargetDropEvent;
-
-import javax.swing.JPanel;
 
 import components.OpticalComponent;
 import components.TransferableComponent;

@@ -12,12 +12,9 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 
 import components.OpticalComponent;
 import components.TransferableComponent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class GUI extends JComponent implements DragGestureListener{
 	public Toolbar toolbar=new Toolbar();
