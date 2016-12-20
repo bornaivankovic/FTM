@@ -3,43 +3,47 @@ package components;
 import java.awt.Point;
 import java.util.ArrayList;
 
-class AddDropMux extends OpticalComponent{
-	
-	private ArrayList<Integer> addWavelengths = new ArrayList<Integer>(); // lista valnih duljina koje simulator treba dodati
-	private ArrayList<Integer> dropWavelengths = new ArrayList<Integer>(); // lista valnih duljina koje simulator treba droppati
+public class AddDropMux extends OpticalComponent {
+	// lista valnih duljina koje simulator treba dodati
+	private ArrayList<Integer> addWavelengths = new ArrayList<Integer>();
+	// lista valnih duljina koje simulator treba droppati
+	private ArrayList<Integer> dropWavelengths = new ArrayList<Integer>();
+
 	public AddDropMux(OpticalComponent c) {
 		super(c);
-	
+
 	}
-	
+
 	public AddDropMux(String str, Point p, int height, int width) {
 		super(str, p, height, width);
-		
+
+	}
+
+	/*
+	 * dodavanje valnih duljina koje treba simulator dodati signalu
+	 */
+	public void setAddWavelengths(int wl) {
+		addWavelengths.add(wl);
+
 	}
 	/*
-	 dodavanje valnih duljina koje treba simulator dodati signalu
+	 * getter za valne duljine koje simulator treba dodati, u petlji vati indexe
+	 * preko ovog gettera
 	 */
-	public void setAddWavelengths (int wl) {
-		this.addWavelengths.add(wl);
-		
+
+	public int getAddWavelengths(int index) {
+		return addWavelengths.get(index);
 	}
+
 	/*
-	 getter za valne duljine koje simulator treba dodati, u petlji vati indexe preko ovog gettera 
+	 * isti scenarij kao i za dodane valne duljine
 	 */
-	
-	public int getAddWavelengths (int index) {
-		return this.addWavelengths.get(index);
-	}
-	
-	/*
-	 isti scenarij kao i za dodane valne duljine
-	 */
-	public void setDropWavelengths (int wl) {
-		this.dropWavelengths.add(wl);
-		
+	public void setDropWavelengths(int wl) {
+		dropWavelengths.add(wl);
+
 	}
 
 	public int getDropWavelengths(int index) {
-		return this.dropWavelengths.get(index);
+		return dropWavelengths.get(index);
 	}
 }

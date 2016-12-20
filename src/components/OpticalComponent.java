@@ -9,7 +9,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class OpticalComponent{
+public class OpticalComponent {
 	private double insertionLoss;
 	private double returnLoss;
 	private double connectorAttenuance;
@@ -17,45 +17,49 @@ public class OpticalComponent{
 	private Point p;
 	private int height;
 	private int width;
-	private boolean selected=false;
-	
-	
-	public OpticalComponent(String str,Point p,int height,int width){
-		this.label=str;
-		this.p=p;
-		this.height=height;
-		this.width=width;
+	private boolean selected = false;
+
+	public OpticalComponent(String str, Point p, int height, int width) {
+		label = str;
+		this.p = p;
+		this.height = height;
+		this.width = width;
 	}
-	
-	public OpticalComponent(OpticalComponent c){
-		this.insertionLoss=c.getInsertionLoss();
-		this.returnLoss=c.getReturnLoss();
-		this.connectorAttenuance=c.getConnectorAttenuance();
-		this.label=c.getLabel();
-		this.p=c.getP();
-		this.height=c.getHeight();
-		this.width=c.getWidth();
+
+	public OpticalComponent(OpticalComponent c) {
+		insertionLoss = c.getInsertionLoss();
+		returnLoss = c.getReturnLoss();
+		connectorAttenuance = c.getConnectorAttenuance();
+		label = c.getLabel();
+		p = c.getP();
+		height = c.getHeight();
+		width = c.getWidth();
 	}
-	
+
 	public double getInsertionLoss() {
 		return insertionLoss;
 	}
+
 	public void setInsertionLoss(double insertionLoss) {
 		this.insertionLoss = insertionLoss;
 	}
+
 	public double getReturnLoss() {
 		return returnLoss;
 	}
+
 	public void setReturnLoss(double returnLoss) {
 		this.returnLoss = returnLoss;
 	}
+
 	public double getConnectorAttenuance() {
 		return connectorAttenuance;
 	}
+
 	public void setConnectorAttenuance(double connectorAttenuance) {
 		this.connectorAttenuance = connectorAttenuance;
 	}
-	
+
 	public String getLabel() {
 		return label;
 	}
@@ -96,7 +100,8 @@ public class OpticalComponent{
 		this.selected = selected;
 	}
 
-	public void draw(Graphics g){
+	public void draw(Graphics g) {
+		boolean showImg = false;
 		g.setColor(Color.BLACK);
 		BufferedImage img = null;
 		try {
@@ -104,27 +109,27 @@ public class OpticalComponent{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if(img!=null){
-			if(selected){;
-				g.drawImage(img,p.x,p.y,width,height,Color.PINK,null);
-				
+		if (img != null && showImg) {
+			if (selected) {
+				;
+				g.drawImage(img, p.x, p.y, width, height, Color.PINK, null);
+
+			} else {
+				g.drawImage(img, p.x, p.y, width, height, null);
 			}
-			else{
-				g.drawImage(img,p.x,p.y,width,height,null);
-			}
-		}
-		else{
+		} else {
 			g.fillRect(p.x, p.y, width, height);
 		}
-		if(label!=null){
+		if (label != null) {
 			g.setColor(Color.WHITE);
-			g.drawString(label, p.x+width/2, p.y+width/2);
+			g.drawString(label, p.x + width / 2, p.y + width / 2);
 		}
 	}
-	
-	public boolean contains(Point p){
-		if(Math.abs(this.getP().x-p.x)<=width && Math.abs(this.getP().y-p.y)<=height)
-				return true;
-		else return false;
+
+	public boolean contains(Point p) {
+		if (Math.abs(getP().x - p.x) <= width && Math.abs(getP().y - p.y) <= height)
+			return true;
+		else
+			return false;
 	}
 }

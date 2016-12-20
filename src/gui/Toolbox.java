@@ -9,43 +9,91 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import components.AddDropMux;
+import components.Amplifier;
+import components.Coupler;
+import components.CrossConnect;
+import components.Decoupler;
+import components.Demultiplexer;
+import components.Filter;
+import components.Multiplexer;
 import components.OpticalComponent;
+import components.Receiver;
+import components.Transmitter;
+import components.WavelengthConverter;
 
 public class Toolbox extends JPanel {
-	//TODO dodaj JScrollPanel
+	// TODO dodaj JScrollPanel
 	private final int WIDTH = 100;
 	private final int HEIGHT = 600;
 	private ArrayList<OpticalComponent> komponente = new ArrayList<OpticalComponent>();
-	public Toolbox(){
+
+	public Toolbox() {
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
-		for(int i=0;i<5;i++){
-			komponente.add(new OpticalComponent(String.valueOf(i),new Point(0,i*60),50,50));
-		}
+		OpticalComponent tmp = new OpticalComponent("L", new Point(0, 0), 50, 50);
+		tmp.setLabel("ADM");
+		komponente.add(new AddDropMux(tmp));
+		tmp.setLabel("AMP");
+		tmp.setP(new Point(0, 60));
+		komponente.add(new Amplifier(tmp));
+		tmp.setLabel("COUP");
+		tmp.setP(new Point(0, 120));
+		komponente.add(new Coupler(tmp));
+		tmp.setLabel("XC");
+		tmp.setP(new Point(0, 180));
+		komponente.add(new CrossConnect(tmp));
+		tmp.setLabel("DECOUP");
+		tmp.setP(new Point(0, 240));
+		komponente.add(new Decoupler(tmp));
+		tmp.setLabel("DEMUX");
+		tmp.setP(new Point(0, 300));
+		komponente.add(new Demultiplexer(tmp));
+		tmp.setLabel("FILTER");
+		tmp.setP(new Point(0, 360));
+		komponente.add(new Filter(tmp));
+		tmp.setLabel("MUX");
+		tmp.setP(new Point(0, 420));
+		komponente.add(new Multiplexer(tmp));
+		tmp.setLabel("Rx");
+		tmp.setP(new Point(0, 480));
+		komponente.add(new Receiver(tmp));
+		tmp.setLabel("Tx");
+		tmp.setP(new Point(0, 540));
+		komponente.add(new Transmitter(tmp));
+		tmp.setLabel("WAC");
+		tmp.setP(new Point(0, 600));
+		komponente.add(new WavelengthConverter(tmp));
+
+		// for(int i=0;i<5;i++){
+		// komponente.add(new OpticalComponent(String.valueOf(i),new
+		// Point(0,i*60),50,50));
+		// }
 	}
-	
+
 	@Override
-	public void paintComponent(Graphics g){
+	public void paintComponent(Graphics g) {
 		g.setColor(Color.BLUE);
 		g.fillRect(0, 0, getWidth(), getHeight());
 		for (OpticalComponent opticalComponent : komponente) {
 			opticalComponent.draw(g);
 		}
 	}
-	
-	public OpticalComponent getOpticalComponent(Point p){
-		int i=findComponent(p);
-		OpticalComponent component=null;
-		if(i>=0)
-			component=komponente.get(i);
+
+	public OpticalComponent getOpticalComponent(Point p) {
+		int i = findComponent(p);
+		OpticalComponent component = null;
+		if (i >= 0)
+			component = komponente.get(i);
 		return component;
 	}
-	
-	private int findComponent(Point p){
+
+	private int findComponent(Point p) {
 		for (OpticalComponent opticalComponent : komponente) {
-			if(new Rectangle(opticalComponent.getP(),new Dimension(opticalComponent.getWidth(), opticalComponent.getHeight())).contains(p))
+			if (new Rectangle(opticalComponent.getP(),
+					new Dimension(opticalComponent.getWidth(), opticalComponent.getHeight())).contains(p))
 				return komponente.indexOf(opticalComponent);
 		}
 		return -1;
 	}
-	
+
 }
