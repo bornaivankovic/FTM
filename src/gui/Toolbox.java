@@ -30,7 +30,7 @@ public class Toolbox extends JPanel {
 
 	public Toolbox() {
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
-		OpticalComponent tmp = new OpticalComponent("L", new Point(0, 0), 50, 50);
+		OpticalComponent tmp = new OpticalComponent("L", new Point(0, 0), 50, 35);
 		tmp.setLabel("ADM");
 		komponente.add(new AddDropMux(tmp));
 		tmp.setLabel("AMP");

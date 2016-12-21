@@ -11,6 +11,7 @@ public class AddDropMux extends OpticalComponent {
 
 	public AddDropMux(OpticalComponent c) {
 		super(c);
+		// setImgPath("D:\\Code\\Java\\FTM\\icons\\adm.png");
 
 	}
 

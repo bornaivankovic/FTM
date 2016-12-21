@@ -42,12 +42,16 @@ public class GUI extends JComponent implements DragGestureListener {
 		frame.getContentPane().setLayout(new BorderLayout());
 		GUI gui = new GUI();
 		frame.getContentPane().add(gui.toolbar, BorderLayout.NORTH);
-		frame.getContentPane().add(new JScrollPane(gui.toolbox, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED), BorderLayout.WEST);
-		frame.getContentPane().add(new JScrollPane(gui.console, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED), BorderLayout.SOUTH);
+		JScrollPane s1 = new JScrollPane(gui.toolbox, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		s1.getViewport().putClientProperty("EnableWindowBlit", Boolean.TRUE);
+		frame.getContentPane().add(s1, BorderLayout.WEST);
+		JScrollPane s2 = new JScrollPane(gui.console, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		frame.getContentPane().add(s2, BorderLayout.SOUTH);
 		frame.getContentPane().add(gui.canvas, BorderLayout.CENTER);
 		gui.canvas.console = gui.console;
+		gui.toolbar.gui = gui;
 		DragSource ds = new DragSource();
 		ds.createDefaultDragGestureRecognizer(gui.toolbox, DnDConstants.ACTION_COPY, gui);
 		new DropTargetListener(gui.canvas);

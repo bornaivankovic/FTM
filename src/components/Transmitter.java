@@ -2,32 +2,33 @@ package components;
 
 import java.awt.Point;
 
-public class Transmitter extends OpticalComponent{
+public class Transmitter extends OpticalComponent {
 	private double outputPower;
 	private double centralWavelength;
 	private double minWavelengthBand;
 	private double maxWavelengthBand;
 	private int numberOfMods;
-	
-	
-	public Transmitter(String str,Point p,int height,int width, double wavelength, double power, double minBand, double maxBand, int mods, double attenuance) {
+
+	public Transmitter(String str, Point p, int height, int width, double wavelength, double power, double minBand,
+			double maxBand, int mods, double attenuance) {
 		super(str, p, height, width);
-		this.outputPower=power;
-		this.centralWavelength=wavelength;
-		this.minWavelengthBand = minBand;
-		this.maxWavelengthBand = maxBand;
-		this.numberOfMods = mods;
-		
+		outputPower = power;
+		centralWavelength = wavelength;
+		minWavelengthBand = minBand;
+		maxWavelengthBand = maxBand;
+		numberOfMods = mods;
+
 	}
-	
-	public Transmitter (OpticalComponent c) {
+
+	public Transmitter(OpticalComponent c) {
 		super(c);
-		this.outputPower = 30;
-		this.minWavelengthBand = 1500;
-		this.maxWavelengthBand = 1600;
-		this.centralWavelength = 1550;
-		this.numberOfMods = 10;
-		
+		outputPower = 30;
+		minWavelengthBand = 1500;
+		maxWavelengthBand = 1600;
+		centralWavelength = 1550;
+		numberOfMods = 10;
+		setImgPath("D:\\Code\\Java\\FTM\\icons\\tx.png");
+
 	}
 
 	public double getOutputPower() {
@@ -70,6 +71,4 @@ public class Transmitter extends OpticalComponent{
 		this.numberOfMods = numberOfMods;
 	}
 
-	
-	
 }

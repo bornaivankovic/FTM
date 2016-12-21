@@ -2,27 +2,29 @@ package components;
 
 import java.awt.Point;
 
-public class Receiver extends OpticalComponent{
-	
+public class Receiver extends OpticalComponent {
+
 	private double minSensitivity;
 	private double maxSensitivity;
 	private double minWavelength;
 	private double maxWavelength;
 
-	public Receiver(String str, Point p, int height, int width, double minSens, double maxSens, double minWave, double maxWave) {
+	public Receiver(String str, Point p, int height, int width, double minSens, double maxSens, double minWave,
+			double maxWave) {
 		super(str, p, height, width);
-		this.maxSensitivity = maxSens;
-		this.minSensitivity = minSens;
-		this.maxWavelength = maxWave;
-		this.minWavelength = minWave;
+		maxSensitivity = maxSens;
+		minSensitivity = minSens;
+		maxWavelength = maxWave;
+		minWavelength = minWave;
 	}
-	
+
 	public Receiver(OpticalComponent c) {
 		super(c);
-		this.minSensitivity = -10;
-		this.maxSensitivity = 50;
-		this.minWavelength = 1500;
-		this.maxWavelength = 1600;
+		minSensitivity = -10;
+		maxSensitivity = 50;
+		minWavelength = 1500;
+		maxWavelength = 1600;
+		setImgPath("D:\\Code\\Java\\FTM\\icons\\rx.png");
 	}
 
 	public double getMinSensitivity() {
@@ -56,6 +58,5 @@ public class Receiver extends OpticalComponent{
 	public void setMaxWavelength(double maxWavelength) {
 		this.maxWavelength = maxWavelength;
 	}
-	
-	
+
 }

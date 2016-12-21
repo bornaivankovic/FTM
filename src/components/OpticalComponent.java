@@ -18,6 +18,7 @@ public class OpticalComponent {
 	private int height;
 	private int width;
 	private boolean selected = false;
+	private String imgPath = "Sad_Pepe.png";
 
 	public OpticalComponent(String str, Point p, int height, int width) {
 		label = str;
@@ -100,27 +101,35 @@ public class OpticalComponent {
 		this.selected = selected;
 	}
 
+	public String getImgPath() {
+		return imgPath;
+	}
+
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
+	}
+
 	public void draw(Graphics g) {
-		boolean showImg = false;
+		boolean showImg = true;
+		boolean showLabel = false;
 		g.setColor(Color.BLACK);
 		BufferedImage img = null;
 		try {
-			img = ImageIO.read(new File("Sad_Pepe.png"));
+
+			img = ImageIO.read(new File(imgPath));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		if (img != null && showImg) {
 			if (selected) {
-				;
 				g.drawImage(img, p.x, p.y, width, height, Color.PINK, null);
-
 			} else {
 				g.drawImage(img, p.x, p.y, width, height, null);
 			}
 		} else {
 			g.fillRect(p.x, p.y, width, height);
 		}
-		if (label != null) {
+		if (label != null && showLabel) {
 			g.setColor(Color.WHITE);
 			g.drawString(label, p.x + width / 2, p.y + width / 2);
 		}

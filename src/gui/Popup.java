@@ -20,6 +20,7 @@ public class Popup extends JFrame {
 	private JTextField textField_2;
 
 	public Popup(MouseEvent e, ArrayList<OpticalComponent> komponente) {
+		setAlwaysOnTop(true);
 		this.setLocation(e.getPoint());
 		this.setSize(300, 300);
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -103,6 +104,7 @@ public class Popup extends JFrame {
 				textField.setText(c.getLabel());
 				textField_1.setText(Double.toString(c.getInsertionLoss()));
 				textField_2.setText(Double.toString(c.getReturnLoss()));
+				setTitle(c.getLabel());
 			}
 		}
 		setVisible(true);
