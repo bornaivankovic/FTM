@@ -15,6 +15,8 @@ public class Coupler extends OpticalComponent {
 
 	public Coupler(OpticalComponent c) {
 		super(c);
+		this.numberOfInputs = 2;
+		this.couplingLoss = 0.2;
 		
 	}
 	

@@ -8,13 +8,15 @@ public class Multiplexer extends OpticalComponent{
 	private int numOfInputs;
 	private double multiPlexingLoss;
 	private int min=0;
-	private int max=1570;
+	private int max=1600;
 	private ArrayList<Integer> minWavelength = new ArrayList<Integer>();
 	private ArrayList<Integer> maxWavelength= new ArrayList<Integer>();;
 	
 	public Multiplexer(OpticalComponent c) {
 		super(c);
-		// TODO Auto-generated constructor stub
+		this.numOfInputs = 2;
+		this.multiPlexingLoss = 0.25;
+		
 	}
 	
 	public Multiplexer(String str,Point p,int height,int width, int inputs, double loss) {

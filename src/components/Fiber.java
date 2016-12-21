@@ -12,6 +12,8 @@ public class Fiber {
 	public Fiber(OpticalComponent c1, OpticalComponent c2) {
 		this.c1 = c1;
 		this.c2 = c2;
+		this.length = 1;
+		this.attenuance = 0.3;
 	}
 
 	public double getLength() {

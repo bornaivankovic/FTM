@@ -19,6 +19,8 @@ public class CrossConnect extends OpticalComponent {
 	
 	public CrossConnect(OpticalComponent c) {
 		super(c);
+		this.numInputs = 2;
+		this.numOutputs = 2;
 	}
 	
 	private void setDefaultSwitchingMatrix () {

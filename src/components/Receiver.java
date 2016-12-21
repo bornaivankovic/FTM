@@ -19,6 +19,10 @@ public class Receiver extends OpticalComponent{
 	
 	public Receiver(OpticalComponent c) {
 		super(c);
+		this.minSensitivity = -10;
+		this.maxSensitivity = 50;
+		this.minWavelength = 1500;
+		this.maxWavelength = 1600;
 	}
 
 	public double getMinSensitivity() {

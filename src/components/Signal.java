@@ -9,9 +9,9 @@ public class Signal {
 	private ArrayList<Integer> wavelengthArray = new ArrayList<Integer>();
 	private double power;
 	
-	public Signal(int wavelength, double power2) {
-		this.wavelengthArray.add(wavelength);
-		this.power = power2;
+	public Signal(/*int wavelength, double power2*/) {
+		//this.wavelengthArray.add(wavelength);
+		//this.power = power2;
 	}
 	
 	public void addWavelength (int wavelength) {
@@ -26,6 +26,22 @@ public class Signal {
 	public void changeWavelength () {
 		// moramo vidit kako to utječe na pojedinu komponentu
 		// tipa da prolaskom kroz pretvornik sve valne duljine sputstimo/povećamo za neki iznos 
+	}
+
+	public double getPower() {
+		return power;
+	}
+
+	public void setPower(double power) {
+		this.power = power;
+	}
+	
+	public int getWavelengthListSize () {
+		return wavelengthArray.size();
+	}
+	
+	public int getWavelength (int i) {
+		return wavelengthArray.get(i);
 	}
 	
 }

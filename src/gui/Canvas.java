@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -17,6 +18,9 @@ import javax.swing.KeyStroke;
 
 import components.Fiber;
 import components.OpticalComponent;
+import components.Receiver;
+import components.Signal;
+import components.Transmitter;
 
 public class Canvas extends JPanel{
 	
@@ -193,4 +197,75 @@ public class Canvas extends JPanel{
 			repaint();
 		}
 	}
+	
+	public int getComponentListLength () {
+		return komponente.size();
+	}
+	
+	public int getFiberListLength () {
+		return vlakna.size();
+	}
+	
+	private void startSimulation () {
+		Signal sig1 = new Signal();
+		for (int i=0; i<komponente.size(); i++) {
+			OpticalComponent tmp = komponente.get(i);
+			String label = tmp.getLabel();
+			switch (label) {
+			case "ADM":
+				
+				break;
+			case "AMP":
+
+				break;
+			case "COUP":
+
+				break;
+			case "XC":
+
+				break;
+			case "DECOUP":
+
+				break;
+			case "DEMUX":
+
+				break;
+			case "FILTER":
+
+				break;
+			case "MUX":
+
+				break;
+			case "RX":
+				Receiver rx = (Receiver)tmp;
+				int min = (int) rx.getMinSensitivity();
+				int max = (int) rx.getMaxSensitivity();
+				for (int j=0; j<sig1.getWavelengthListSize(); j++) {
+					if (min<sig1.getWavelength(j) && sig1.getWavelength(j)<max)
+						console.println("Prijamnik je detektirao valnu duljinu: " + sig1.getWavelength(j));
+				}
+				break;
+			case "TX":
+				Transmitter tx = (Transmitter)tmp;
+				sig1.setPower(tx.getOutputPower());
+				int temp = (int) ((tx.getMaxWavelengthBand()-tx.getMinWavelengthBand()) / tx.getNumberOfMods());
+				int temp2 = (int) tx.getMinWavelengthBand();
+				console.println("Izlazna snaga signala predajnika je : " +sig1.getPower() +"dB" );
+				console.println("valne duljine signala su (u nanometrima): ");
+				for (int j=0; j<tx.getNumberOfMods(); j++) {
+					temp2 = temp2 + temp;
+					sig1.addWavelength(temp2);
+					console.println("Valna duljina: " +temp2);
+				}
+					
+				break;
+			case "WAC":
+
+				break;
+			default:
+				break;
+			}
+		}
+	}
+	
 }

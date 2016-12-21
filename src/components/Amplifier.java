@@ -15,6 +15,8 @@ public class Amplifier extends OpticalComponent {
 	
 	public Amplifier(OpticalComponent c) {
 		super(c);
+		this.gain = 20;
+		this.gainSaturation = 80;
 	}
 
 	public double getGain() {

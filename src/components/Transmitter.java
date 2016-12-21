@@ -8,7 +8,7 @@ public class Transmitter extends OpticalComponent{
 	private double minWavelengthBand;
 	private double maxWavelengthBand;
 	private int numberOfMods;
-	private double connectorAttenuance;
+	
 	
 	public Transmitter(String str,Point p,int height,int width, double wavelength, double power, double minBand, double maxBand, int mods, double attenuance) {
 		super(str, p, height, width);
@@ -17,11 +17,17 @@ public class Transmitter extends OpticalComponent{
 		this.minWavelengthBand = minBand;
 		this.maxWavelengthBand = maxBand;
 		this.numberOfMods = mods;
-		this.connectorAttenuance = attenuance;
+		
 	}
 	
 	public Transmitter (OpticalComponent c) {
 		super(c);
+		this.outputPower = 30;
+		this.minWavelengthBand = 1500;
+		this.maxWavelengthBand = 1600;
+		this.centralWavelength = 1550;
+		this.numberOfMods = 10;
+		
 	}
 
 	public double getOutputPower() {
@@ -64,13 +70,6 @@ public class Transmitter extends OpticalComponent{
 		this.numberOfMods = numberOfMods;
 	}
 
-	public double getConnectorAttenuance() {
-		return connectorAttenuance;
-	}
-
-	public void setConnectorAttenuance(double connectorAttenuance) {
-		this.connectorAttenuance = connectorAttenuance;
-	}
 	
 	
 }

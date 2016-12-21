@@ -18,6 +18,9 @@ public class Decoupler extends OpticalComponent {
 
 	public Decoupler(OpticalComponent c) {
 		super(c);
+		this.couplingLoss = 0.25;
+		this.numberOfOutputs = 2;
+		this.decouplingRatio = 0.5;
 		
 	}
 	

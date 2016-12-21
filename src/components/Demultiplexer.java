@@ -8,7 +8,7 @@ public class Demultiplexer extends OpticalComponent {
 	private int numOfOutputs;
 	private double multiPlexingLoss;
 	private int min=0;
-	private int max=1570;
+	private int max=1600;
 	private ArrayList<Integer> minWavelength = new ArrayList<Integer>();
 	private ArrayList<Integer> maxWavelength= new ArrayList<Integer>();;
 
@@ -23,6 +23,13 @@ public class Demultiplexer extends OpticalComponent {
 	}
 	public Demultiplexer(OpticalComponent c) {
 		super(c);
+		this.numOfOutputs = 2;
+		this.multiPlexingLoss = 0.25;
+		for (int i=0; i<2; i++) {
+			minWavelength.add(i, min);
+			maxWavelength.add(i, max);
+		}
+		
 	}
 	
 	public void setChanBand (int chan, int min, int max) {
