@@ -74,9 +74,12 @@ public class Receiver extends OpticalComponent {
 	}
 
 	public void handleSignal(Signal s) {
+		console.println("_______________");
+		console.println("Receiver:");
 		if (s.getPower() < minSensitivity || s.getPower() > maxSensitivity)
 			console.println("No Signal detected");
 		else {
+			console.println("Input signal's power: " + s.getPower() + "dB.");
 			int size = s.getWavelengthListSize();
 			for (int i = 0; i < size; i++) {
 				if (s.getWavelength(i) < minWavelength || s.getWavelength(i) > maxWavelength)

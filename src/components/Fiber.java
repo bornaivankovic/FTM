@@ -44,7 +44,7 @@ public class Fiber {
 	public void transferSignalOverFiber(Signal s) {
 		double outPower = s.getPower();
 		double loss = length * attenuance + 2 * connectorAttenuance;
-		s.setPower(outPower);
+		s.setPower(outPower-loss);
 	}
 
 	public void handleSignal(Signal s) {
