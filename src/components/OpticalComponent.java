@@ -19,6 +19,8 @@ public class OpticalComponent {
 	private int width;
 	private boolean selected = false;
 	private String imgPath = "Sad_Pepe.png";
+	private Fiber outConnector;
+	private Fiber inConnector;
 
 	public OpticalComponent(String str, Point p, int height, int width) {
 		label = str;
@@ -107,6 +109,22 @@ public class OpticalComponent {
 
 	public void setImgPath(String imgPath) {
 		this.imgPath = imgPath;
+	}
+
+	public Fiber getOutConnector() {
+		return outConnector;
+	}
+
+	public void setOutConnector(Fiber outConnector) {
+		this.outConnector = outConnector;
+	}
+
+	public Fiber getInConnector() {
+		return inConnector;
+	}
+
+	public void setInConnector(Fiber inConnector) {
+		this.inConnector = inConnector;
 	}
 
 	public void draw(Graphics g) {

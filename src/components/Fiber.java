@@ -9,14 +9,14 @@ public class Fiber {
 	public OpticalComponent inC;
 	public OpticalComponent outC;
 	private double connectorAttenuance; // loss on connector in dB
-	private ComponentList outCType;
+	// private ComponentList outCType;
 
 	public Fiber(OpticalComponent c1, OpticalComponent c2) {
-		this.inC = c1;
-		this.outC = c2;
-		this.length = 1;
-		this.attenuance = 0.3;
-		this.connectorAttenuance = 0.1; 
+		inC = c1;
+		outC = c2;
+		length = 1;
+		attenuance = 0.3;
+		connectorAttenuance = 0.1;
 	}
 
 	public double getLength() {
@@ -43,43 +43,43 @@ public class Fiber {
 
 	public void transferSignalOverFiber(Signal s) {
 		double outPower = s.getPower();
-		double loss = length*attenuance + 2*connectorAttenuance;
-		s.setPower(outPower);		
+		double loss = length * attenuance + 2 * connectorAttenuance;
+		s.setPower(outPower);
 	}
 
 	public void handleSignal(Signal s) {
 		transferSignalOverFiber(s);
-		switch (outCType) {
-		case TX:
-			System.out.println("ERROR");
-		case RX:
-			Receiver r = (Receiver)outC;
-			r.handleSignal(s);
-		case MUX:
-			Multiplexer m = (Multiplexer)outC;
-			m.handleSignal(s);
-		case DMUX:
-			Demultiplexer dm = (Demultiplexer)outC;
-			dm.handleSignal(s);
-		case FILTER:
-			Filter f = (Filter) outC;
-			f.handleSignal(s);
-		case COUP:
-			Coupler coup = (Coupler)outC;
-			coup.handleSignal(s);
-		case DECOUP:
-			Decoupler decoup = (Decoupler)outC;
-			decoup.handleSignal(s);
-		case ADMUX:
-			AddDropMux admux = (AddDropMux)outC;
-			admux.handleSignal(s);
-		case AMP:
-			Amplifier amp = (Amplifier)outC;
-			amp.handleSignal(s);
-		case WLCONV:
-		case CROSSC:
-		}
-		
+		// switch (outCType) {
+		// case TX:
+		// System.out.println("ERROR");
+		// case RX:
+		// Receiver r = (Receiver)outC;
+		// r.handleSignal(s);
+		// case MUX:
+		// Multiplexer m = (Multiplexer)outC;
+		// m.handleSignal(s);
+		// case DMUX:
+		// Demultiplexer dm = (Demultiplexer)outC;
+		// dm.handleSignal(s);
+		// case FILTER:
+		// Filter f = (Filter) outC;
+		// f.handleSignal(s);
+		// case COUP:
+		// Coupler coup = (Coupler)outC;
+		// coup.handleSignal(s);
+		// case DECOUP:
+		// Decoupler decoup = (Decoupler)outC;
+		// decoup.handleSignal(s);
+		// case ADMUX:
+		// AddDropMux admux = (AddDropMux)outC;
+		// admux.handleSignal(s);
+		// case AMP:
+		// Amplifier amp = (Amplifier)outC;
+		// amp.handleSignal(s);
+		// case WLCONV:
+		// case CROSSC:
+		// }
+
 	}
 
 }

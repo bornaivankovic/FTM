@@ -35,7 +35,7 @@ public class Toolbar extends JToolBar {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			//gui.canvas.startSimulation();
+			gui.canvas.startSimulation();
 		}
 
 	}

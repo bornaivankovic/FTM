@@ -8,7 +8,7 @@ public class Transmitter extends OpticalComponent {
 	private double minWavelengthBand;
 	private double maxWavelengthBand;
 	private int numberOfMods;
-	private Fiber outputConnector = null;
+	// private Fiber outputConnector = null;
 
 	public Transmitter(String str, Point p, int height, int width, int wavelength, double power, double minBand,
 			double maxBand, int mods, double attenuance) {
@@ -76,8 +76,8 @@ public class Transmitter extends OpticalComponent {
 		Signal sig = new Signal(centralWavelength, outputPower);
 		sendSignal(sig);
 	}
-	
-	private void sendSignal (Signal s) {
-		outputConnector.handleSignal(s);
+
+	private void sendSignal(Signal s) {
+		getOutConnector().handleSignal(s);
 	}
 }

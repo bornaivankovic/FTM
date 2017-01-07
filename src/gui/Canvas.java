@@ -15,11 +15,19 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
+import components.AddDropMux;
+import components.Amplifier;
+import components.Coupler;
+import components.CrossConnect;
+import components.Decoupler;
+import components.Demultiplexer;
 import components.Fiber;
+import components.Filter;
+import components.Multiplexer;
 import components.OpticalComponent;
 import components.Receiver;
-import components.Signal;
 import components.Transmitter;
+import components.WavelengthConverter;
 
 public class Canvas extends JPanel {
 
@@ -88,6 +96,7 @@ public class Canvas extends JPanel {
 		setBackground(Color.WHITE);
 		komponente = new ArrayList<OpticalComponent>();
 		vlakna = new ArrayList<Fiber>();
+		allTransmitters = new ArrayList<>();
 	}
 
 	public void addComponent(OpticalComponent component, Point p) {
@@ -95,8 +104,27 @@ public class Canvas extends JPanel {
 		OpticalComponent c = null;
 		if (component instanceof Transmitter) {
 			c = new Transmitter(component);
+			allTransmitters.add((Transmitter) c);
 		} else if (component instanceof Receiver) {
 			c = new Receiver(component);
+		} else if (component instanceof AddDropMux) {
+			c = new AddDropMux(component);
+		} else if (component instanceof Amplifier) {
+			c = new Amplifier(component);
+		} else if (component instanceof Coupler) {
+			c = new Coupler(component);
+		} else if (component instanceof CrossConnect) {
+			c = new CrossConnect(component);
+		} else if (component instanceof Decoupler) {
+			c = new Decoupler(component);
+		} else if (component instanceof Demultiplexer) {
+			c = new Demultiplexer(component);
+		} else if (component instanceof Filter) {
+			c = new Filter(component);
+		} else if (component instanceof Multiplexer) {
+			c = new Multiplexer(component);
+		} else if (component instanceof WavelengthConverter) {
+			c = new WavelengthConverter(component);
 		} else {
 			c = new OpticalComponent(component);
 		}
@@ -160,13 +188,20 @@ public class Canvas extends JPanel {
 	}
 
 	public void deleteSelected() {
-		ArrayList<OpticalComponent> zaIzbrisati = new ArrayList<>();
+		ArrayList<OpticalComponent> zaIzbrisatiC = new ArrayList<>();
+		ArrayList<Fiber> zaIzbrisatiF = new ArrayList<>();
 		for (OpticalComponent c : komponente) {
 			if (c.isSelected()) {
-				zaIzbrisati.add(c);
+				zaIzbrisatiC.add(c);
+				for (Fiber f : vlakna) {
+					if (f.inC.equals(c) || f.outC.equals(c)) {
+						zaIzbrisatiF.add(f);
+					}
+				}
 			}
 		}
-		komponente.removeAll(zaIzbrisati);
+		vlakna.removeAll(zaIzbrisatiF);
+		komponente.removeAll(zaIzbrisatiC);
 	}
 
 	private class DeleteAction extends AbstractAction {
@@ -199,7 +234,10 @@ public class Canvas extends JPanel {
 						c2 = c;
 				}
 			}
-			vlakna.add(new Fiber(c1, c2));
+			Fiber f = new Fiber(c1, c2);
+			vlakna.add(f);
+			c1.setOutConnector(f);
+			c2.setInConnector(f);
 			repaint();
 		}
 	}
@@ -211,113 +249,61 @@ public class Canvas extends JPanel {
 	public int getFiberListLength() {
 		return vlakna.size();
 	}
+
+	public void startSimulation() {
+		for (Transmitter t : allTransmitters) {
+			t.createSignal();
+		}
+	}
 	/*
-	void startSimulation() {
-		Signal sig1 = new Signal();
-		for (int i = 0; i < komponente.size(); i++) {
-			OpticalComponent tmp = komponente.get(i);
-			String label = tmp.getLabel();
-			// switch (label) {
-			// case "ADM":
-			//
-			// break;
-			// case "AMP":
-			//
-			// break;
-			// case "COUP":
-			//
-			// break;
-			// case "XC":
-			//
-			// break;
-			// case "DECOUP":
-			//
-			// break;
-			// case "DEMUX":
-			//
-			// break;
-			// case "FILTER":
-			//
-			// break;
-			// case "MUX":
-			//
-			// break;
-			// case "RX":
-			// Receiver rx = (Receiver) tmp;
-			// int min = (int) rx.getMinSensitivity();
-			// int max = (int) rx.getMaxSensitivity();
-			// for (int j = 0; j < sig1.getWavelengthListSize(); j++) {
-			// if (min < sig1.getWavelength(j) && sig1.getWavelength(j) < max)
-			// console.println("Prijamnik je detektirao valnu duljinu: " +
-			// sig1.getWavelength(j));
-			// }
-			// break;
-			// case "TX":
-			// Transmitter tx = (Transmitter) tmp;
-			// sig1.setPower(tx.getOutputPower());
-			// int temp = (int) ((tx.getMaxWavelengthBand() -
-			// tx.getMinWavelengthBand()) / tx.getNumberOfMods());
-			// int temp2 = (int) tx.getMinWavelengthBand();
-			// console.println("Izlazna snaga signala predajnika je : " +
-			// sig1.getPower() + "dB");
-			// console.println("valne duljine signala su (u nanometrima): ");
-			// for (int j = 0; j < tx.getNumberOfMods(); j++) {
-			// temp2 = temp2 + temp;
-			// sig1.addWavelength(temp2);
-			// console.println("Valna duljina: " + temp2);
-			// }
-			//
-			// break;
-			// case "WAC":
-			//
-			// break;
-			// default:
-			// break;
-			// }
-			if (label.equals("Rx")) {
-				Receiver rx = (Receiver) tmp;
-				int min = (int) rx.getMinWavelength();
-				int max = (int) rx.getMaxWavelength();
-
-				Fiber f = findFiber(komponente.get(i - 1), rx);
-				sig1.setPower(sig1.getPower() - f.getAttenuance() * f.getLength());
-				if (sig1.getPower() >= rx.getMinSensitivity() && sig1.getPower() <= rx.getMaxSensitivity()) {
-					console.println("Snaga primljenog signala: " + sig1.getPower() + "dB");
-				} else {
-					console.println("Prijamnik ne moze detektirati signal dane snage(" + sig1.getPower() + ")");
-					continue;
-				}
-
-				String s = "";
-				for (int j = 0; j < sig1.getWavelengthListSize(); j++) {
-					if (min < sig1.getWavelength(j) && sig1.getWavelength(j) < max)
-						s += sig1.getWavelength(j) + ",";
-				}
-				console.println("Prijamnik je detektirao valne duljine: " + s);
-			} else if (label.equals("Tx")) {
-				Transmitter tx = (Transmitter) tmp;
-				sig1.setPower(tx.getOutputPower());
-				int temp = (int) ((tx.getMaxWavelengthBand() - tx.getMinWavelengthBand()) / tx.getNumberOfMods());
-				int temp2 = (int) tx.getMinWavelengthBand();
-				console.println("Izlazna snaga signala predajnika je : " + sig1.getPower() + "dB");
-				String s = "";
-				for (int j = 0; j < tx.getNumberOfMods(); j++) {
-					temp2 = temp2 + temp;
-					sig1.addWavelength(temp2);
-					s += temp2 + ",";
-				}
-				console.println("valne duljine signala su (u nanometrima): " + s);
-			}
-		}
-	}
-
-	private Fiber findFiber(OpticalComponent c1, OpticalComponent c2) {
-		for (Fiber f : vlakna) {
-			if (f.c1.equals(c1) && f.c2.equals(c2) || f.c1.equals(c2) && f.c2.equals(c1)) {
-				return f;
-			}
-		}
-		return null;
-	}
-	*/
+	 * void startSimulation() { Signal sig1 = new Signal(); for (int i = 0; i <
+	 * komponente.size(); i++) { OpticalComponent tmp = komponente.get(i);
+	 * String label = tmp.getLabel(); // switch (label) { // case "ADM": // //
+	 * break; // case "AMP": // // break; // case "COUP": // // break; // case
+	 * "XC": // // break; // case "DECOUP": // // break; // case "DEMUX": // //
+	 * break; // case "FILTER": // // break; // case "MUX": // // break; // case
+	 * "RX": // Receiver rx = (Receiver) tmp; // int min = (int)
+	 * rx.getMinSensitivity(); // int max = (int) rx.getMaxSensitivity(); // for
+	 * (int j = 0; j < sig1.getWavelengthListSize(); j++) { // if (min <
+	 * sig1.getWavelength(j) && sig1.getWavelength(j) < max) // console.println(
+	 * "Prijamnik je detektirao valnu duljinu: " + // sig1.getWavelength(j)); //
+	 * } // break; // case "TX": // Transmitter tx = (Transmitter) tmp; //
+	 * sig1.setPower(tx.getOutputPower()); // int temp = (int)
+	 * ((tx.getMaxWavelengthBand() - // tx.getMinWavelengthBand()) /
+	 * tx.getNumberOfMods()); // int temp2 = (int) tx.getMinWavelengthBand(); //
+	 * console.println("Izlazna snaga signala predajnika je : " + //
+	 * sig1.getPower() + "dB"); // console.println(
+	 * "valne duljine signala su (u nanometrima): "); // for (int j = 0; j <
+	 * tx.getNumberOfMods(); j++) { // temp2 = temp2 + temp; //
+	 * sig1.addWavelength(temp2); // console.println("Valna duljina: " + temp2);
+	 * // } // // break; // case "WAC": // // break; // default: // break; // }
+	 * if (label.equals("Rx")) { Receiver rx = (Receiver) tmp; int min = (int)
+	 * rx.getMinWavelength(); int max = (int) rx.getMaxWavelength();
+	 *
+	 * Fiber f = findFiber(komponente.get(i - 1), rx);
+	 * sig1.setPower(sig1.getPower() - f.getAttenuance() * f.getLength()); if
+	 * (sig1.getPower() >= rx.getMinSensitivity() && sig1.getPower() <=
+	 * rx.getMaxSensitivity()) { console.println("Snaga primljenog signala: " +
+	 * sig1.getPower() + "dB"); } else { console.println(
+	 * "Prijamnik ne moze detektirati signal dane snage(" + sig1.getPower() +
+	 * ")"); continue; }
+	 *
+	 * String s = ""; for (int j = 0; j < sig1.getWavelengthListSize(); j++) {
+	 * if (min < sig1.getWavelength(j) && sig1.getWavelength(j) < max) s +=
+	 * sig1.getWavelength(j) + ","; } console.println(
+	 * "Prijamnik je detektirao valne duljine: " + s); } else if
+	 * (label.equals("Tx")) { Transmitter tx = (Transmitter) tmp;
+	 * sig1.setPower(tx.getOutputPower()); int temp = (int)
+	 * ((tx.getMaxWavelengthBand() - tx.getMinWavelengthBand()) /
+	 * tx.getNumberOfMods()); int temp2 = (int) tx.getMinWavelengthBand();
+	 * console.println("Izlazna snaga signala predajnika je : " +
+	 * sig1.getPower() + "dB"); String s = ""; for (int j = 0; j <
+	 * tx.getNumberOfMods(); j++) { temp2 = temp2 + temp;
+	 * sig1.addWavelength(temp2); s += temp2 + ","; } console.println(
+	 * "valne duljine signala su (u nanometrima): " + s); } } }
+	 *
+	 * private Fiber findFiber(OpticalComponent c1, OpticalComponent c2) { for
+	 * (Fiber f : vlakna) { if (f.c1.equals(c1) && f.c2.equals(c2) ||
+	 * f.c1.equals(c2) && f.c2.equals(c1)) { return f; } } return null; }
+	 */
 }
