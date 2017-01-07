@@ -76,6 +76,8 @@ public class Transmitter extends OpticalComponent {
 
 	public void createSignal() {
 		Signal sig = new Signal(outputPower);
+		Console.getConsoleInstance().println("________________");
+		Console.getConsoleInstance().println("Transmitter:");
 		Console.getConsoleInstance().println("Generating signal...");
 		addWavelenghtsToSignal(sig); 
 		sendSignal(sig);
@@ -92,6 +94,7 @@ public class Transmitter extends OpticalComponent {
 	}
 
 	private void sendSignal(Signal s) {
+		Console.getConsoleInstance().println("Transmitting Signal....Signal power: " + s.getPower() + "dB.");
 		getOutConnector().handleSignal(s);
 	}
 }

@@ -1,6 +1,7 @@
 package components;
 
 import java.util.ArrayList;
+import java.util.*;
 
 public class Signal {
 	//wavelengthList polje valnih duljina, možemo još i mplementirat max ogranicenje broja kanala
@@ -48,4 +49,18 @@ public class Signal {
 		return wavelengthArray.get(i);
 	}
 	
+	public void sortWavelenght () {
+		Collections.sort(wavelengthArray);
+	}
+	
+	public boolean hasWavelenght (int w) {
+		boolean has = false;
+		for (int w2 : wavelengthArray) {
+			if (w2 == w) {
+				has = true;
+				break;
+			}
+		}
+		return has;
+	}
 }
