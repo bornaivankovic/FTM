@@ -4,10 +4,34 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 public class AddDropMux extends OpticalComponent {
+	
+	private int numOfInputs = 2; // DEFAULT 2 ulaza 1 izlaz
+	
 	// lista valnih duljina koje simulator treba dodati
 	private ArrayList<Integer> addWavelengths = new ArrayList<Integer>();
 	// lista valnih duljina koje simulator treba droppati
 	private ArrayList<Integer> dropWavelengths = new ArrayList<Integer>();
+	private double inSigPowerLoss = 0.2;  //Nekakva DEFAULT vrijednost gubitka snage za svaki ulazni signal
+	private ArrayList<Signal> inSignals = new ArrayList<Signal>();
+	private ArrayList<Integer> outputWavelengths = new ArrayList<Integer>();
+	private int handleMethodCallTimes = 0;
+	private Fiber fiberOut;
+
+	public double getInSigPowerLoss() {
+		return inSigPowerLoss;
+	}
+
+	public void setInSigPowerLoss(double inSigPowerLoss) {
+		this.inSigPowerLoss = inSigPowerLoss;
+	}
+	
+	public int getNumOfInputs() {
+		return numOfInputs;
+	}
+
+	public void setNumOfInputs(int numOfInputs) {
+		this.numOfInputs = numOfInputs;
+	}
 
 	public AddDropMux(OpticalComponent c) {
 		super(c);
@@ -46,5 +70,54 @@ public class AddDropMux extends OpticalComponent {
 
 	public int getDropWavelengths(int index) {
 		return dropWavelengths.get(index);
+	}
+
+	public void handleSignal(Signal s) {
+		handleMethodCallTimes++;
+		attenuateSignal(s); 
+		inSignals.add(s);
+		if (handleMethodCallTimes == numOfInputs) {
+			double outputPower;
+			double totalInputPower=0;
+			for (Signal sig : inSignals) {
+				totalInputPower += sig.getPower();
+			}
+			outputPower = totalInputPower / numOfInputs ;
+			sendSignal(outputPower);
+		}
+	}
+	
+	private void sendSignal(double power) {
+		Signal outputSignal = new Signal(power);
+		for (Signal s : inSignals) {
+			int size = s.getWavelengthListSize();
+			for (int i = 0; i<size; i++)
+				outputSignal.addWavelength(s.getWavelength(i));
+		}
+		addWavelengthsToSignal (outputSignal);
+		dropWavelengthsFromSignal (outputSignal);
+		fiberOut.handleSignal(outputSignal);
+	}
+
+	private void dropWavelengthsFromSignal(Signal s) {
+		for (int i=0; i<dropWavelengths.size(); i++) {
+			int wave = dropWavelengths.get(i);
+			for (int j=0; j<s.getWavelengthListSize(); j++) {
+				if (s.getWavelength(j)==wave)
+					s.dropWavelength(wave);
+			}
+		}
+	}
+
+	private void addWavelengthsToSignal(Signal outputSignal) {
+		for (int i=0; i<addWavelengths.size(); i++) {
+			outputSignal.addWavelength(addWavelengths.get(i));
+		}
+		
+	}
+
+	private void attenuateSignal(Signal s) {
+		double outPower = s.getPower();
+		s.setPower(outPower - inSigPowerLoss);
 	}
 }

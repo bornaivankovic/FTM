@@ -6,10 +6,18 @@ import javax.swing.JTextArea;
 
 public class Console extends JTextArea {
 	
-	public Console(){
+	private static Console instance = null;
+	
+	private Console(){
 		setAutoscrolls(false);
 		setBackground(Color.LIGHT_GRAY);
 		setRows(4);
+	}
+	
+	public static Console getInstance () {
+		if (instance==null)
+			instance = new Console();
+		return instance;
 	}
 	
 	public void pr(String str){

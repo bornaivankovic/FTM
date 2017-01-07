@@ -25,6 +25,7 @@ public class Canvas extends JPanel {
 
 	private static ArrayList<OpticalComponent> komponente;
 	private static ArrayList<Fiber> vlakna;
+	private static ArrayList<Transmitter> allTransmitters;
 
 	private Point mousePt = new Point(800 / 2, 600 / 2);
 	private Rectangle mouseRect = new Rectangle();
@@ -210,7 +211,7 @@ public class Canvas extends JPanel {
 	public int getFiberListLength() {
 		return vlakna.size();
 	}
-
+	/*
 	void startSimulation() {
 		Signal sig1 = new Signal();
 		for (int i = 0; i < komponente.size(); i++) {
@@ -318,5 +319,5 @@ public class Canvas extends JPanel {
 		}
 		return null;
 	}
-
+	*/
 }

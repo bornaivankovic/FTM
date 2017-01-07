@@ -1,13 +1,15 @@
 package components;
 
 import java.awt.Point;
+import java.util.ArrayList;
 
 public class Decoupler extends OpticalComponent {
 
 	private int numberOfOutputs;
-	private double couplingLoss;
+	private double couplingLoss;   // loss of signal's power in dB
 	@SuppressWarnings("unused")
 	private double decouplingRatio;
+	private ArrayList<Fiber> outputFibers = new ArrayList<Fiber>();
 
 	public Decoupler(String str, Point p, int height, int width, int numberOfOutputs, int couplingLoss) {
 		super(str, p, height, width);
@@ -41,4 +43,20 @@ public class Decoupler extends OpticalComponent {
 		couplingLoss = l;
 	}
 
+	public void handleSignal(Signal s) {
+		attenuateSignal(s);
+		for (int i=0; i<outputFibers.size(); i++) {
+			Fiber fOut = outputFibers.get(i);
+			Signal sigOut = new Signal(s.getPower()/numberOfOutputs);
+			for (int j=0; j<s.getWavelengthListSize(); j++) {
+					sigOut.addWavelength(s.getWavelength(j));
+			}
+			fOut.handleSignal(sigOut);
+		}	
+	}
+
+	private void attenuateSignal(Signal s) {
+		double outPower = s.getPower();
+		s.setPower(outPower-couplingLoss);
+	}
 }

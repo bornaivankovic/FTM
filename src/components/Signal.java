@@ -9,9 +9,13 @@ public class Signal {
 	private ArrayList<Integer> wavelengthArray = new ArrayList<Integer>();
 	private double power;
 	
-	public Signal(/*int wavelength, double power2*/) {
-		//this.wavelengthArray.add(wavelength);
-		//this.power = power2;
+	public Signal(int wavelength, double power2) {
+		this.wavelengthArray.add(wavelength);
+		this.power = power2;
+	}
+	
+	public Signal (double power2) {
+		this.power = power2;
 	}
 	
 	public void addWavelength (int wavelength) {

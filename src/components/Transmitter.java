@@ -4,12 +4,13 @@ import java.awt.Point;
 
 public class Transmitter extends OpticalComponent {
 	private double outputPower;
-	private double centralWavelength;
+	private int centralWavelength;
 	private double minWavelengthBand;
 	private double maxWavelengthBand;
 	private int numberOfMods;
+	private Fiber outputConnector = null;
 
-	public Transmitter(String str, Point p, int height, int width, double wavelength, double power, double minBand,
+	public Transmitter(String str, Point p, int height, int width, int wavelength, double power, double minBand,
 			double maxBand, int mods, double attenuance) {
 		super(str, p, height, width);
 		outputPower = power;
@@ -43,7 +44,7 @@ public class Transmitter extends OpticalComponent {
 		return centralWavelength;
 	}
 
-	public void setCentralWavelength(double centralWavelength) {
+	public void setCentralWavelength(int centralWavelength) {
 		this.centralWavelength = centralWavelength;
 	}
 
@@ -71,4 +72,12 @@ public class Transmitter extends OpticalComponent {
 		this.numberOfMods = numberOfMods;
 	}
 
+	public void createSignal() {
+		Signal sig = new Signal(centralWavelength, outputPower);
+		sendSignal(sig);
+	}
+	
+	private void sendSignal (Signal s) {
+		outputConnector.handleSignal(s);
+	}
 }

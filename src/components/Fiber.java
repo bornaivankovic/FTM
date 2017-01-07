@@ -4,16 +4,19 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class Fiber {
-	private double length;
-	private double attenuance;
-	public OpticalComponent c1;
-	public OpticalComponent c2;
+	private double length; // length in km
+	private double attenuance; // loss in dB/km
+	public OpticalComponent inC;
+	public OpticalComponent outC;
+	private double connectorAttenuance; // loss on connector in dB
+	private ComponentList outCType;
 
 	public Fiber(OpticalComponent c1, OpticalComponent c2) {
-		this.c1 = c1;
-		this.c2 = c2;
+		this.inC = c1;
+		this.outC = c2;
 		this.length = 1;
 		this.attenuance = 0.3;
+		this.connectorAttenuance = 0.1; 
 	}
 
 	public double getLength() {
@@ -34,8 +37,49 @@ public class Fiber {
 
 	public void draw(Graphics g) {
 		g.setColor(Color.BLACK);
-		g.drawLine(c1.getP().x, c1.getP().y, c2.getP().x, c2.getP().y);
-		g.drawString(String.valueOf(length), (c1.getP().x + c2.getP().x) / 2, (c1.getP().y + c2.getP().y) / 2);
+		g.drawLine(inC.getP().x, inC.getP().y, outC.getP().x, outC.getP().y);
+		g.drawString(String.valueOf(length), (inC.getP().x + outC.getP().x) / 2, (inC.getP().y + outC.getP().y) / 2);
+	}
+
+	public void transferSignalOverFiber(Signal s) {
+		double outPower = s.getPower();
+		double loss = length*attenuance + 2*connectorAttenuance;
+		s.setPower(outPower);		
+	}
+
+	public void handleSignal(Signal s) {
+		transferSignalOverFiber(s);
+		switch (outCType) {
+		case TX:
+			System.out.println("ERROR");
+		case RX:
+			Receiver r = (Receiver)outC;
+			r.handleSignal(s);
+		case MUX:
+			Multiplexer m = (Multiplexer)outC;
+			m.handleSignal(s);
+		case DMUX:
+			Demultiplexer dm = (Demultiplexer)outC;
+			dm.handleSignal(s);
+		case FILTER:
+			Filter f = (Filter) outC;
+			f.handleSignal(s);
+		case COUP:
+			Coupler coup = (Coupler)outC;
+			coup.handleSignal(s);
+		case DECOUP:
+			Decoupler decoup = (Decoupler)outC;
+			decoup.handleSignal(s);
+		case ADMUX:
+			AddDropMux admux = (AddDropMux)outC;
+			admux.handleSignal(s);
+		case AMP:
+			Amplifier amp = (Amplifier)outC;
+			amp.handleSignal(s);
+		case WLCONV:
+		case CROSSC:
+		}
+		
 	}
 
 }

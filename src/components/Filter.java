@@ -10,6 +10,8 @@ public class Filter extends OpticalComponent {
 										// vrijednosti manje od centralne i
 	private double minBand;
 	private double maxBand; // pola vrijednosti iznad centralne valne uljine
+	private Fiber fiberOut;
+	private double powerLoss = 0.2;  // DEFAULTNI gubitak na komponenti
 
 	public Filter(String str, Point p, int height, int width, double centWave, double wavelengthBand) {
 		super(str, p, height, width);
@@ -43,5 +45,34 @@ public class Filter extends OpticalComponent {
 	public void setWavelengthBandWidth(double wavelengthBandWidth) {
 		this.wavelengthBandWidth = wavelengthBandWidth;
 	}
+
+	public void handleSignal(Signal s) {
+		attenuateSignal(s);
+		sendSignal(s);
+	}
+
+	private void sendSignal(Signal s) {
+		for (int i=0; i<s.getWavelengthListSize(); i++) {
+			if (s.getWavelength(i)<minBand || s.getWavelength(i)>maxBand)
+				s.dropWavelength(s.getWavelength(i));
+		}
+		fiberOut.handleSignal(s);
+	}
+
+	private void attenuateSignal(Signal s) {
+		double outPower = s.getPower();
+		s.setPower(outPower-powerLoss);
+		
+	}
+
+	public double getPowerLoss() {
+		return powerLoss;
+	}
+
+	public void setPowerLoss(double powerLoss) {
+		this.powerLoss = powerLoss;
+	}
+	
+	
 
 }
