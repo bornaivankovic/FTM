@@ -19,7 +19,7 @@ import components.TransferableComponent;
 public class GUI extends JComponent implements DragGestureListener {
 	public Toolbar toolbar = new Toolbar();
 	public Toolbox toolbox = new Toolbox();
-	public Console console = new Console();
+	public Console console = Console.getConsoleInstance();
 	public Canvas canvas = new Canvas();
 
 	public static void main(String[] args) {

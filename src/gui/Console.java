@@ -5,11 +5,17 @@ import java.awt.Color;
 import javax.swing.JTextArea;
 
 public class Console extends JTextArea {
-
-	public Console() {
+	private static Console consoleInstance = null;
+	private Console() {
 		setAutoscrolls(false);
 		setBackground(Color.LIGHT_GRAY);
 		setRows(4);
+	}
+	
+	public static Console getConsoleInstance () {
+		if (consoleInstance == null)
+			consoleInstance = new Console();
+		return consoleInstance;
 	}
 
 	public void pr(String str) {
