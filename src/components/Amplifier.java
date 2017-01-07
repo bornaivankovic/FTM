@@ -2,6 +2,8 @@ package components;
 
 import java.awt.Point;
 
+import gui.Console;
+
 public class Amplifier extends OpticalComponent {
 
 	private double gain;
@@ -37,6 +39,9 @@ public class Amplifier extends OpticalComponent {
 	}
 
 	public void handleSignal(Signal s) {
+		Console.getConsoleInstance().println("_____________");
+		Console.getConsoleInstance().println("Amplifier:");
+		Console.getConsoleInstance().println("Input signal's power " + s.getPower() + "dB.");
 		amplifySignal(s);
 		sendSignal(s);
 	}
@@ -47,7 +52,8 @@ public class Amplifier extends OpticalComponent {
 
 	public void amplifySignal(Signal s) {
 		s.setPower(s.getPower() + gain);
-		System.out.println("Signal amplified...");
+		Console.getConsoleInstance().println("Signal amplified...");
+		Console.getConsoleInstance().println("Output signal's power " + s.getPower() + "dB.");
 	}
 
 }
