@@ -134,7 +134,10 @@ public class OpticalComponent {
 		BufferedImage img = null;
 		try {
 
-			img = ImageIO.read(new File(imgPath));
+			File currentDirFile = new File("");
+			String helper = currentDirFile.getAbsolutePath() + "\\icons\\";
+			String path = helper + imgPath;
+			img = ImageIO.read(new File(path));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

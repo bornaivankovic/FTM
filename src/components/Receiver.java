@@ -28,7 +28,7 @@ public class Receiver extends OpticalComponent {
 		maxSensitivity = 50;
 		minWavelength = 1500;
 		maxWavelength = 1600;
-		setImgPath("D:\\Code\\Java\\FTM\\icons\\rx.png");
+		setImgPath("rx.png");
 	}
 
 	public double getMinSensitivity() {

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Multiplexer extends OpticalComponent {
 
 	private int numOfInputs;
-	private double multiPlexingLoss;              // loss of signal's power in dB
+	private double multiPlexingLoss; // loss of signal's power in dB
 	private int min = 0;
 	private int max = 1600;
 	private ArrayList<Integer> minWavelength = new ArrayList<Integer>();
@@ -20,7 +20,7 @@ public class Multiplexer extends OpticalComponent {
 		super(c);
 		numOfInputs = 2;
 		multiPlexingLoss = 0.25;
-		setImgPath("D:\\Code\\Java\\FTM\\icons\\mux.png");
+		setImgPath("mux.png");
 	}
 
 	public Multiplexer(String str, Point p, int height, int width, int inputs, double loss) {
@@ -60,15 +60,15 @@ public class Multiplexer extends OpticalComponent {
 
 	public void handleSignal(Signal s) {
 		handleMethodCallTimes++;
-		attenuateSignal(s); 
+		attenuateSignal(s);
 		inSignals.add(s);
 		if (handleMethodCallTimes == numOfInputs) {
 			double outputPower;
-			double totalInputPower=0;
+			double totalInputPower = 0;
 			for (Signal sig : inSignals) {
 				totalInputPower += sig.getPower();
 			}
-			outputPower = totalInputPower / numOfInputs ;
+			outputPower = totalInputPower / numOfInputs;
 			sendSignal(outputPower);
 		}
 	}
@@ -77,7 +77,7 @@ public class Multiplexer extends OpticalComponent {
 		Signal outputSignal = new Signal(power);
 		for (Signal s : inSignals) {
 			int size = s.getWavelengthListSize();
-			for (int i = 0; i<size; i++)
+			for (int i = 0; i < size; i++)
 				outputSignal.addWavelength(s.getWavelength(i));
 		}
 		fiberOut.handleSignal(outputSignal);
@@ -85,7 +85,7 @@ public class Multiplexer extends OpticalComponent {
 
 	private void attenuateSignal(Signal s) {
 		double outPower = s.getPower();
-		s.setPower(outPower-multiPlexingLoss);
+		s.setPower(outPower - multiPlexingLoss);
 	}
 
 }

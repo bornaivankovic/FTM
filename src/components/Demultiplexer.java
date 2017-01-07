@@ -31,7 +31,7 @@ public class Demultiplexer extends OpticalComponent {
 			minWavelength.add(i, min);
 			maxWavelength.add(i, max);
 		}
-		setImgPath("D:\\Code\\Java\\FTM\\icons\\demux.png");
+		setImgPath("demux.png");
 
 	}
 
@@ -58,11 +58,11 @@ public class Demultiplexer extends OpticalComponent {
 
 	public void handleSignal(Signal s) {
 		attenuateSignal(s);
-		for (int i=0; i<outputFibers.size(); i++) {
+		for (int i = 0; i < outputFibers.size(); i++) {
 			Fiber fOut = outputFibers.get(i);
 			Signal sigOut = new Signal(s.getPower());
-			for (int j=0; j<s.getWavelengthListSize(); j++) {
-				if (s.getWavelength(j)>minWavelength.get(i) && s.getWavelength(j)<maxWavelength.get(i))
+			for (int j = 0; j < s.getWavelengthListSize(); j++) {
+				if (s.getWavelength(j) > minWavelength.get(i) && s.getWavelength(j) < maxWavelength.get(i))
 					sigOut.addWavelength(s.getWavelength(j));
 			}
 			fOut.handleSignal(sigOut);
@@ -71,7 +71,7 @@ public class Demultiplexer extends OpticalComponent {
 
 	private void attenuateSignal(Signal s) {
 		double outPower = s.getPower();
-		s.setPower(outPower- demultiPlexingLoss);
+		s.setPower(outPower - demultiPlexingLoss);
 	}
 
 }

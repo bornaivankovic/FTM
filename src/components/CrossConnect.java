@@ -21,7 +21,7 @@ public class CrossConnect extends OpticalComponent {
 		super(c);
 		numInputs = 2;
 		numOutputs = 2;
-		setImgPath("D:\\Code\\Java\\FTM\\icons\\xc.png");
+		setImgPath("xc.png");
 	}
 
 	private void setDefaultSwitchingMatrix() {

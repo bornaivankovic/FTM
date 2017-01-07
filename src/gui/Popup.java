@@ -105,8 +105,11 @@ public class Popup extends JFrame {
 				textField_1.setText(Double.toString(c.getInsertionLoss()));
 				textField_2.setText(Double.toString(c.getReturnLoss()));
 				setTitle(c.getLabel());
+				System.out.println(c.getInsertionLoss());
 			}
 		}
+
 		setVisible(true);
+		repaint();
 	}
 }

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Decoupler extends OpticalComponent {
 
 	private int numberOfOutputs;
-	private double couplingLoss;   // loss of signal's power in dB
+	private double couplingLoss; // loss of signal's power in dB
 	@SuppressWarnings("unused")
 	private double decouplingRatio;
 	private ArrayList<Fiber> outputFibers = new ArrayList<Fiber>();
@@ -23,7 +23,7 @@ public class Decoupler extends OpticalComponent {
 		couplingLoss = 0.25;
 		numberOfOutputs = 2;
 		decouplingRatio = 0.5;
-		setImgPath("D:\\Code\\Java\\FTM\\icons\\decoup.png");
+		setImgPath("decoup.png");
 	}
 
 	public int getNumberOfOutputs() {
@@ -45,18 +45,18 @@ public class Decoupler extends OpticalComponent {
 
 	public void handleSignal(Signal s) {
 		attenuateSignal(s);
-		for (int i=0; i<outputFibers.size(); i++) {
+		for (int i = 0; i < outputFibers.size(); i++) {
 			Fiber fOut = outputFibers.get(i);
-			Signal sigOut = new Signal(s.getPower()/numberOfOutputs);
-			for (int j=0; j<s.getWavelengthListSize(); j++) {
-					sigOut.addWavelength(s.getWavelength(j));
+			Signal sigOut = new Signal(s.getPower() / numberOfOutputs);
+			for (int j = 0; j < s.getWavelengthListSize(); j++) {
+				sigOut.addWavelength(s.getWavelength(j));
 			}
 			fOut.handleSignal(sigOut);
-		}	
+		}
 	}
 
 	private void attenuateSignal(Signal s) {
 		double outPower = s.getPower();
-		s.setPower(outPower-couplingLoss);
+		s.setPower(outPower - couplingLoss);
 	}
 }

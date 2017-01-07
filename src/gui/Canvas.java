@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
@@ -185,6 +186,7 @@ public class Canvas extends JPanel {
 
 	private void showPopup(MouseEvent e) {
 		Popup popup = new Popup(e, komponente);
+		JDialog dialog = new JDialog();
 	}
 
 	public void deleteSelected() {

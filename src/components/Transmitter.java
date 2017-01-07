@@ -28,7 +28,7 @@ public class Transmitter extends OpticalComponent {
 		maxWavelengthBand = 1600;
 		centralWavelength = 1550;
 		numberOfMods = 10;
-		setImgPath("D:\\Code\\Java\\FTM\\icons\\tx.png");
+		setImgPath("tx.png");
 
 	}
 

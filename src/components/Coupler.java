@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Coupler extends OpticalComponent {
 
 	private int numberOfInputs;
-	private double couplingLoss;           // loss of signal's power in dB
+	private double couplingLoss; // loss of signal's power in dB
 	private int handleMethodCallTimes = 0;
 	private ArrayList<Signal> inSignals = new ArrayList<Signal>();
 	private Fiber fiberOut;
@@ -21,7 +21,7 @@ public class Coupler extends OpticalComponent {
 		super(c);
 		numberOfInputs = 2;
 		couplingLoss = 0.2;
-		setImgPath("D:\\Code\\Java\\FTM\\icons\\coup.png");
+		setImgPath("coup.png");
 	}
 
 	public int getNumberOfInputs() {
@@ -46,11 +46,11 @@ public class Coupler extends OpticalComponent {
 		inSignals.add(s);
 		if (handleMethodCallTimes == numberOfInputs) {
 			double outputPower;
-			double totalInputPower=0;
+			double totalInputPower = 0;
 			for (Signal sig : inSignals) {
 				totalInputPower += sig.getPower();
 			}
-			outputPower = totalInputPower / numberOfInputs ;
+			outputPower = totalInputPower / numberOfInputs;
 			sendSignal(outputPower);
 		}
 	}
@@ -59,7 +59,7 @@ public class Coupler extends OpticalComponent {
 		Signal outputSignal = new Signal(power);
 		for (Signal s : inSignals) {
 			int size = s.getWavelengthListSize();
-			for (int i = 0; i<size; i++)
+			for (int i = 0; i < size; i++)
 				outputSignal.addWavelength(s.getWavelength(i));
 		}
 		fiberOut.handleSignal(outputSignal);
@@ -67,7 +67,7 @@ public class Coupler extends OpticalComponent {
 
 	private void attenuateSignal(Signal s) {
 		double outPower = s.getPower();
-		s.setPower(outPower-couplingLoss);
+		s.setPower(outPower - couplingLoss);
 	}
 
 }
