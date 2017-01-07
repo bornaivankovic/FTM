@@ -107,7 +107,7 @@ public class Canvas extends JPanel {
 			c = new Transmitter(component);
 			allTransmitters.add((Transmitter) c);
 		} else if (component instanceof Receiver) {
-			c = new Receiver(component);
+			c = new Receiver(component, console);
 		} else if (component instanceof AddDropMux) {
 			c = new AddDropMux(component);
 		} else if (component instanceof Amplifier) {

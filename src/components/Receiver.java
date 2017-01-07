@@ -31,6 +31,16 @@ public class Receiver extends OpticalComponent {
 		setImgPath("rx.png");
 	}
 
+	public Receiver(OpticalComponent c, Console con) {
+		super(c);
+		minSensitivity = -10;
+		maxSensitivity = 50;
+		minWavelength = 1500;
+		maxWavelength = 1600;
+		console = con;
+		setImgPath("rx.png");
+	}
+
 	public double getMinSensitivity() {
 		return minSensitivity;
 	}
