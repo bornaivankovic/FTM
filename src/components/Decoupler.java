@@ -59,4 +59,8 @@ public class Decoupler extends OpticalComponent {
 		double outPower = s.getPower();
 		s.setPower(outPower - couplingLoss);
 	}
+	
+	public void addOutputFiber (Fiber f) {
+		outputFibers.add(f);
+	}
 }

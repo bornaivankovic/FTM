@@ -237,6 +237,14 @@ public class Canvas extends JPanel {
 				}
 			}
 			Fiber f = new Fiber(c1, c2);
+			if (c1 instanceof Decoupler) {
+				Decoupler dc = (Decoupler)c1;
+				dc.addOutputFiber(f);
+			}
+			else if (c1 instanceof Demultiplexer) {
+				Demultiplexer dm = (Demultiplexer)c1;
+				dm.addOutputFiber(f);
+			}
 			vlakna.add(f);
 			c1.setOutConnector(f);
 			c2.setInConnector(f);
