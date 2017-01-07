@@ -2,6 +2,8 @@ package components;
 
 import java.awt.Point;
 
+import gui.Console;
+
 public class Transmitter extends OpticalComponent {
 	private double outputPower;
 	private int centralWavelength;
@@ -73,9 +75,20 @@ public class Transmitter extends OpticalComponent {
 	}
 
 	public void createSignal() {
-		Signal sig = new Signal(centralWavelength, outputPower);
-		System.out.println("Generating signal...");
+		Signal sig = new Signal(outputPower);
+		Console.getConsoleInstance().println("Generating signal...");
+		addWavelenghtsToSignal(sig); 
 		sendSignal(sig);
+	}
+
+	private void addWavelenghtsToSignal(Signal s) {
+		int increment =(int) (maxWavelengthBand - minWavelengthBand) / numberOfMods; 
+		for (int i=0; i<numberOfMods; i++) {
+			int wavel = (int)minWavelengthBand + i*increment;
+			s.addWavelength(wavel);
+			Console.getConsoleInstance().println("Setting up "+ wavel + " nm...");
+		}
+		
 	}
 
 	private void sendSignal(Signal s) {
