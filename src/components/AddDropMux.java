@@ -14,9 +14,7 @@ public class AddDropMux extends OpticalComponent {
 	private double inSigPowerLoss = 0.2; // Nekakva DEFAULT vrijednost gubitka
 											// snage za svaki ulazni signal
 	private ArrayList<Signal> inSignals = new ArrayList<Signal>();
-	private ArrayList<Integer> outputWavelengths = new ArrayList<Integer>();
 	private int handleMethodCallTimes = 0;
-	private Fiber fiberOut;
 
 	public double getInSigPowerLoss() {
 		return inSigPowerLoss;
@@ -97,7 +95,7 @@ public class AddDropMux extends OpticalComponent {
 		}
 		addWavelengthsToSignal(outputSignal);
 		dropWavelengthsFromSignal(outputSignal);
-		fiberOut.handleSignal(outputSignal);
+		getOutConnector().handleSignal(outputSignal);
 	}
 
 	private void dropWavelengthsFromSignal(Signal s) {

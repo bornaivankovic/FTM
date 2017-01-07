@@ -9,7 +9,6 @@ public class Coupler extends OpticalComponent {
 	private double couplingLoss; // loss of signal's power in dB
 	private int handleMethodCallTimes = 0;
 	private ArrayList<Signal> inSignals = new ArrayList<Signal>();
-	private Fiber fiberOut;
 
 	public Coupler(String str, Point p, int height, int width, int numberOfInputs, int couplingLoss) {
 		super(str, p, height, width);
@@ -62,7 +61,7 @@ public class Coupler extends OpticalComponent {
 			for (int i = 0; i < size; i++)
 				outputSignal.addWavelength(s.getWavelength(i));
 		}
-		fiberOut.handleSignal(outputSignal);
+		getOutConnector().handleSignal(outputSignal);
 	}
 
 	private void attenuateSignal(Signal s) {

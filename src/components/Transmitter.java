@@ -74,6 +74,7 @@ public class Transmitter extends OpticalComponent {
 
 	public void createSignal() {
 		Signal sig = new Signal(centralWavelength, outputPower);
+		System.out.println("Generating signal...components.Transmitter@2e573272");
 		sendSignal(sig);
 	}
 
