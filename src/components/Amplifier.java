@@ -51,7 +51,11 @@ public class Amplifier extends OpticalComponent {
 	}
 
 	public void amplifySignal(Signal s) {
-		s.setPower(s.getPower() + gain);
+		double tempPower = s.getPower()+gain;
+		if (tempPower>gainSaturation)
+			s.setPower(gainSaturation);
+		else
+			s.setPower(tempPower);
 		Console.getConsoleInstance().println("Signal amplified...");
 		Console.getConsoleInstance().println("Output signal's power " + s.getPower() + "dB.");
 	}

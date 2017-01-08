@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import components.Amplifier;
 import components.OpticalComponent;
 import components.Receiver;
 import components.Transmitter;
@@ -30,6 +31,9 @@ public class Popup extends JFrame {
 	private JTextField textRecMaxSens;
 	private JTextField textRecNumMinW;
 	private JTextField textRecNumMaxW;
+	//amplifier vars
+	private JTextField textAmpGain;
+	private JTextField textAmpGainSat;
 
 	public Popup(MouseEvent e, ArrayList<OpticalComponent> komponente) {
 		setAlwaysOnTop(true);
@@ -114,6 +118,11 @@ public class Popup extends JFrame {
 							rx.setMaxSensitivity(Double.parseDouble(textRecMaxSens.getText()));
 							rx.setMinWavelength(Double.parseDouble(textRecNumMinW.getText()));
 							rx.setMaxWavelength(Double.parseDouble(textRecNumMaxW.getText()));
+						}
+						else if (c instanceof Amplifier) {
+							Amplifier amp = (Amplifier)c;
+							amp.setGain(Double.parseDouble(textAmpGain.getText()));
+							amp.setGainSaturation(Double.parseDouble(textAmpGainSat.getText()));
 						}
 					}
 				}
@@ -226,7 +235,7 @@ public class Popup extends JFrame {
 					getContentPane().add(textRecMaxSens, gbc_textRecMaxSens);
 					textRecMaxSens.setColumns(10);
 					
-					JLabel lblRecNumMinW = new JLabel("Mods");
+					JLabel lblRecNumMinW = new JLabel("Min wavelenght");
 					GridBagConstraints gbc_lblRecNumMinW = new GridBagConstraints();
 					gbc_lblRecNumMinW.anchor = GridBagConstraints.EAST;
 					gbc_lblRecNumMinW.insets = new Insets(0, 0, 5, 5);
@@ -243,7 +252,7 @@ public class Popup extends JFrame {
 					getContentPane().add(textRecNumMinW, gbc_textRecNumMinW);
 					textRecNumMinW.setColumns(10);
 					
-					JLabel lblRecNumMaxW = new JLabel("Mods");
+					JLabel lblRecNumMaxW = new JLabel("Max wavelenght");
 					GridBagConstraints gbc_lblRecNumMaxW = new GridBagConstraints();
 					gbc_lblRecNumMaxW.anchor = GridBagConstraints.EAST;
 					gbc_lblRecNumMaxW.insets = new Insets(0, 0, 5, 5);
@@ -264,6 +273,46 @@ public class Popup extends JFrame {
 					textRecMaxSens.setText(Double.toString(rx.getMaxSensitivity()));
 					textRecNumMinW.setText(Double.toString(rx.getMinWavelength()));
 					textRecNumMaxW.setText(Double.toString(rx.getMaxWavelength()));
+				}
+				else if (c instanceof Amplifier) {
+					Amplifier amp = (Amplifier)c;
+					
+					JLabel lblAmpGain = new JLabel("Gain");
+					GridBagConstraints gbc_lblAmpGain = new GridBagConstraints();
+					gbc_lblAmpGain.anchor = GridBagConstraints.EAST;
+					gbc_lblAmpGain.insets = new Insets(0, 0, 5, 5);
+					gbc_lblAmpGain.gridx = 1;
+					gbc_lblAmpGain.gridy = 4;
+					getContentPane().add(lblAmpGain, gbc_lblAmpGain);
+
+					textAmpGain = new JTextField();
+					GridBagConstraints gbc_textAmpGain = new GridBagConstraints();
+					gbc_textAmpGain.anchor = GridBagConstraints.NORTHWEST;
+					gbc_textAmpGain.insets = new Insets(0, 0, 5, 0);
+					gbc_textAmpGain.gridx = 2;
+					gbc_textAmpGain.gridy = 4;
+					getContentPane().add(textAmpGain, gbc_textAmpGain);
+					textAmpGain.setColumns(10);
+					
+					JLabel lblAmpGainSat = new JLabel("Gain saturation");
+					GridBagConstraints gbc_lblAmpGainSat = new GridBagConstraints();
+					gbc_lblAmpGainSat.anchor = GridBagConstraints.EAST;
+					gbc_lblAmpGainSat.insets = new Insets(0, 0, 5, 5);
+					gbc_lblAmpGainSat.gridx = 1;
+					gbc_lblAmpGainSat.gridy = 5;
+					getContentPane().add(lblAmpGainSat, gbc_lblAmpGainSat);
+
+					textAmpGainSat = new JTextField();
+					GridBagConstraints gbc_textAmpGainSat = new GridBagConstraints();
+					gbc_textAmpGainSat.anchor = GridBagConstraints.NORTHWEST;
+					gbc_textAmpGainSat.insets = new Insets(0, 0, 5, 0);
+					gbc_textAmpGainSat.gridx = 2;
+					gbc_textAmpGainSat.gridy = 5;
+					getContentPane().add(textAmpGainSat, gbc_textAmpGainSat);
+					textAmpGainSat.setColumns(10);
+					
+					textAmpGain.setText(Double.toString(amp.getGain()));
+					textAmpGainSat.setText(Double.toString(amp.getGainSaturation()));
 				}
 			}
 		}
