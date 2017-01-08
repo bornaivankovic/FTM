@@ -89,7 +89,4 @@ public class Filter extends OpticalComponent {
 	public void setMaxBand(double maxBand) {
 		this.maxBand = maxBand;
 	}
-	
-	
-
 }

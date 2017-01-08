@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import components.Amplifier;
+import components.Coupler;
 import components.Filter;
 import components.OpticalComponent;
 import components.Receiver;
@@ -40,9 +41,12 @@ public class Popup extends JFrame {
 	private JTextField textFiltWBand;
 	private JTextField textFiltMinW;
 	private JTextField textFiltMaxW;
+	//coupler vars
+	private JTextField textCoupLoss;
 	
 
 	public Popup(MouseEvent e, ArrayList<OpticalComponent> komponente) {
+
 		setAlwaysOnTop(true);
 		this.setLocation(e.getPoint());
 		this.setSize(300, 300);
@@ -137,6 +141,10 @@ public class Popup extends JFrame {
 							f.setWavelengthBandWidth(Double.parseDouble(textFiltWBand.getText()));
 							f.setMinBand(Double.parseDouble(textFiltMinW.getText()));
 							f.setMaxBand(Double.parseDouble(textFiltMaxW.getText()));
+						}
+						else if (c instanceof Coupler) {
+							Coupler coup = (Coupler)c;
+							coup.setCouplingLoss(Double.parseDouble(textCoupLoss.getText()));
 						}
 					}
 				}
@@ -403,11 +411,37 @@ public class Popup extends JFrame {
 					textFiltMinW.setText(Double.toString(f.getMinBand()));
 					textFiltMaxW.setText(Double.toString(f.getMaxBand()));
 				}
+				else if (c instanceof Coupler) {
+					Coupler coup = (Coupler)c;
+					JLabel lblCoupLoss = new JLabel("Coupling loss");
+					GridBagConstraints gbc_lblCoupLoss = new GridBagConstraints();
+					textCoupLoss = new JTextField();
+					GridBagConstraints gbc_textCoupLoss = new GridBagConstraints();
+					createField(lblCoupLoss, gbc_lblCoupLoss, 1, 4, textCoupLoss, gbc_textCoupLoss);
+					
+					textCoupLoss.setText(Double.toString(coup.getCouplingLoss()));
+				}
 				
 			}
 		}
 
 		setVisible(true);
 		repaint();
+	}
+
+	private void createField (JLabel lbl, GridBagConstraints gbc_lbl, int gridX, int gridY, JTextField txtField, GridBagConstraints gbc_txtField) {
+		
+		gbc_lbl.anchor = GridBagConstraints.EAST;
+		gbc_lbl.insets = new Insets(0, 0, 5, 5);
+		gbc_lbl.gridx = gridX;
+		gbc_lbl.gridy = gridY;
+		getContentPane().add(lbl, gbc_lbl);
+
+		gbc_txtField.anchor = GridBagConstraints.NORTHWEST;
+		gbc_txtField.insets = new Insets(0, 0, 5, 0);
+		gbc_txtField.gridx = gridX + 1;
+		gbc_txtField.gridy = gridY;
+		getContentPane().add(txtField, gbc_txtField);
+		txtField.setColumns(10);
 	}
 }
