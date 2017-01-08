@@ -228,25 +228,39 @@ public class Canvas extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			OpticalComponent c1 = null, c2 = null;
-			if (vlakna.size()==0) {
-				for (OpticalComponent c : komponente) {
-					if (c.isSelected() && c instanceof Transmitter) {
-						c1=c;
-					}
-					else if (c.isSelected()) {
-						c2=c;
-					}
+//			if (vlakna.size()==0) {
+//				for (OpticalComponent c : komponente) {
+//					if (c.isSelected() && c instanceof Transmitter) {
+//						c1=c;
+//					}
+//					else if (c.isSelected()) {
+//						c2=c;
+//					}
+//				}
+//			}
+//			else {
+//				for (OpticalComponent c : komponente) {
+//					if (c.isSelected() && c.isHasInConnector()) {
+//						c1 = c;
+//					}
+//					else if (c.isSelected()) {
+//						c2 = c;
+//					}
+//				}
+//			}
+			for (OpticalComponent c : komponente) {
+				if (c.isSelected()) {
+					if (c1==null)
+						c1 = c;
+					else
+						c2 = c;
 				}
 			}
-			else {
-				for (OpticalComponent c : komponente) {
-					if (c.isSelected() && c.isHasInConnector()) {
-						c1 = c;
-					}
-					else if (c.isSelected()) {
-						c2 = c;
-					}
-				}
+			
+			if (c1.getP().x > c2.getP().x) {
+				OpticalComponent tempC = c1;
+				c1 = c2;
+				c2 = tempC;
 			}
 			
 			Fiber f = new Fiber(c1, c2);
