@@ -25,7 +25,7 @@ public class Signal {
 	
 	public void dropWavelength (int wavelength) {
 		int index = wavelengthArray.indexOf(wavelength);
-		wavelengthArray.remove(wavelength);
+		wavelengthArray.remove(index);
 	}
 	
 	public void changeWavelength () {

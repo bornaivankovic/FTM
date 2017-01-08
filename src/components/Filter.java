@@ -52,9 +52,10 @@ public class Filter extends OpticalComponent {
 	}
 
 	private void sendSignal(Signal s) {
-		for (int i = 0; i < s.getWavelengthListSize(); i++) {
-			if (s.getWavelength(i) < minBand || s.getWavelength(i) > maxBand)
+		for (int i = s.getWavelengthListSize()-1; i > -1 ; i--) {
+			if (s.getWavelength(i) < minBand || s.getWavelength(i) > maxBand) {
 				s.dropWavelength(s.getWavelength(i));
+			}
 			
 		}
 		getOutConnector().handleSignal(s);
