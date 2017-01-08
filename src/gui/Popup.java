@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 
 import components.Amplifier;
 import components.Coupler;
+import components.Decoupler;
 import components.Demultiplexer;
 import components.Filter;
 import components.Multiplexer;
@@ -57,6 +58,8 @@ public class Popup extends JFrame {
 	private JTextField textDmuxInConnector;
 	private JTextField textDmuxMinW;
 	private JTextField textDmuxMaxW;
+	//decoup vars
+	private JTextField textDcoupLoss;
 	
 	
 
@@ -184,6 +187,10 @@ public class Popup extends JFrame {
 							else 
 								dmux.setSelectedPort(sMax-1);
 							dmux.setChanBand(s, Integer.parseInt(textDmuxMinW.getText()), Integer.parseInt(textDmuxMaxW.getText()));
+						}
+						else if (c instanceof Decoupler) {
+							Decoupler d = (Decoupler)c;
+							d.setCouplingLoss(Double.parseDouble(textDcoupLoss.getText()));
 						}
 						
 					}
@@ -536,6 +543,16 @@ public class Popup extends JFrame {
 					textDmuxInConnector.setText(Integer.toString(dmux.getSelectedPort()));
 					textDmuxMinW.setText(Integer.toString(dmux.getMinChanBand(dmux.getSelectedPort())));
 					textDmuxMaxW.setText(Integer.toString(dmux.getMaxChanBand(dmux.getSelectedPort())));
+				}
+				else if (c instanceof Decoupler) {
+					Decoupler d = (Decoupler)c;
+					JLabel lblDcoupLoss = new JLabel("Decoupling loss");
+					GridBagConstraints gbc_lblDcoupLoss = new GridBagConstraints();
+					textDcoupLoss = new JTextField();
+					GridBagConstraints gbc_textDcoupLoss = new GridBagConstraints();
+					createField(lblDcoupLoss, gbc_lblDcoupLoss, 1, 4, textDcoupLoss, gbc_textDcoupLoss);
+					
+					textDcoupLoss.setText(Double.toString(d.getCouplingLoss()));
 				}
 				
 			}

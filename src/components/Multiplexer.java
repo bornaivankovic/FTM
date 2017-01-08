@@ -14,8 +14,8 @@ public class Multiplexer extends OpticalComponent {
 	private ArrayList<Signal> inSignals = new ArrayList<Signal>();
 	private ArrayList<Integer> outputWavelengths = new ArrayList<Integer>();
 	private int handleMethodCallTimes = 0;
-	private Fiber fiberOut;
 	private int selectedPort = 0;
+	private ArrayList<Fiber> inputFibers = new ArrayList<Fiber>();
 
 	public Multiplexer(OpticalComponent c) {
 		super(c);
@@ -36,6 +36,10 @@ public class Multiplexer extends OpticalComponent {
 			minWavelength.add(i, min);
 			maxWavelength.add(i, max);
 		}
+	}
+	
+	public void addInputFiber (Fiber f) {
+		inputFibers.add(f);
 	}
 
 	public void setChanBand(int chan, int min, int max) {
@@ -103,7 +107,7 @@ public class Multiplexer extends OpticalComponent {
 			for (int i = 0; i < size; i++)
 				outputSignal.addWavelength(s.getWavelength(i));
 		}
-		fiberOut.handleSignal(outputSignal);
+		getOutConnector().handleSignal(outputSignal);
 	}
 
 	private void attenuateSignal(Signal s) {
