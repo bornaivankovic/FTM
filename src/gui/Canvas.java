@@ -228,14 +228,27 @@ public class Canvas extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			OpticalComponent c1 = null, c2 = null;
-			for (OpticalComponent c : komponente) {
-				if (c.isSelected()) {
-					if (c1 == null)
-						c1 = c;
-					else
-						c2 = c;
+			if (vlakna.size()==0) {
+				for (OpticalComponent c : komponente) {
+					if (c.isSelected() && c instanceof Transmitter) {
+						c1=c;
+					}
+					else if (c.isSelected()) {
+						c2=c;
+					}
 				}
 			}
+			else {
+				for (OpticalComponent c : komponente) {
+					if (c.isSelected() && c.isHasInConnector()) {
+						c1 = c;
+					}
+					else if (c.isSelected()) {
+						c2 = c;
+					}
+				}
+			}
+			
 			Fiber f = new Fiber(c1, c2);
 			if (c1 instanceof Decoupler) {
 				Decoupler dc = (Decoupler)c1;
@@ -248,6 +261,9 @@ public class Canvas extends JPanel {
 			vlakna.add(f);
 			c1.setOutConnector(f);
 			c2.setInConnector(f);
+			c2.setHasInConnector(true);
+			c1.setSelected(false);
+			c2.setSelected(false);
 			repaint();
 		}
 	}

@@ -21,6 +21,7 @@ public class OpticalComponent {
 	private String imgPath = "Sad_Pepe.png";
 	private Fiber outConnector;
 	private Fiber inConnector;
+	private boolean hasInConnector = false;
 
 	public OpticalComponent(String str, Point p, int height, int width) {
 		label = str;
@@ -162,4 +163,13 @@ public class OpticalComponent {
 		else
 			return false;
 	}
+
+	public boolean isHasInConnector() {
+		return hasInConnector;
+	}
+
+	public void setHasInConnector(boolean hasInConnector) {
+		this.hasInConnector = hasInConnector;
+	}
+	
 }
