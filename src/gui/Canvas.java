@@ -194,9 +194,18 @@ public class Canvas extends JPanel {
 				JDialog dialog = new JDialog();
 			}
 		}
+	}
+	
+	private void showFiberPopup(MouseEvent e) {
+		for (Fiber f : vlakna) {
+			if (f.isSelected()) {
+				FiberPopup fiberPopup = new FiberPopup(e, vlakna);
+				JDialog fiberPopupDialog = new JDialog();
+			}
+		}
 		
 	}
-
+	
 	public void deleteSelected() {
 		ArrayList<OpticalComponent> zaIzbrisatiC = new ArrayList<>();
 		ArrayList<Fiber> zaIzbrisatiF = new ArrayList<>();
