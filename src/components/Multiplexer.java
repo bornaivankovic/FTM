@@ -7,7 +7,7 @@ public class Multiplexer extends OpticalComponent {
 
 	private int numOfInputs;
 	private double multiPlexingLoss; // loss of signal's power in dB
-	private int min = 0;
+	private int min = 1500;
 	private int max = 1600;
 	private ArrayList<Integer> minWavelength = new ArrayList<Integer>();
 	private ArrayList<Integer> maxWavelength = new ArrayList<Integer>();
@@ -15,12 +15,17 @@ public class Multiplexer extends OpticalComponent {
 	private ArrayList<Integer> outputWavelengths = new ArrayList<Integer>();
 	private int handleMethodCallTimes = 0;
 	private Fiber fiberOut;
+	private int selectedPort = 0;
 
 	public Multiplexer(OpticalComponent c) {
 		super(c);
-		numOfInputs = 2;
+		numOfInputs = 4;
 		multiPlexingLoss = 0.25;
 		setImgPath("mux.png");
+		for (int i = 0; i < numOfInputs; i++) {
+			minWavelength.add(i, min + i*5);
+			maxWavelength.add(i, max - i*5);
+		}
 	}
 
 	public Multiplexer(String str, Point p, int height, int width, int inputs, double loss) {
@@ -34,6 +39,8 @@ public class Multiplexer extends OpticalComponent {
 	}
 
 	public void setChanBand(int chan, int min, int max) {
+		minWavelength.remove(chan);
+		maxWavelength.remove(chan);
 		minWavelength.add(chan, min);
 		maxWavelength.add(chan, max);
 	}
@@ -56,6 +63,22 @@ public class Multiplexer extends OpticalComponent {
 
 	public double getMultiplexingLoss() {
 		return multiPlexingLoss;
+	}
+	
+	public int getSelectedPort() {
+		return selectedPort;
+	}
+
+	public void setSelectedPort(int selectedPort) {
+		this.selectedPort = selectedPort;
+	}
+
+	public int getNumOfInputs() {
+		return numOfInputs;
+	}
+
+	public void setNumOfInputs(int numOfInputs) {
+		this.numOfInputs = numOfInputs;
 	}
 
 	public void handleSignal(Signal s) {
@@ -87,5 +110,7 @@ public class Multiplexer extends OpticalComponent {
 		double outPower = s.getPower();
 		s.setPower(outPower - multiPlexingLoss);
 	}
+	
+	
 
 }

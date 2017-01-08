@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import components.Amplifier;
 import components.Coupler;
 import components.Filter;
+import components.Multiplexer;
 import components.OpticalComponent;
 import components.Receiver;
 import components.Transmitter;
@@ -43,6 +44,13 @@ public class Popup extends JFrame {
 	private JTextField textFiltMaxW;
 	//coupler vars
 	private JTextField textCoupLoss;
+	//mux vars
+	private JTextField textMuxNumOfInputs;
+	private JTextField textMuxLoss;
+	private JTextField textMuxInConnector;
+	private JTextField textMuxMinW;
+	private JTextField textMuxMaxW;
+	
 	
 
 	public Popup(MouseEvent e, ArrayList<OpticalComponent> komponente) {
@@ -146,6 +154,18 @@ public class Popup extends JFrame {
 							Coupler coup = (Coupler)c;
 							coup.setCouplingLoss(Double.parseDouble(textCoupLoss.getText()));
 						}
+						else if (c instanceof Multiplexer) {
+							Multiplexer mux = (Multiplexer)c;
+							mux.setNumOfInputs(Integer.parseInt(textMuxNumOfInputs.getText()));
+							mux.setMultiplexingLoss(Double.parseDouble(textMuxLoss.getText()));
+							int s = Integer.parseInt(textMuxInConnector.getText());
+							int sMax = mux.getNumOfInputs();
+							if (s>-1 && s<sMax)
+								mux.setSelectedPort(Integer.parseInt(textMuxInConnector.getText()));
+							else 
+								mux.setSelectedPort(sMax-1);
+							mux.setChanBand(s, Integer.parseInt(textMuxMinW.getText()), Integer.parseInt(textMuxMaxW.getText()));
+						}
 					}
 				}
 			}
@@ -153,7 +173,7 @@ public class Popup extends JFrame {
 		GridBagConstraints gbc_btnSave = new GridBagConstraints();
 		gbc_btnSave.insets = new Insets(0, 0, 0, 5);
 		gbc_btnSave.gridx = 1;
-		gbc_btnSave.gridy = 8;
+		gbc_btnSave.gridy = 10;
 		getContentPane().add(btnSave, gbc_btnSave);
 		for (OpticalComponent c : komponente) {
 			if (c.isSelected()) {
@@ -420,6 +440,44 @@ public class Popup extends JFrame {
 					createField(lblCoupLoss, gbc_lblCoupLoss, 1, 4, textCoupLoss, gbc_textCoupLoss);
 					
 					textCoupLoss.setText(Double.toString(coup.getCouplingLoss()));
+				}
+				else if (c instanceof Multiplexer) {
+					Multiplexer mux = (Multiplexer)c;
+					JLabel lblMuxNumOfInputs = new JLabel("Number of inputs");
+					GridBagConstraints gbc_lblMuxNumOfInputs = new GridBagConstraints();
+					textMuxNumOfInputs = new JTextField();
+					GridBagConstraints gbc_textMuxNumOfInputs = new GridBagConstraints();
+					createField(lblMuxNumOfInputs, gbc_lblMuxNumOfInputs, 1, 4, textMuxNumOfInputs, gbc_lblMuxNumOfInputs);
+					
+					JLabel lblMuxLoss = new JLabel("Multiplexing loss");
+					GridBagConstraints gbc_lblMuxLoss = new GridBagConstraints();
+					textMuxLoss = new JTextField();
+					GridBagConstraints gbc_textMuxLoss = new GridBagConstraints();
+					createField(lblMuxLoss, gbc_lblMuxLoss, 1, 5, textMuxLoss, gbc_textMuxLoss);
+					
+					JLabel lblMuxInConnector = new JLabel("Select input port");
+					GridBagConstraints gbc_lblMuxInConnector = new GridBagConstraints();
+					textMuxInConnector = new JTextField();
+					GridBagConstraints gbc_textMuxInConnector = new GridBagConstraints();
+					createField(lblMuxInConnector, gbc_lblMuxInConnector, 1, 6, textMuxInConnector, gbc_textMuxInConnector);
+					
+					JLabel lblMuxMinW = new JLabel("Min detectable wav.");
+					GridBagConstraints gbc_lblMuxMinW = new GridBagConstraints();
+					textMuxMinW = new JTextField();
+					GridBagConstraints gbc_textMuxMinW = new GridBagConstraints();
+					createField(lblMuxMinW, gbc_lblMuxMinW, 1, 7, textMuxMinW, gbc_textMuxMinW);
+					
+					JLabel lblMuxMaxW = new JLabel("Max detectable wav.");
+					GridBagConstraints gbc_lblMuxMaxW = new GridBagConstraints();
+					textMuxMaxW = new JTextField();
+					GridBagConstraints gbc_textMuxMaxW = new GridBagConstraints();
+					createField(lblMuxMaxW, gbc_lblMuxMaxW, 1, 8, textMuxMaxW, gbc_textMuxMaxW);
+					
+					textMuxNumOfInputs.setText(Integer.toString(mux.getNumOfInputs()));
+					textMuxLoss.setText(Double.toString(mux.getMultiplexingLoss()));
+					textMuxInConnector.setText(Integer.toString(mux.getSelectedPort()));
+					textMuxMinW.setText(Integer.toString(mux.getMinChanBand(mux.getSelectedPort())));
+					textMuxMaxW.setText(Integer.toString(mux.getMaxChanBand(mux.getSelectedPort())));
 				}
 				
 			}
