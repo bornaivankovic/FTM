@@ -27,7 +27,7 @@ public class Filter extends OpticalComponent {
 		wavelengthBandWidth = 20;
 		minBand = 1560;
 		maxBand = 1590;
-		// setImgPath("filter.png");
+		setImgPath("filter.png");
 	}
 
 	public double getCentralWavelength() {

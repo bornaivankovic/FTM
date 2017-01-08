@@ -8,7 +8,8 @@ public class Console extends JTextArea {
 	private static Console consoleInstance = null;
 	private Console() {
 		setAutoscrolls(false);
-		setBackground(Color.LIGHT_GRAY);
+		setBackground(Color.BLACK);
+		setForeground(Color.WHITE);
 		setRows(10);
 	}
 	

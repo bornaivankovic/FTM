@@ -34,7 +34,7 @@ public class AddDropMux extends OpticalComponent {
 
 	public AddDropMux(OpticalComponent c) {
 		super(c);
-		// setImgPath("adm.png");
+		setImgPath("adm.png");
 
 	}
 

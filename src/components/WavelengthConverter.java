@@ -23,6 +23,7 @@ public class WavelengthConverter extends OpticalComponent {
 		this.maxBandwidth = 1600;
 		this.minOutBand = 1600;
 		this.maxOutBand = 1700;
+		setImgPath("wc.png");
 	}
 	
 	public int getMinBandwidth() {
