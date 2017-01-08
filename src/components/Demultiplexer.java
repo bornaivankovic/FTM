@@ -12,6 +12,7 @@ public class Demultiplexer extends OpticalComponent {
 	private ArrayList<Integer> minWavelength = new ArrayList<Integer>();
 	private ArrayList<Integer> maxWavelength = new ArrayList<Integer>();
 	private ArrayList<Fiber> outputFibers = new ArrayList<Fiber>();
+	private int selectedPort = 0;
 
 	public Demultiplexer(String str, Point p, int height, int width, int outputs, double loss) {
 		super(str, p, height, width);
@@ -25,31 +26,42 @@ public class Demultiplexer extends OpticalComponent {
 
 	public Demultiplexer(OpticalComponent c) {
 		super(c);
-		numOfOutputs = 2;
+		numOfOutputs = 4;
 		demultiPlexingLoss = 0.25;
 		
-		minWavelength.add(0, 1500);
-		maxWavelength.add(0, 1530);
-		
-		minWavelength.add(1, 1570);
-		maxWavelength.add(1, 1600);
-		/*
-		for (int i = 0; i < 2; i++) {
-			minWavelength.add(i, min);
-			maxWavelength.add(i, max);
+		for (int i = 0; i < numOfOutputs; i++) {
+			minWavelength.add(i, min + i*5);
+			maxWavelength.add(i, max - i*5);
 		}
-		*/
 		setImgPath("demux.png");
 
 	}
 
 	public void setChanBand(int chan, int min, int max) {
+		minWavelength.remove(chan);
+		maxWavelength.remove(chan);
 		minWavelength.add(chan, min);
 		maxWavelength.add(chan, max);
 	}
 
 	public int getMinChanBand(int chan) {
 		return minWavelength.get(chan);
+	}
+
+	public int getNumOfOutputs() {
+		return numOfOutputs;
+	}
+
+	public void setNumOfOutputs(int numOfOutputs) {
+		this.numOfOutputs = numOfOutputs;
+	}
+
+	public int getSelectedPort() {
+		return selectedPort;
+	}
+
+	public void setSelectedPort(int selectedPort) {
+		this.selectedPort = selectedPort;
 	}
 
 	public int getMaxChanBand(int chan) {

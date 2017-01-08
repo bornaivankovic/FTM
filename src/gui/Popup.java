@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 
 import components.Amplifier;
 import components.Coupler;
+import components.Demultiplexer;
 import components.Filter;
 import components.Multiplexer;
 import components.OpticalComponent;
@@ -50,6 +51,12 @@ public class Popup extends JFrame {
 	private JTextField textMuxInConnector;
 	private JTextField textMuxMinW;
 	private JTextField textMuxMaxW;
+	//demux vars
+	private JTextField textDmuxNumOfInputs;
+	private JTextField textDmuxLoss;
+	private JTextField textDmuxInConnector;
+	private JTextField textDmuxMinW;
+	private JTextField textDmuxMaxW;
 	
 	
 
@@ -166,6 +173,19 @@ public class Popup extends JFrame {
 								mux.setSelectedPort(sMax-1);
 							mux.setChanBand(s, Integer.parseInt(textMuxMinW.getText()), Integer.parseInt(textMuxMaxW.getText()));
 						}
+						else if (c instanceof Demultiplexer) {
+							Demultiplexer dmux = (Demultiplexer)c;
+							dmux.setNumOfOutputs(Integer.parseInt(textDmuxNumOfInputs.getText()));
+							dmux.setDemultiplexingLoss(Double.parseDouble(textDmuxLoss.getText()));
+							int s = Integer.parseInt(textDmuxInConnector.getText());
+							int sMax = dmux.getNumOfOutputs();
+							if (s>-1 && s<sMax)
+								dmux.setSelectedPort(Integer.parseInt(textDmuxInConnector.getText()));
+							else 
+								dmux.setSelectedPort(sMax-1);
+							dmux.setChanBand(s, Integer.parseInt(textDmuxMinW.getText()), Integer.parseInt(textDmuxMaxW.getText()));
+						}
+						
 					}
 				}
 			}
@@ -478,6 +498,44 @@ public class Popup extends JFrame {
 					textMuxInConnector.setText(Integer.toString(mux.getSelectedPort()));
 					textMuxMinW.setText(Integer.toString(mux.getMinChanBand(mux.getSelectedPort())));
 					textMuxMaxW.setText(Integer.toString(mux.getMaxChanBand(mux.getSelectedPort())));
+				}
+				else if (c instanceof Demultiplexer) {
+					Demultiplexer dmux = (Demultiplexer)c;
+					JLabel lblDmuxNumOfInputs = new JLabel("Number of outputs");
+					GridBagConstraints gbc_lblDmuxNumOfInputs = new GridBagConstraints();
+					textDmuxNumOfInputs = new JTextField();
+					GridBagConstraints gbc_textDmuxNumOfInputs = new GridBagConstraints();
+					createField(lblDmuxNumOfInputs, gbc_lblDmuxNumOfInputs, 1, 4, textDmuxNumOfInputs, gbc_textDmuxNumOfInputs);
+					
+					JLabel lblDmuxLoss = new JLabel("Demultiplexing loss");
+					GridBagConstraints gbc_lblDmuxLoss = new GridBagConstraints();
+					textDmuxLoss = new JTextField();
+					GridBagConstraints gbc_textDmuxLoss = new GridBagConstraints();
+					createField(lblDmuxLoss, gbc_lblDmuxLoss, 1, 5, textDmuxLoss, gbc_textDmuxLoss);
+					
+					JLabel lblDmuxInConnector = new JLabel("Select output port");
+					GridBagConstraints gbc_lblDmuxInConnector = new GridBagConstraints();
+					textDmuxInConnector = new JTextField();
+					GridBagConstraints gbc_textDmuxInConnector = new GridBagConstraints();
+					createField(lblDmuxInConnector, gbc_lblDmuxInConnector, 1, 6, textDmuxInConnector, gbc_textDmuxInConnector);
+					
+					JLabel lblDmuxMinW = new JLabel("Min detectable wav.");
+					GridBagConstraints gbc_lblDmuxMinW = new GridBagConstraints();
+					textDmuxMinW = new JTextField();
+					GridBagConstraints gbc_textDmuxMinW = new GridBagConstraints();
+					createField(lblDmuxMinW, gbc_lblDmuxMinW, 1, 7, textDmuxMinW, gbc_textDmuxMinW);
+					
+					JLabel lblDmuxMaxW = new JLabel("Max detectable wav.");
+					GridBagConstraints gbc_lblDmuxMaxW = new GridBagConstraints();
+					textDmuxMaxW = new JTextField();
+					GridBagConstraints gbc_textDmuxMaxW = new GridBagConstraints();
+					createField(lblDmuxMaxW, gbc_lblDmuxMaxW, 1, 8, textDmuxMaxW, gbc_textDmuxMaxW);
+					
+					textDmuxNumOfInputs.setText(Integer.toString(dmux.getNumOfOutputs()));
+					textDmuxLoss.setText(Double.toString(dmux.getDemultiplexingLoss()));
+					textDmuxInConnector.setText(Integer.toString(dmux.getSelectedPort()));
+					textDmuxMinW.setText(Integer.toString(dmux.getMinChanBand(dmux.getSelectedPort())));
+					textDmuxMaxW.setText(Integer.toString(dmux.getMaxChanBand(dmux.getSelectedPort())));
 				}
 				
 			}
