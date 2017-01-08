@@ -20,9 +20,11 @@ public class WavelengthConverter extends OpticalComponent {
 	public WavelengthConverter(OpticalComponent c) {
 		super(c);
 		this.minBandwidth = 1500;
-		this.maxBandwidth = 1600;
-		this.minOutBand = 1600;
-		this.maxOutBand = 1700;
+		this.maxBandwidth = 1550;
+		this.minOutBand = 1550;
+		this.maxOutBand = 1600;
+		this.setInsertionLoss(0.5);
+		this.setReturnLoss(0.5);
 		setImgPath("wc.png");
 	}
 	
@@ -54,6 +56,34 @@ public class WavelengthConverter extends OpticalComponent {
 	
 	public void setOutMaxBandwidth(int maxBand) {
 		this.maxOutBand = maxBand;
+	}
+
+	public void handleSignal(Signal s) {
+		attenuateSignal(s);
+		Signal outputSignal = new Signal (s.getPower());
+		int offset; 
+		int centW1 = (minBandwidth+maxBandwidth)/2;
+		int centW2 = (minOutBand+maxOutBand)/2;
+		if (centW1>centW2)
+			offset = centW1-centW2;
+		else
+			offset = centW2-centW1;
+		for (int i = s.getWavelengthListSize()-1; i > -1 ; i--) {
+			if (s.getWavelength(i) < minBandwidth || s.getWavelength(i) > maxBandwidth) {
+				s.dropWavelength(s.getWavelength(i));
+			}
+		}
+		for (int i = 0; i < s.getWavelengthListSize(); i++) {
+			int w = s.getWavelength(i);
+			outputSignal.addWavelength(w+offset);
+		}
+		getOutConnector().handleSignal(outputSignal);
+	}
+
+	private void attenuateSignal(Signal s) {
+		double pow = s.getPower();
+		pow = pow - this.getReturnLoss() - this.getInsertionLoss();
+		s.setPower(pow);
 	}
 	
 }

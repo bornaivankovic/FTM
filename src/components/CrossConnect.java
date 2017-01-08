@@ -65,4 +65,9 @@ public class CrossConnect extends OpticalComponent {
 		switchingMatrix[input][output] = status;
 	}
 
+	public void handleSingle(Signal s) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

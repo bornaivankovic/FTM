@@ -98,10 +98,12 @@ public class Fiber {
 			amp.handleSignal(s);
 		}
 		else if (outC instanceof WavelengthConverter) {
-			
+			WavelengthConverter wc = (WavelengthConverter) outC;
+			wc.handleSignal(s);
 		}
 		else if (outC instanceof CrossConnect) {
-	
+			CrossConnect cc = (CrossConnect) outC;
+			cc.handleSingle(s);
 		}
 		
 		/*

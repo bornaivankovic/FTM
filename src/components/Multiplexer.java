@@ -104,9 +104,13 @@ public class Multiplexer extends OpticalComponent {
 		Signal outputSignal = new Signal(power);
 		for (Signal s : inSignals) {
 			int size = s.getWavelengthListSize();
-			for (int i = 0; i < size; i++)
-				outputSignal.addWavelength(s.getWavelength(i));
+			for (int i = 0; i < size; i++) {
+				int w1 = s.getWavelength(i);
+				if (!outputSignal.hasWavelenght(w1))
+					outputSignal.addWavelength(s.getWavelength(i));
+			}
 		}
+		outputSignal.sortWavelenght();
 		getOutConnector().handleSignal(outputSignal);
 	}
 

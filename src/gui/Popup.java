@@ -21,6 +21,7 @@ import components.Multiplexer;
 import components.OpticalComponent;
 import components.Receiver;
 import components.Transmitter;
+import components.WavelengthConverter;
 
 public class Popup extends JFrame {
 	//common vars
@@ -60,6 +61,11 @@ public class Popup extends JFrame {
 	private JTextField textDmuxMaxW;
 	//decoup vars
 	private JTextField textDcoupLoss;
+	//waveConverter vars
+	private JTextField textWCMinW;
+	private JTextField textWCMaxW;
+	private JTextField textWCMinOutW;
+	private JTextField textWCMaxOutW;
 	
 
 	public Popup(MouseEvent e, ArrayList<OpticalComponent> komponente) {
@@ -139,6 +145,13 @@ public class Popup extends JFrame {
 						else if (c instanceof Decoupler) {
 							Decoupler d = (Decoupler)c;
 							d.setCouplingLoss(Double.parseDouble(textDcoupLoss.getText()));
+						}
+						else if (c instanceof WavelengthConverter) {
+							WavelengthConverter wc = (WavelengthConverter) c;
+							wc.setMinBandwidth(Integer.parseInt(textWCMinW.getText()));
+							wc.setMaxBandwidth(Integer.parseInt(textWCMaxW.getText()));
+							wc.setOutMinBandwidth(Integer.parseInt(textWCMinOutW.getText()));
+							wc.setOutMaxBandwidth(Integer.parseInt(textWCMaxOutW.getText()));
 						}
 						
 					}
@@ -266,7 +279,7 @@ public class Popup extends JFrame {
 					
 					textFieldMinW.setText(Double.toString(tx.getMinWavelengthBand()));
 					textFieldMaxW.setText(Double.toString(tx.getMaxWavelengthBand()));
-					textFieldNumMods.setText(Double.toString(tx.getNumberOfMods()));
+					textFieldNumMods.setText(Integer.toString(tx.getNumberOfMods()));
 				}
 				else if (c instanceof Receiver) {
 					Receiver rx = (Receiver) c;
@@ -554,6 +567,39 @@ public class Popup extends JFrame {
 					createField(lblDcoupLoss, gbc_lblDcoupLoss, 1, 4, textDcoupLoss, gbc_textDcoupLoss);
 					
 					textDcoupLoss.setText(Double.toString(d.getCouplingLoss()));
+				}
+				else if (c instanceof WavelengthConverter) {
+					WavelengthConverter wc = (WavelengthConverter) c;
+					JLabel lblWCMinW = new JLabel("Min detectable Wav.");
+					GridBagConstraints gbc_lblWCMinW = new GridBagConstraints();
+					textWCMinW = new JTextField();
+					GridBagConstraints gbc_textWCMinW = new GridBagConstraints();
+					createField(lblWCMinW, gbc_lblWCMinW, 1, 4, textWCMinW, gbc_textWCMinW);
+					
+					JLabel lblWCMaxW = new JLabel("Max detectable Wav.");
+					GridBagConstraints gbc_lblWCMaxW = new GridBagConstraints();
+					textWCMaxW = new JTextField();
+					GridBagConstraints gbc_textWCMaxW = new GridBagConstraints();
+					createField(lblWCMaxW, gbc_lblWCMaxW, 1, 5, textWCMaxW, gbc_textWCMaxW);
+					
+					JLabel lblWCMinOutW = new JLabel("Min out wavelength");
+					GridBagConstraints gbc_lblWCMinOutW = new GridBagConstraints();
+					textWCMinOutW = new JTextField();
+					GridBagConstraints gbc_textWCMinOutW = new GridBagConstraints();
+					createField(lblWCMinOutW, gbc_lblWCMinOutW, 1, 6, textWCMinOutW, gbc_textWCMinOutW);
+					
+					JLabel lblWCMaxOutW = new JLabel("Max out wavelength");
+					GridBagConstraints gbc_lblWCMaxOutW = new GridBagConstraints();
+					textWCMaxOutW = new JTextField();
+					GridBagConstraints gbc_textWCMaxOutW = new GridBagConstraints();
+					createField(lblWCMaxOutW, gbc_lblWCMaxOutW, 1, 7, textWCMaxOutW, gbc_textWCMaxOutW);
+					
+					textWCMinW.setText(Integer.toString(wc.getMinBandwidth()));
+					textWCMaxW.setText(Integer.toString(wc.getMaxBandwidth()));
+					textWCMinOutW.setText(Integer.toString(wc.getOutMinBandwidth()));
+					textWCMaxOutW.setText(Integer.toString(wc.getOutMaxBandwidth()));
+					
+					
 				}
 				
 			}
