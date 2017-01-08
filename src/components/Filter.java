@@ -8,8 +8,9 @@ public class Filter extends OpticalComponent {
 	private double wavelengthBandWidth; // nekakva peek-to-peek vrijednost
 										// pomocu koje cemo uzet pola
 										// vrijednosti manje od centralne i
+										// pola vrijednosti iznad centralne valne uljine
 	private double minBand;
-	private double maxBand; // pola vrijednosti iznad centralne valne uljine
+	private double maxBand; 
 	private double powerLoss = 0.2; // DEFAULTNI gubitak na komponenti
 
 	public Filter(String str, Point p, int height, int width, double centWave, double wavelengthBand) {
@@ -72,5 +73,23 @@ public class Filter extends OpticalComponent {
 	public void setPowerLoss(double powerLoss) {
 		this.powerLoss = powerLoss;
 	}
+
+	public double getMinBand() {
+		return minBand;
+	}
+
+	public void setMinBand(double minBand) {
+		this.minBand = minBand;
+	}
+
+	public double getMaxBand() {
+		return maxBand;
+	}
+
+	public void setMaxBand(double maxBand) {
+		this.maxBand = maxBand;
+	}
+	
+	
 
 }

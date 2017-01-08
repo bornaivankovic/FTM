@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import components.Amplifier;
+import components.Filter;
 import components.OpticalComponent;
 import components.Receiver;
 import components.Transmitter;
@@ -34,6 +35,12 @@ public class Popup extends JFrame {
 	//amplifier vars
 	private JTextField textAmpGain;
 	private JTextField textAmpGainSat;
+	//filter vars
+	private JTextField textFiltCentW;
+	private JTextField textFiltWBand;
+	private JTextField textFiltMinW;
+	private JTextField textFiltMaxW;
+	
 
 	public Popup(MouseEvent e, ArrayList<OpticalComponent> komponente) {
 		setAlwaysOnTop(true);
@@ -123,6 +130,13 @@ public class Popup extends JFrame {
 							Amplifier amp = (Amplifier)c;
 							amp.setGain(Double.parseDouble(textAmpGain.getText()));
 							amp.setGainSaturation(Double.parseDouble(textAmpGainSat.getText()));
+						}
+						else if (c instanceof Filter) {
+							Filter f = (Filter)c;
+							f.setCentralWavelength(Double.parseDouble(textFiltCentW.getText()));
+							f.setWavelengthBandWidth(Double.parseDouble(textFiltWBand.getText()));
+							f.setMinBand(Double.parseDouble(textFiltMinW.getText()));
+							f.setMaxBand(Double.parseDouble(textFiltMaxW.getText()));
 						}
 					}
 				}
@@ -314,6 +328,82 @@ public class Popup extends JFrame {
 					textAmpGain.setText(Double.toString(amp.getGain()));
 					textAmpGainSat.setText(Double.toString(amp.getGainSaturation()));
 				}
+				else if (c instanceof Filter) {
+					Filter f = (Filter)c;
+					JLabel lblFiltCentW = new JLabel("Central Wavelenght");
+					GridBagConstraints gbc_lblFiltCentW = new GridBagConstraints();
+					gbc_lblFiltCentW.anchor = GridBagConstraints.EAST;
+					gbc_lblFiltCentW.insets = new Insets(0, 0, 5, 5);
+					gbc_lblFiltCentW.gridx = 1;
+					gbc_lblFiltCentW.gridy = 4;
+					getContentPane().add(lblFiltCentW, gbc_lblFiltCentW);
+
+					textFiltCentW = new JTextField();
+					GridBagConstraints gbc_textFiltCentW = new GridBagConstraints();
+					gbc_textFiltCentW.anchor = GridBagConstraints.NORTHWEST;
+					gbc_textFiltCentW.insets = new Insets(0, 0, 5, 0);
+					gbc_textFiltCentW.gridx = 2;
+					gbc_textFiltCentW.gridy = 4;
+					getContentPane().add(textFiltCentW, gbc_textFiltCentW);
+					textFiltCentW.setColumns(10);
+					
+					JLabel lblFiltWBand = new JLabel("Wavelenght band");
+					GridBagConstraints gbc_lblFiltWBand = new GridBagConstraints();
+					gbc_lblFiltWBand.anchor = GridBagConstraints.EAST;
+					gbc_lblFiltWBand.insets = new Insets(0, 0, 5, 5);
+					gbc_lblFiltWBand.gridx = 1;
+					gbc_lblFiltWBand.gridy = 5;
+					getContentPane().add(lblFiltWBand, gbc_lblFiltWBand);
+
+					textFiltWBand = new JTextField();
+					GridBagConstraints gbc_textFiltWBand = new GridBagConstraints();
+					gbc_textFiltWBand.anchor = GridBagConstraints.NORTHWEST;
+					gbc_textFiltWBand.insets = new Insets(0, 0, 5, 0);
+					gbc_textFiltWBand.gridx = 2;
+					gbc_textFiltWBand.gridy = 5;
+					getContentPane().add(textFiltWBand, gbc_textFiltWBand);
+					textFiltWBand.setColumns(10);
+					
+					JLabel lblFiltMinW = new JLabel("Min detectable Wav.");
+					GridBagConstraints gbc_lblFiltMinW = new GridBagConstraints();
+					gbc_lblFiltMinW.anchor = GridBagConstraints.EAST;
+					gbc_lblFiltMinW.insets = new Insets(0, 0, 5, 5);
+					gbc_lblFiltMinW.gridx = 1;
+					gbc_lblFiltMinW.gridy = 6;
+					getContentPane().add(lblFiltMinW, gbc_lblFiltMinW);
+
+					textFiltMinW = new JTextField();
+					GridBagConstraints gbc_textFiltMinW = new GridBagConstraints();
+					gbc_textFiltMinW.anchor = GridBagConstraints.NORTHWEST;
+					gbc_textFiltMinW.insets = new Insets(0, 0, 5, 0);
+					gbc_textFiltMinW.gridx = 2;
+					gbc_textFiltMinW.gridy = 6;
+					getContentPane().add(textFiltMinW, gbc_textFiltMinW);
+					textFiltMinW.setColumns(10);
+					
+					JLabel lblFiltMaxW = new JLabel("Min detectable Wav.");
+					GridBagConstraints gbc_lblFiltMaxW = new GridBagConstraints();
+					gbc_lblFiltMaxW.anchor = GridBagConstraints.EAST;
+					gbc_lblFiltMaxW.insets = new Insets(0, 0, 5, 5);
+					gbc_lblFiltMaxW.gridx = 1;
+					gbc_lblFiltMaxW.gridy = 7;
+					getContentPane().add(lblFiltMaxW, gbc_lblFiltMaxW);
+
+					textFiltMaxW = new JTextField();
+					GridBagConstraints gbc_textFiltMaxW = new GridBagConstraints();
+					gbc_textFiltMaxW.anchor = GridBagConstraints.NORTHWEST;
+					gbc_textFiltMaxW.insets = new Insets(0, 0, 5, 0);
+					gbc_textFiltMaxW.gridx = 2;
+					gbc_textFiltMaxW.gridy = 7;
+					getContentPane().add(textFiltMaxW, gbc_textFiltMaxW);
+					textFiltMaxW.setColumns(10);
+					
+					textFiltCentW.setText(Double.toString(f.getCentralWavelength()));
+					textFiltWBand.setText(Double.toString(f.getWavelengthBandWidth()));
+					textFiltMinW.setText(Double.toString(f.getMinBand()));
+					textFiltMaxW.setText(Double.toString(f.getMaxBand()));
+				}
+				
 			}
 		}
 
