@@ -12,7 +12,7 @@ public class Fiber {
 	public OpticalComponent inC;
 	public OpticalComponent outC;
 	private double connectorAttenuance; // loss on connector in dB
-	//private ComponentList outCType;
+	// private ComponentList outCType;
 	private boolean selected = false;
 	private Point fiberP;
 
@@ -40,6 +40,14 @@ public class Fiber {
 		this.attenuance = attenuance;
 	}
 
+	public double getConnectorAttenuance() {
+		return connectorAttenuance;
+	}
+
+	public void setConnectorAttenuance(double connectorAttenuance) {
+		this.connectorAttenuance = connectorAttenuance;
+	}
+
 	public void draw(Graphics g) {
 		g.setColor(Color.BLACK);
 		Graphics2D g2 = (Graphics2D) g;
@@ -47,101 +55,68 @@ public class Fiber {
 			g2.setColor(Color.PINK);
 		}
 		g2.setStroke(new BasicStroke(3));
-		g2.drawLine(inC.getP().x+35, inC.getP().y+25, outC.getP().x, outC.getP().y+25);
+		g2.drawLine(inC.getP().x + 35, inC.getP().y + 25, outC.getP().x, outC.getP().y + 25);
 		g2.setStroke(new BasicStroke());
 		g2.setColor(Color.BLACK);
-		g.drawString(String.valueOf(length), (inC.getP().x + outC.getP().x) / 2, ((inC.getP().y + outC.getP().y) / 2)+22);
-		setFiberP(new Point(((inC.getP().x + outC.getP().x) / 2), ((inC.getP().y + outC.getP().y) / 2)+22));
+		g.drawString(String.valueOf(length), (inC.getP().x + outC.getP().x) / 2,
+				(inC.getP().y + outC.getP().y) / 2 + 22);
+		setFiberP(new Point((inC.getP().x + outC.getP().x) / 2, (inC.getP().y + outC.getP().y) / 2 + 22));
 	}
 
 	public void transferSignalOverFiber(Signal s) {
 		double outPower = s.getPower();
 		double loss = length * attenuance + 2 * connectorAttenuance;
-		s.setPower(outPower-loss);
+		s.setPower(outPower - loss);
 	}
 
 	public void handleSignal(Signal s) {
 		transferSignalOverFiber(s);
 		if (outC instanceof Transmitter) {
 			System.out.println("ERROR");
-		}
-		else if (outC instanceof Receiver) {
-			Receiver r = (Receiver)outC;
+		} else if (outC instanceof Receiver) {
+			Receiver r = (Receiver) outC;
 			r.handleSignal(s);
-		}
-		else if (outC instanceof Multiplexer) {
-			Multiplexer m = (Multiplexer)outC;
+		} else if (outC instanceof Multiplexer) {
+			Multiplexer m = (Multiplexer) outC;
 			m.handleSignal(s);
-		}
-		else if (outC instanceof Demultiplexer) {
-			Demultiplexer dm = (Demultiplexer)outC;
+		} else if (outC instanceof Demultiplexer) {
+			Demultiplexer dm = (Demultiplexer) outC;
 			dm.handleSignal(s);
-		}
-		else if (outC instanceof Filter) {
+		} else if (outC instanceof Filter) {
 			Filter f = (Filter) outC;
 			f.handleSignal(s);
-		}
-		else if (outC instanceof Coupler) {
-			Coupler coup = (Coupler)outC;
+		} else if (outC instanceof Coupler) {
+			Coupler coup = (Coupler) outC;
 			coup.handleSignal(s);
-		}
-		else if (outC instanceof Decoupler) {
-			Decoupler decoup = (Decoupler)outC;
+		} else if (outC instanceof Decoupler) {
+			Decoupler decoup = (Decoupler) outC;
 			decoup.handleSignal(s);
-		}
-		else if (outC instanceof AddDropMux) {
-			AddDropMux admux = (AddDropMux)outC;
+		} else if (outC instanceof AddDropMux) {
+			AddDropMux admux = (AddDropMux) outC;
 			admux.handleSignal(s);
-		}
-		else if (outC instanceof Amplifier) {
-			Amplifier amp = (Amplifier)outC;
+		} else if (outC instanceof Amplifier) {
+			Amplifier amp = (Amplifier) outC;
 			amp.handleSignal(s);
+		} else if (outC instanceof WavelengthConverter) {
+
+		} else if (outC instanceof CrossConnect) {
+
 		}
-		else if (outC instanceof WavelengthConverter) {
-			WavelengthConverter wc = (WavelengthConverter) outC;
-			wc.handleSignal(s);
-		}
-		else if (outC instanceof CrossConnect) {
-			CrossConnect cc = (CrossConnect) outC;
-			cc.handleSingle(s);
-		}
-		
+
 		/*
-		 switch (outCType) {
-		 case TX:
-		 System.out.println("ERROR");
-		 case RX:
-		 Receiver r = (Receiver)outC;
-		 r.handleSignal(s);
-		 case MUX:
-		 Multiplexer m = (Multiplexer)outC;
-		 m.handleSignal(s);
-		 case DMUX:
-		 Demultiplexer dm = (Demultiplexer)outC;
-		 dm.handleSignal(s);
-		 case FILTER:
-		 Filter f = (Filter) outC;
-		 f.handleSignal(s);
-		 case COUP:
-		 Coupler coup = (Coupler)outC;
-		 coup.handleSignal(s);
-		 case DECOUP:
-		 Decoupler decoup = (Decoupler)outC;
-		 decoup.handleSignal(s);
-		 case ADMUX:
-		 AddDropMux admux = (AddDropMux)outC;
-		 admux.handleSignal(s);
-		 case AMP:
-		 Amplifier amp = (Amplifier)outC;
-		 amp.handleSignal(s);
-		 case WLCONV:
-		 case CROSSC:
-		 }
+		 * switch (outCType) { case TX: System.out.println("ERROR"); case RX:
+		 * Receiver r = (Receiver)outC; r.handleSignal(s); case MUX: Multiplexer
+		 * m = (Multiplexer)outC; m.handleSignal(s); case DMUX: Demultiplexer dm
+		 * = (Demultiplexer)outC; dm.handleSignal(s); case FILTER: Filter f =
+		 * (Filter) outC; f.handleSignal(s); case COUP: Coupler coup =
+		 * (Coupler)outC; coup.handleSignal(s); case DECOUP: Decoupler decoup =
+		 * (Decoupler)outC; decoup.handleSignal(s); case ADMUX: AddDropMux admux
+		 * = (AddDropMux)outC; admux.handleSignal(s); case AMP: Amplifier amp =
+		 * (Amplifier)outC; amp.handleSignal(s); case WLCONV: case CROSSC: }
 		 */
 
 	}
 
-	
 	public boolean isSelected() {
 		return selected;
 	}
@@ -157,5 +132,5 @@ public class Fiber {
 	public void setFiberP(Point fiberP) {
 		this.fiberP = fiberP;
 	}
-	
+
 }

@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
-import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
@@ -191,21 +190,24 @@ public class Canvas extends JPanel {
 		for (OpticalComponent c : komponente) {
 			if (c.isSelected()) {
 				Popup popup = new Popup(e, komponente);
-				JDialog dialog = new JDialog();
 			}
 		}
-	}
-	
-	private void showFiberPopup(MouseEvent e) {
 		for (Fiber f : vlakna) {
 			if (f.isSelected()) {
 				FiberPopup fiberPopup = new FiberPopup(e, vlakna);
-				JDialog fiberPopupDialog = new JDialog();
 			}
 		}
-		
 	}
-	
+
+	// private void showFiberPopup(MouseEvent e) {
+	// for (Fiber f : vlakna) {
+	// if (f.isSelected()) {
+	// FiberPopup fiberPopup = new FiberPopup(e, vlakna);
+	// }
+	// }
+	//
+	// }
+
 	public void deleteSelected() {
 		ArrayList<OpticalComponent> zaIzbrisatiC = new ArrayList<>();
 		ArrayList<Fiber> zaIzbrisatiF = new ArrayList<>();
@@ -245,48 +247,47 @@ public class Canvas extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			OpticalComponent c1 = null, c2 = null;
-//			if (vlakna.size()==0) {
-//				for (OpticalComponent c : komponente) {
-//					if (c.isSelected() && c instanceof Transmitter) {
-//						c1=c;
-//					}
-//					else if (c.isSelected()) {
-//						c2=c;
-//					}
-//				}
-//			}
-//			else {
-//				for (OpticalComponent c : komponente) {
-//					if (c.isSelected() && c.isHasInConnector()) {
-//						c1 = c;
-//					}
-//					else if (c.isSelected()) {
-//						c2 = c;
-//					}
-//				}
-//			}
+			// if (vlakna.size()==0) {
+			// for (OpticalComponent c : komponente) {
+			// if (c.isSelected() && c instanceof Transmitter) {
+			// c1=c;
+			// }
+			// else if (c.isSelected()) {
+			// c2=c;
+			// }
+			// }
+			// }
+			// else {
+			// for (OpticalComponent c : komponente) {
+			// if (c.isSelected() && c.isHasInConnector()) {
+			// c1 = c;
+			// }
+			// else if (c.isSelected()) {
+			// c2 = c;
+			// }
+			// }
+			// }
 			for (OpticalComponent c : komponente) {
 				if (c.isSelected()) {
-					if (c1==null)
+					if (c1 == null)
 						c1 = c;
 					else
 						c2 = c;
 				}
 			}
-			
+
 			if (c1.getP().x > c2.getP().x) {
 				OpticalComponent tempC = c1;
 				c1 = c2;
 				c2 = tempC;
 			}
-			
+
 			Fiber f = new Fiber(c1, c2);
 			if (c1 instanceof Decoupler) {
-				Decoupler dc = (Decoupler)c1;
+				Decoupler dc = (Decoupler) c1;
 				dc.addOutputFiber(f);
-			}
-			else if (c1 instanceof Demultiplexer) {
-				Demultiplexer dm = (Demultiplexer)c1;
+			} else if (c1 instanceof Demultiplexer) {
+				Demultiplexer dm = (Demultiplexer) c1;
 				dm.addOutputFiber(f);
 			}
 			vlakna.add(f);
