@@ -22,10 +22,10 @@ public class Filter extends OpticalComponent {
 
 	public Filter(OpticalComponent c) {
 		super(c);
-		centralWavelength = 1550;
-		wavelengthBandWidth = 100;
-		minBand = 1500;
-		maxBand = 1600;
+		centralWavelength = 1570;
+		wavelengthBandWidth = 20;
+		minBand = 1560;
+		maxBand = 1590;
 		// setImgPath("filter.png");
 	}
 
@@ -54,6 +54,7 @@ public class Filter extends OpticalComponent {
 		for (int i = 0; i < s.getWavelengthListSize(); i++) {
 			if (s.getWavelength(i) < minBand || s.getWavelength(i) > maxBand)
 				s.dropWavelength(s.getWavelength(i));
+			
 		}
 		getOutConnector().handleSignal(s);
 	}

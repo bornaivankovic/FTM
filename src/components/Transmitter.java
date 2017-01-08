@@ -77,7 +77,7 @@ public class Transmitter extends OpticalComponent {
 	public void createSignal() {
 		Signal sig = new Signal(outputPower);
 		Console.getConsoleInstance().println("________________");
-		Console.getConsoleInstance().println("Transmitter:");
+		Console.getConsoleInstance().println(getLabel() + ":components.Coupler@a92ce79");
 		Console.getConsoleInstance().println("Generating signal...");
 		addWavelenghtsToSignal(sig); 
 		sendSignal(sig);
