@@ -144,10 +144,12 @@ public class OpticalComponent {
 		}
 		if (img != null && showImg) {
 			if (selected) {
-				g.drawImage(img, p.x, p.y, width, height, Color.PINK, null);
-			} else {
-				g.drawImage(img, p.x, p.y, width, height, null);
+				g.setColor(Color.PINK);
+				g.fillRect(p.x-3,  p.y-3, width+6, height+6); 
+				g.setColor(Color.BLACK);
 			}
+			g.drawImage(img, p.x, p.y, width, height, null);
+			
 		} else {
 			g.fillRect(p.x, p.y, width, height);
 		}

@@ -161,6 +161,9 @@ public class Canvas extends JPanel {
 		for (OpticalComponent c : komponente) {
 			c.setSelected(r.contains(c.getP()));
 		}
+		for (Fiber f : vlakna) {
+			f.setSelected(r.contains(f.getFiberP()));
+		}
 	}
 
 	private boolean selectOne(Point p) {
@@ -185,8 +188,13 @@ public class Canvas extends JPanel {
 	}
 
 	private void showPopup(MouseEvent e) {
-		Popup popup = new Popup(e, komponente);
-		JDialog dialog = new JDialog();
+		for (OpticalComponent c : komponente) {
+			if (c.isSelected()) {
+				Popup popup = new Popup(e, komponente);
+				JDialog dialog = new JDialog();
+			}
+		}
+		
 	}
 
 	public void deleteSelected() {

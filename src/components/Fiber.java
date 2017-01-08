@@ -1,7 +1,10 @@
 package components;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
 
 public class Fiber {
 	private double length; // length in km
@@ -10,6 +13,8 @@ public class Fiber {
 	public OpticalComponent outC;
 	private double connectorAttenuance; // loss on connector in dB
 	//private ComponentList outCType;
+	private boolean selected = false;
+	private Point fiberP;
 
 	public Fiber(OpticalComponent c1, OpticalComponent c2) {
 		inC = c1;
@@ -37,8 +42,16 @@ public class Fiber {
 
 	public void draw(Graphics g) {
 		g.setColor(Color.BLACK);
-		g.drawLine(inC.getP().x, inC.getP().y, outC.getP().x, outC.getP().y);
-		g.drawString(String.valueOf(length), (inC.getP().x + outC.getP().x) / 2, (inC.getP().y + outC.getP().y) / 2);
+		Graphics2D g2 = (Graphics2D) g;
+		if (selected) {
+			g2.setColor(Color.PINK);
+		}
+		g2.setStroke(new BasicStroke(3));
+		g2.drawLine(inC.getP().x+35, inC.getP().y+25, outC.getP().x, outC.getP().y+25);
+		g2.setStroke(new BasicStroke());
+		g2.setColor(Color.BLACK);
+		g.drawString(String.valueOf(length), (inC.getP().x + outC.getP().x) / 2, ((inC.getP().y + outC.getP().y) / 2)+22);
+		setFiberP(new Point(((inC.getP().x + outC.getP().x) / 2), ((inC.getP().y + outC.getP().y) / 2)+22));
 	}
 
 	public void transferSignalOverFiber(Signal s) {
@@ -126,4 +139,21 @@ public class Fiber {
 
 	}
 
+	
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
+
+	public Point getFiberP() {
+		return fiberP;
+	}
+
+	public void setFiberP(Point fiberP) {
+		this.fiberP = fiberP;
+	}
+	
 }
