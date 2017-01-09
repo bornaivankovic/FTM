@@ -1,12 +1,15 @@
 package components;
 
 import java.awt.Point;
+import java.util.ArrayList;
 
 public class CrossConnect extends OpticalComponent {
 
 	private int numInputs;
 	private int numOutputs;
 	private int[][] switchingMatrix;
+	private ArrayList<Integer> inPorts = new ArrayList<Integer>();
+	private ArrayList<Integer> outPorts = new ArrayList<Integer>();
 
 	public CrossConnect(String str, Point p, int height, int width, int inputs, int outputs) {
 		super(str, p, height, width);
@@ -19,8 +22,8 @@ public class CrossConnect extends OpticalComponent {
 
 	public CrossConnect(OpticalComponent c) {
 		super(c);
-		numInputs = 2;
-		numOutputs = 2;
+		numInputs = 4;
+		numOutputs = 4;
 		setImgPath("xc.png");
 	}
 
@@ -66,7 +69,7 @@ public class CrossConnect extends OpticalComponent {
 	}
 
 	public void handleSingle(Signal s) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
