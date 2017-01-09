@@ -364,4 +364,12 @@ public class Canvas extends JPanel {
 	 * (Fiber f : vlakna) { if (f.c1.equals(c1) && f.c2.equals(c2) ||
 	 * f.c1.equals(c2) && f.c2.equals(c1)) { return f; } } return null; }
 	 */
+
+	public void resetSimulation() {
+		Console.getConsoleInstance().println("Reseting...\n...\n...\n...\n...\nDone!");
+		allTransmitters.clear();
+		komponente.clear();
+		vlakna.clear();
+		
+	}
 }
