@@ -293,6 +293,7 @@ public class Canvas extends JPanel {
 		allTransmitters.clear();
 		komponente.clear();
 		vlakna.clear();
+		repaint();
 	}
 
 	public void saveSimulation() {
@@ -313,8 +314,7 @@ public class Canvas extends JPanel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		repaint();
 		Console.getConsoleInstance().println("Load complete!");
-		
-		
 	}
 }
