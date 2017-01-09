@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 
 import javax.imageio.ImageIO;
@@ -135,22 +135,19 @@ public class OpticalComponent implements Serializable {
 		g.setColor(Color.BLACK);
 		BufferedImage img = null;
 		try {
-
-			File currentDirFile = new File("");
-			String helper = currentDirFile.getAbsolutePath() + "\\icons\\";
-			String path = helper + imgPath;
-			img = ImageIO.read(new File(path));
+			InputStream in = getClass().getClassLoader().getResourceAsStream(imgPath);
+			img = ImageIO.read(in);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		if (img != null && showImg) {
 			if (selected) {
 				g.setColor(Color.PINK);
-				g.fillRect(p.x-3,  p.y-3, width+6, height+6); 
+				g.fillRect(p.x - 3, p.y - 3, width + 6, height + 6);
 				g.setColor(Color.BLACK);
 			}
 			g.drawImage(img, p.x, p.y, width, height, null);
-			
+
 		} else {
 			g.fillRect(p.x, p.y, width, height);
 		}
@@ -174,5 +171,5 @@ public class OpticalComponent implements Serializable {
 	public void setHasInConnector(boolean hasInConnector) {
 		this.hasInConnector = hasInConnector;
 	}
-	
+
 }

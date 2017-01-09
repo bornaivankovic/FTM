@@ -132,6 +132,14 @@ public class Canvas extends JPanel {
 			c = new OpticalComponent(component);
 		}
 		c.setP(p);
+
+		int i = 1;
+		for (OpticalComponent oc : komponente) {
+			if (oc.getClass().equals(c.getClass())) {
+				i++;
+			}
+		}
+		c.setLabel(c.getLabel() + i);
 		komponente.add(c);
 	}
 
@@ -287,7 +295,7 @@ public class Canvas extends JPanel {
 			t.createSignal();
 		}
 	}
-	
+
 	public void resetSimulation() {
 		Console.getConsoleInstance().println("Reseting...\n...\n...\n...\n...\nDone!");
 		allTransmitters.clear();
@@ -305,7 +313,7 @@ public class Canvas extends JPanel {
 	public void loadSimulation() {
 		Map<String, ArrayList> map;
 		ArrayListDeserialization load = new ArrayListDeserialization();
-		
+
 		try {
 			map = load.deserializeList("simulacija");
 			komponente = map.get("components");
