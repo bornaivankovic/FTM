@@ -9,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
@@ -28,6 +29,8 @@ import components.OpticalComponent;
 import components.Receiver;
 import components.Transmitter;
 import components.WavelengthConverter;
+import util.ArrayListDeserialization;
+import util.ArrayListSerialization;
 
 public class Canvas extends JPanel {
 
@@ -199,15 +202,6 @@ public class Canvas extends JPanel {
 		}
 	}
 
-	// private void showFiberPopup(MouseEvent e) {
-	// for (Fiber f : vlakna) {
-	// if (f.isSelected()) {
-	// FiberPopup fiberPopup = new FiberPopup(e, vlakna);
-	// }
-	// }
-	//
-	// }
-
 	public void deleteSelected() {
 		ArrayList<OpticalComponent> zaIzbrisatiC = new ArrayList<>();
 		ArrayList<Fiber> zaIzbrisatiF = new ArrayList<>();
@@ -247,26 +241,6 @@ public class Canvas extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			OpticalComponent c1 = null, c2 = null;
-			// if (vlakna.size()==0) {
-			// for (OpticalComponent c : komponente) {
-			// if (c.isSelected() && c instanceof Transmitter) {
-			// c1=c;
-			// }
-			// else if (c.isSelected()) {
-			// c2=c;
-			// }
-			// }
-			// }
-			// else {
-			// for (OpticalComponent c : komponente) {
-			// if (c.isSelected() && c.isHasInConnector()) {
-			// c1 = c;
-			// }
-			// else if (c.isSelected()) {
-			// c2 = c;
-			// }
-			// }
-			// }
 			for (OpticalComponent c : komponente) {
 				if (c.isSelected()) {
 					if (c1 == null)
@@ -313,63 +287,34 @@ public class Canvas extends JPanel {
 			t.createSignal();
 		}
 	}
-	/*
-	 * void startSimulation() { Signal sig1 = new Signal(); for (int i = 0; i <
-	 * komponente.size(); i++) { OpticalComponent tmp = komponente.get(i);
-	 * String label = tmp.getLabel(); // switch (label) { // case "ADM": // //
-	 * break; // case "AMP": // // break; // case "COUP": // // break; // case
-	 * "XC": // // break; // case "DECOUP": // // break; // case "DEMUX": // //
-	 * break; // case "FILTER": // // break; // case "MUX": // // break; // case
-	 * "RX": // Receiver rx = (Receiver) tmp; // int min = (int)
-	 * rx.getMinSensitivity(); // int max = (int) rx.getMaxSensitivity(); // for
-	 * (int j = 0; j < sig1.getWavelengthListSize(); j++) { // if (min <
-	 * sig1.getWavelength(j) && sig1.getWavelength(j) < max) // console.println(
-	 * "Prijamnik je detektirao valnu duljinu: " + // sig1.getWavelength(j)); //
-	 * } // break; // case "TX": // Transmitter tx = (Transmitter) tmp; //
-	 * sig1.setPower(tx.getOutputPower()); // int temp = (int)
-	 * ((tx.getMaxWavelengthBand() - // tx.getMinWavelengthBand()) /
-	 * tx.getNumberOfMods()); // int temp2 = (int) tx.getMinWavelengthBand(); //
-	 * console.println("Izlazna snaga signala predajnika je : " + //
-	 * sig1.getPower() + "dB"); // console.println(
-	 * "valne duljine signala su (u nanometrima): "); // for (int j = 0; j <
-	 * tx.getNumberOfMods(); j++) { // temp2 = temp2 + temp; //
-	 * sig1.addWavelength(temp2); // console.println("Valna duljina: " + temp2);
-	 * // } // // break; // case "WAC": // // break; // default: // break; // }
-	 * if (label.equals("Rx")) { Receiver rx = (Receiver) tmp; int min = (int)
-	 * rx.getMinWavelength(); int max = (int) rx.getMaxWavelength();
-	 *
-	 * Fiber f = findFiber(komponente.get(i - 1), rx);
-	 * sig1.setPower(sig1.getPower() - f.getAttenuance() * f.getLength()); if
-	 * (sig1.getPower() >= rx.getMinSensitivity() && sig1.getPower() <=
-	 * rx.getMaxSensitivity()) { console.println("Snaga primljenog signala: " +
-	 * sig1.getPower() + "dB"); } else { console.println(
-	 * "Prijamnik ne moze detektirati signal dane snage(" + sig1.getPower() +
-	 * ")"); continue; }
-	 *
-	 * String s = ""; for (int j = 0; j < sig1.getWavelengthListSize(); j++) {
-	 * if (min < sig1.getWavelength(j) && sig1.getWavelength(j) < max) s +=
-	 * sig1.getWavelength(j) + ","; } console.println(
-	 * "Prijamnik je detektirao valne duljine: " + s); } else if
-	 * (label.equals("Tx")) { Transmitter tx = (Transmitter) tmp;
-	 * sig1.setPower(tx.getOutputPower()); int temp = (int)
-	 * ((tx.getMaxWavelengthBand() - tx.getMinWavelengthBand()) /
-	 * tx.getNumberOfMods()); int temp2 = (int) tx.getMinWavelengthBand();
-	 * console.println("Izlazna snaga signala predajnika je : " +
-	 * sig1.getPower() + "dB"); String s = ""; for (int j = 0; j <
-	 * tx.getNumberOfMods(); j++) { temp2 = temp2 + temp;
-	 * sig1.addWavelength(temp2); s += temp2 + ","; } console.println(
-	 * "valne duljine signala su (u nanometrima): " + s); } } }
-	 *
-	 * private Fiber findFiber(OpticalComponent c1, OpticalComponent c2) { for
-	 * (Fiber f : vlakna) { if (f.c1.equals(c1) && f.c2.equals(c2) ||
-	 * f.c1.equals(c2) && f.c2.equals(c1)) { return f; } } return null; }
-	 */
-
+	
 	public void resetSimulation() {
 		Console.getConsoleInstance().println("Reseting...\n...\n...\n...\n...\nDone!");
 		allTransmitters.clear();
 		komponente.clear();
 		vlakna.clear();
+	}
+
+	public void saveSimulation() {
+		ArrayListSerialization save = new ArrayListSerialization();
+		save.serializeList(komponente, vlakna, allTransmitters, "simulacija");
+		Console.getConsoleInstance().println("\nSaving...");
+	}
+
+	public void loadSimulation() {
+		Map<String, ArrayList> map;
+		ArrayListDeserialization load = new ArrayListDeserialization();
+		
+		try {
+			map = load.deserializeList("simulacija");
+			komponente = map.get("components");
+			vlakna = map.get("fibers");
+			allTransmitters = map.get("transmitters");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		Console.getConsoleInstance().println("Load complete!");
+		
 		
 	}
 }

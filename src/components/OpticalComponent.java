@@ -6,10 +6,11 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 
-public class OpticalComponent {
+public class OpticalComponent implements Serializable {
 	private double insertionLoss;
 	private double returnLoss;
 	private double connectorAttenuance;

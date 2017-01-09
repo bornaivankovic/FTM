@@ -5,8 +5,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.io.Serializable;
 
-public class Fiber {
+public class Fiber implements Serializable{
 	private double length; // length in km
 	private double attenuance; // loss in dB/km
 	public OpticalComponent inC;
@@ -98,22 +99,12 @@ public class Fiber {
 			Amplifier amp = (Amplifier) outC;
 			amp.handleSignal(s);
 		} else if (outC instanceof WavelengthConverter) {
-
+			WavelengthConverter wc = (WavelengthConverter) outC;
+			wc.getOutConnector().handleSignal(s);
 		} else if (outC instanceof CrossConnect) {
-
+			CrossConnect cc = (CrossConnect) outC;
+			cc.getOutConnector().handleSignal(s);
 		}
-
-		/*
-		 * switch (outCType) { case TX: System.out.println("ERROR"); case RX:
-		 * Receiver r = (Receiver)outC; r.handleSignal(s); case MUX: Multiplexer
-		 * m = (Multiplexer)outC; m.handleSignal(s); case DMUX: Demultiplexer dm
-		 * = (Demultiplexer)outC; dm.handleSignal(s); case FILTER: Filter f =
-		 * (Filter) outC; f.handleSignal(s); case COUP: Coupler coup =
-		 * (Coupler)outC; coup.handleSignal(s); case DECOUP: Decoupler decoup =
-		 * (Decoupler)outC; decoup.handleSignal(s); case ADMUX: AddDropMux admux
-		 * = (AddDropMux)outC; admux.handleSignal(s); case AMP: Amplifier amp =
-		 * (Amplifier)outC; amp.handleSignal(s); case WLCONV: case CROSSC: }
-		 */
 
 	}
 

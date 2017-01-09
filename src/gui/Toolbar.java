@@ -10,27 +10,31 @@ public class Toolbar extends JToolBar {
 
 	private StartAction start = new StartAction("Start");
 	private ResetAction reset = new ResetAction("Reset");
+	private SaveAction save = new SaveAction("Save");
+	private LoadAction load = new LoadAction("Load");
 	public GUI gui = null;
 
 	public Toolbar() {
 		JButton startButton = new JButton(start);
-		JButton resetButton = new JButton(reset); 
+		JButton resetButton = new JButton(reset);
+		JButton saveButton = new JButton(save);
+		JButton loadButton = new JButton(load);
 		this.add(startButton);
 		this.add(resetButton);
-		this.add(new JButton("Pause"));
-		this.add(new JButton("Save"));
-		this.add(new JButton("Load"));
+		this.add(saveButton);
+		this.add(loadButton);
 	}
 
 	public Toolbar(GUI gui) {
 		this.gui = gui;
 		JButton startButton = new JButton(start);
 		JButton resetButton = new JButton(reset);
+		JButton saveButton = new JButton(save);
+		JButton loadButton = new JButton(load);
 		this.add(startButton);
 		this.add(resetButton);
-		this.add(new JButton("Pause"));
-		this.add(new JButton("Save"));
-		this.add(new JButton("Load"));
+		this.add(saveButton);
+		this.add(loadButton);
 	}
 
 	private class StartAction extends AbstractAction {
@@ -55,6 +59,32 @@ public class Toolbar extends JToolBar {
 		public void actionPerformed(ActionEvent e) {
 			
 			gui.canvas.resetSimulation();
+		}
+		
+	}
+	
+	private class SaveAction extends  AbstractAction{
+		public SaveAction(String name) {
+			super(name);
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			gui.canvas.saveSimulation();
+		}
+		
+	}
+	
+	private class LoadAction extends  AbstractAction{
+		public LoadAction(String name) {
+			super(name);
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			gui.canvas.loadSimulation();
 		}
 		
 	}
