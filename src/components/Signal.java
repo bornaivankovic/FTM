@@ -1,6 +1,9 @@
 package components;
 
 import java.util.ArrayList;
+
+import gui.Console;
+
 import java.util.*;
 
 public class Signal {
@@ -26,6 +29,7 @@ public class Signal {
 	public void dropWavelength (int wavelength) {
 		int index = wavelengthArray.indexOf(wavelength);
 		wavelengthArray.remove(index);
+		Console.getConsoleInstance().println("droping wavelength "+wavelength + " at index " + index );
 	}
 	
 	public void changeWavelength () {

@@ -77,13 +77,16 @@ public class WavelengthConverter extends OpticalComponent {
 			int w = s.getWavelength(i);
 			outputSignal.addWavelength(w+offset);
 		}
-		getOutConnector().handleSignal(outputSignal);
+		sendSignal(outputSignal);
 	}
 
 	private void attenuateSignal(Signal s) {
 		double pow = s.getPower();
 		pow = pow - this.getReturnLoss() - this.getInsertionLoss();
 		s.setPower(pow);
+	}
+	private void sendSignal(Signal s) {
+		getOutConnector().handleSignal(s);
 	}
 	
 }

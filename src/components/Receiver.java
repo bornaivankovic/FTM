@@ -1,10 +1,11 @@
 package components;
 
 import java.awt.Point;
+import java.io.Serializable;
 
 import gui.Console;
 
-public class Receiver extends OpticalComponent {
+public class Receiver extends OpticalComponent implements Serializable {
 
 	private double minSensitivity;
 	private double maxSensitivity;
@@ -75,7 +76,7 @@ public class Receiver extends OpticalComponent {
 
 	public void handleSignal(Signal s) {
 		console.println("_______________");
-		console.println("Receiver:");
+		console.println(getLabel() + ":");
 		if (s.getPower() < minSensitivity || s.getPower() > maxSensitivity)
 			console.println("No Signal detected");
 		else {

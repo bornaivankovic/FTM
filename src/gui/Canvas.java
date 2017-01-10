@@ -271,6 +271,14 @@ public class Canvas extends JPanel {
 			} else if (c1 instanceof Demultiplexer) {
 				Demultiplexer dm = (Demultiplexer) c1;
 				dm.addOutputFiber(f);
+			} else if (c1 instanceof CrossConnect) {
+				CrossConnect cc = (CrossConnect) c1;
+				cc.addOutPortFiber(f);
+			}
+			if (c2 instanceof CrossConnect) {
+				f.setOwnReference(f);
+				CrossConnect cc = (CrossConnect) c2;
+				cc.addInPortFiber(f);
 			}
 			vlakna.add(f);
 			c1.setOutConnector(f);

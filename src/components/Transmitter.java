@@ -1,16 +1,16 @@
 package components;
 
 import java.awt.Point;
+import java.io.Serializable;
 
 import gui.Console;
 
-public class Transmitter extends OpticalComponent {
+public class Transmitter extends OpticalComponent implements Serializable {
 	private double outputPower;
 	private int centralWavelength;
 	private double minWavelengthBand;
 	private double maxWavelengthBand;
 	private int numberOfMods;
-	// private Fiber outputConnector = null;
 
 	public Transmitter(String str, Point p, int height, int width, int wavelength, double power, double minBand,
 			double maxBand, int mods, double attenuance) {
@@ -26,10 +26,10 @@ public class Transmitter extends OpticalComponent {
 	public Transmitter(OpticalComponent c) {
 		super(c);
 		outputPower = 30;
-		minWavelengthBand = 1500;
-		maxWavelengthBand = 1600;
-		centralWavelength = 1550;
-		numberOfMods = 10;
+		minWavelengthBand = 1530;
+		maxWavelengthBand = 1560;
+		centralWavelength = 1555;
+		numberOfMods = 5;
 		setImgPath("tx.png");
 
 	}

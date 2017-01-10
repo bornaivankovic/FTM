@@ -7,6 +7,8 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.io.Serializable;
 
+import gui.Console;
+
 public class Fiber implements Serializable{
 	private double length; // length in km
 	private double attenuance; // loss in dB/km
@@ -16,7 +18,7 @@ public class Fiber implements Serializable{
 	// private ComponentList outCType;
 	private boolean selected = false;
 	private Point fiberP;
-
+	private Fiber f;
 	public Fiber(OpticalComponent c1, OpticalComponent c2) {
 		inC = c1;
 		outC = c2;
@@ -64,47 +66,59 @@ public class Fiber implements Serializable{
 		setFiberP(new Point((inC.getP().x + outC.getP().x) / 2, (inC.getP().y + outC.getP().y) / 2 + 22));
 	}
 
-	public void transferSignalOverFiber(Signal s) {
+	public void attenuateSignal(Signal s) {
 		double outPower = s.getPower();
 		double loss = length * attenuance + 2 * connectorAttenuance;
 		s.setPower(outPower - loss);
 	}
 
 	public void handleSignal(Signal s) {
-		transferSignalOverFiber(s);
+		Console.getConsoleInstance().println("Signal on fiber");
+		attenuateSignal(s);
 		if (outC instanceof Transmitter) {
 			System.out.println("ERROR");
 		} else if (outC instanceof Receiver) {
 			Receiver r = (Receiver) outC;
+			Console.getConsoleInstance().println("rx.");
 			r.handleSignal(s);
 		} else if (outC instanceof Multiplexer) {
 			Multiplexer m = (Multiplexer) outC;
+			Console.getConsoleInstance().println("mux.");
 			m.handleSignal(s);
 		} else if (outC instanceof Demultiplexer) {
 			Demultiplexer dm = (Demultiplexer) outC;
+			Console.getConsoleInstance().println("demux.");
 			dm.handleSignal(s);
 		} else if (outC instanceof Filter) {
 			Filter f = (Filter) outC;
+			Console.getConsoleInstance().println("filt.");
 			f.handleSignal(s);
 		} else if (outC instanceof Coupler) {
 			Coupler coup = (Coupler) outC;
+			Console.getConsoleInstance().println("coup.");
 			coup.handleSignal(s);
 		} else if (outC instanceof Decoupler) {
 			Decoupler decoup = (Decoupler) outC;
+			Console.getConsoleInstance().println("decoup.");
 			decoup.handleSignal(s);
 		} else if (outC instanceof AddDropMux) {
 			AddDropMux admux = (AddDropMux) outC;
+			Console.getConsoleInstance().println("admux.");
 			admux.handleSignal(s);
 		} else if (outC instanceof Amplifier) {
 			Amplifier amp = (Amplifier) outC;
+			Console.getConsoleInstance().println("amp.");
 			amp.handleSignal(s);
 		} else if (outC instanceof WavelengthConverter) {
 			WavelengthConverter wc = (WavelengthConverter) outC;
-			wc.getOutConnector().handleSignal(s);
+			Console.getConsoleInstance().println("wc.");
+			wc.handleSignal(s);
 		} else if (outC instanceof CrossConnect) {
 			CrossConnect cc = (CrossConnect) outC;
-			cc.getOutConnector().handleSignal(s);
-		}
+			Console.getConsoleInstance().println("cc.");
+			cc.handleSignal(s, f);
+		} else 
+			Console.getConsoleInstance().println("No match in output connector.");
 
 	}
 
@@ -122,6 +136,10 @@ public class Fiber implements Serializable{
 
 	public void setFiberP(Point fiberP) {
 		this.fiberP = fiberP;
+	}
+	
+	public void setOwnReference (Fiber fib) {
+		this.f=fib;
 	}
 
 }
