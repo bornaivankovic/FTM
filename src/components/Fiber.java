@@ -73,53 +73,40 @@ public class Fiber implements Serializable{
 	}
 
 	public void handleSignal(Signal s) {
-		Console.getConsoleInstance().println("Signal on fiber");
 		attenuateSignal(s);
 		if (outC instanceof Transmitter) {
 			System.out.println("ERROR");
 		} else if (outC instanceof Receiver) {
 			Receiver r = (Receiver) outC;
-			Console.getConsoleInstance().println("rx.");
 			r.handleSignal(s);
 		} else if (outC instanceof Multiplexer) {
 			Multiplexer m = (Multiplexer) outC;
-			Console.getConsoleInstance().println("mux.");
 			m.handleSignal(s);
 		} else if (outC instanceof Demultiplexer) {
 			Demultiplexer dm = (Demultiplexer) outC;
-			Console.getConsoleInstance().println("demux.");
 			dm.handleSignal(s);
 		} else if (outC instanceof Filter) {
 			Filter f = (Filter) outC;
-			Console.getConsoleInstance().println("filt.");
 			f.handleSignal(s);
 		} else if (outC instanceof Coupler) {
 			Coupler coup = (Coupler) outC;
-			Console.getConsoleInstance().println("coup.");
 			coup.handleSignal(s);
 		} else if (outC instanceof Decoupler) {
 			Decoupler decoup = (Decoupler) outC;
-			Console.getConsoleInstance().println("decoup.");
 			decoup.handleSignal(s);
 		} else if (outC instanceof AddDropMux) {
 			AddDropMux admux = (AddDropMux) outC;
-			Console.getConsoleInstance().println("admux.");
 			admux.handleSignal(s);
 		} else if (outC instanceof Amplifier) {
 			Amplifier amp = (Amplifier) outC;
-			Console.getConsoleInstance().println("amp.");
 			amp.handleSignal(s);
 		} else if (outC instanceof WavelengthConverter) {
 			WavelengthConverter wc = (WavelengthConverter) outC;
-			Console.getConsoleInstance().println("wc.");
 			wc.handleSignal(s);
 		} else if (outC instanceof CrossConnect) {
 			CrossConnect cc = (CrossConnect) outC;
-			Console.getConsoleInstance().println("cc.");
 			cc.handleSignal(s, f);
-		} else 
-			Console.getConsoleInstance().println("No match in output connector.");
-
+		}
 	}
 
 	public boolean isSelected() {

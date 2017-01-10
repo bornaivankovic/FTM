@@ -13,7 +13,7 @@ public class Receiver extends OpticalComponent implements Serializable {
 	private double maxWavelength;
 
 	private Console console;
-
+	
 	public Receiver(String str, Point p, int height, int width, double minSens, double maxSens, double minWave,
 			double maxWave) {
 		super(str, p, height, width);
@@ -75,18 +75,18 @@ public class Receiver extends OpticalComponent implements Serializable {
 	}
 
 	public void handleSignal(Signal s) {
-		console.println("_______________");
-		console.println(getLabel() + ":");
+		Console.getConsoleInstance().println("_______________");
+		Console.getConsoleInstance().println(getLabel() + ":");
 		if (s.getPower() < minSensitivity || s.getPower() > maxSensitivity)
-			console.println("No Signal detected");
+			Console.getConsoleInstance().println("No Signal detected");
 		else {
-			console.println("Input signal's power: " + s.getPower() + "dB.");
+			Console.getConsoleInstance().println("Input signal's power: " + s.getPower() + "dB.");
 			int size = s.getWavelengthListSize();
 			for (int i = 0; i < size; i++) {
 				if (s.getWavelength(i) < minWavelength || s.getWavelength(i) > maxWavelength)
-					console.println("Wavelength out of detectable range...");
+					Console.getConsoleInstance().println("Wavelength out of detectable range...");
 				else
-					console.println("Detected " + s.getWavelength(i) + " nm...");
+					Console.getConsoleInstance().println("Detected " + s.getWavelength(i) + " nm...");
 			}
 		}
 	}
