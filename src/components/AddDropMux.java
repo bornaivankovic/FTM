@@ -34,6 +34,8 @@ public class AddDropMux extends OpticalComponent {
 
 	public AddDropMux(OpticalComponent c) {
 		super(c);
+		this.setInsertionLoss(0.3);
+		this.setReturnLoss(0.3);
 		setImgPath("adm.png");
 
 	}
@@ -117,6 +119,7 @@ public class AddDropMux extends OpticalComponent {
 
 	private void attenuateSignal(Signal s) {
 		double outPower = s.getPower();
+		outPower = outPower - this.getInsertionLoss() - this.getReturnLoss();
 		s.setPower(outPower - inSigPowerLoss);
 	}
 }

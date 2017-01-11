@@ -22,6 +22,8 @@ public class Multiplexer extends OpticalComponent {
 		numOfInputs = 4;
 		multiPlexingLoss = 0.25;
 		setImgPath("mux.png");
+		this.setInsertionLoss(0.3);
+		this.setReturnLoss(0.2);
 		for (int i = 0; i < numOfInputs; i++) {
 			minWavelength.add(i, min + i*5);
 			maxWavelength.add(i, max - i*5);
@@ -32,6 +34,8 @@ public class Multiplexer extends OpticalComponent {
 		super(str, p, height, width);
 		numOfInputs = inputs;
 		multiPlexingLoss = loss;
+		this.setInsertionLoss(0.3);
+		this.setReturnLoss(0.2);
 		for (int i = 0; i < inputs; i++) {
 			minWavelength.add(i, min);
 			maxWavelength.add(i, max);
@@ -116,7 +120,8 @@ public class Multiplexer extends OpticalComponent {
 
 	private void attenuateSignal(Signal s) {
 		double outPower = s.getPower();
-		s.setPower(outPower - multiPlexingLoss);
+		outPower = outPower - multiPlexingLoss - this.getReturnLoss() - this.getInsertionLoss();
+		s.setPower(outPower);
 	}
 	
 	

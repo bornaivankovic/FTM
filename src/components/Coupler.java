@@ -16,12 +16,16 @@ public class Coupler extends OpticalComponent {
 		super(str, p, height, width);
 		this.numberOfInputs = numberOfInputs;
 		this.couplingLoss = couplingLoss;
+		this.setInsertionLoss(0.2);
+		this.setReturnLoss(0.3);
 	}
 
 	public Coupler(OpticalComponent c) {
 		super(c);
 		numberOfInputs = 2;
-		couplingLoss = 0.2;
+		couplingLoss = 0.4;
+		this.setInsertionLoss(0.2);
+		this.setReturnLoss(0.3);
 		setImgPath("coup.png");
 	}
 
@@ -76,7 +80,8 @@ public class Coupler extends OpticalComponent {
 
 	private void attenuateSignal(Signal s) {
 		double outPower = s.getPower();
-		s.setPower(outPower - couplingLoss);
+		outPower = outPower -this.getInsertionLoss() - this.getReturnLoss() -couplingLoss;
+		s.setPower(outPower);
 	}
 
 }

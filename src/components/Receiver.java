@@ -21,6 +21,8 @@ public class Receiver extends OpticalComponent implements Serializable {
 		minSensitivity = minSens;
 		maxWavelength = maxWave;
 		minWavelength = minWave;
+		this.setInsertionLoss(0.3);
+		this.setReturnLoss(0.2);
 	}
 
 	public Receiver(OpticalComponent c) {
@@ -30,6 +32,8 @@ public class Receiver extends OpticalComponent implements Serializable {
 		minWavelength = 1500;
 		maxWavelength = 1600;
 		setImgPath("Rx.png");
+		this.setInsertionLoss(0.3);
+		this.setReturnLoss(0.2);
 	}
 
 	public Receiver(OpticalComponent c, Console con) {
@@ -75,6 +79,7 @@ public class Receiver extends OpticalComponent implements Serializable {
 	}
 
 	public void handleSignal(Signal s) {
+		attenuateSignal(s);
 		Console.getConsoleInstance().println("_______________");
 		Console.getConsoleInstance().println(getLabel() + ":");
 		if (s.getPower() < minSensitivity || s.getPower() > maxSensitivity)
@@ -89,6 +94,12 @@ public class Receiver extends OpticalComponent implements Serializable {
 					Console.getConsoleInstance().println("Detected " + s.getWavelength(i) + " nm...");
 			}
 		}
+	}
+
+	private void attenuateSignal(Signal s) {
+		double outPower = s.getPower();
+		outPower = outPower - this.getReturnLoss() - this.getInsertionLoss();
+		s.setPower(outPower);
 	}
 
 }

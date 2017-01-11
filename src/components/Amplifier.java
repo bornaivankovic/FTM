@@ -13,12 +13,16 @@ public class Amplifier extends OpticalComponent {
 		super(str, p, height, width);
 		this.gain = gain;
 		gainSaturation = saturation;
+		this.setInsertionLoss(0.3);
+		this.setReturnLoss(0.2);
 	}
 
 	public Amplifier(OpticalComponent c) {
 		super(c);
 		gain = 20;
 		gainSaturation = 80;
+		this.setInsertionLoss(0.3);
+		this.setReturnLoss(0.2);
 		setImgPath("amp.png");
 	}
 
@@ -52,6 +56,7 @@ public class Amplifier extends OpticalComponent {
 
 	public void amplifySignal(Signal s) {
 		double tempPower = s.getPower()+gain;
+		tempPower = tempPower - this.getReturnLoss() - this.getInsertionLoss();
 		if (tempPower>gainSaturation)
 			s.setPower(gainSaturation);
 		else

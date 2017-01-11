@@ -15,6 +15,8 @@ public class WavelengthConverter extends OpticalComponent {
 		this.maxBandwidth = maxBand;
 		this.minOutBand = minOutBand;
 		this.maxOutBand = maxOutBand;
+		this.setInsertionLoss(0.5);
+		this.setReturnLoss(0.5);
 	}
 	
 	public WavelengthConverter(OpticalComponent c) {

@@ -16,6 +16,8 @@ public class Decoupler extends OpticalComponent {
 		this.numberOfOutputs = numberOfOutputs;
 		this.couplingLoss = couplingLoss;
 		decouplingRatio = 1 / numberOfOutputs;
+		this.setInsertionLoss(0.2);
+		this.setReturnLoss(0.3);
 	}
 
 	public Decoupler(OpticalComponent c) {
@@ -23,6 +25,8 @@ public class Decoupler extends OpticalComponent {
 		couplingLoss = 0.25;
 		numberOfOutputs = 2;
 		decouplingRatio = 0.5;
+		this.setInsertionLoss(0.2);
+		this.setReturnLoss(0.3);
 		setImgPath("decoup.png");
 	}
 
@@ -57,7 +61,8 @@ public class Decoupler extends OpticalComponent {
 
 	private void attenuateSignal(Signal s) {
 		double outPower = s.getPower();
-		s.setPower(outPower - couplingLoss);
+		outPower = outPower - couplingLoss - this.getInsertionLoss() - this.getReturnLoss();
+		s.setPower(outPower);
 	}
 	
 	public void addOutputFiber (Fiber f) {

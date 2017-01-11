@@ -18,6 +18,8 @@ public class Demultiplexer extends OpticalComponent {
 		super(str, p, height, width);
 		numOfOutputs = outputs;
 		demultiPlexingLoss = loss;
+		this.setInsertionLoss(0.2);
+		this.setReturnLoss(0.3);
 		for (int i = 0; i < outputs; i++) {
 			minWavelength.add(i, min);
 			maxWavelength.add(i, max);
@@ -28,7 +30,8 @@ public class Demultiplexer extends OpticalComponent {
 		super(c);
 		numOfOutputs = 4;
 		demultiPlexingLoss = 0.25;
-		
+		this.setInsertionLoss(0.2);
+		this.setReturnLoss(0.3);
 		for (int i = 0; i < numOfOutputs; i++) {
 			minWavelength.add(i, min + i*5);
 			maxWavelength.add(i, max - i*5);
@@ -91,7 +94,8 @@ public class Demultiplexer extends OpticalComponent {
 
 	private void attenuateSignal(Signal s) {
 		double outPower = s.getPower();
-		s.setPower(outPower - demultiPlexingLoss);
+		outPower = outPower -demultiPlexingLoss -this.getReturnLoss() - this.getInsertionLoss();
+		s.setPower(outPower);
 	}
 	
 	public void addOutputFiber (Fiber f) {

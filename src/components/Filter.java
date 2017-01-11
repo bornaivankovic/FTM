@@ -17,6 +17,8 @@ public class Filter extends OpticalComponent {
 		super(str, p, height, width);
 		centralWavelength = centWave;
 		wavelengthBandWidth = wavelengthBand;
+		this.setReturnLoss(0.3);
+		this.setInsertionLoss(0.3);
 		minBand = centralWavelength - wavelengthBandWidth / 2;
 		maxBand = centralWavelength + wavelengthBandWidth / 2;
 	}
@@ -27,6 +29,8 @@ public class Filter extends OpticalComponent {
 		wavelengthBandWidth = 20;
 		minBand = 1560;
 		maxBand = 1590;
+		this.setReturnLoss(0.3);
+		this.setInsertionLoss(0.3);
 		setImgPath("filter.png");
 	}
 
@@ -63,7 +67,8 @@ public class Filter extends OpticalComponent {
 
 	private void attenuateSignal(Signal s) {
 		double outPower = s.getPower();
-		s.setPower(outPower - powerLoss);
+		outPower = outPower - powerLoss - this.getReturnLoss() - this.getInsertionLoss();
+		s.setPower(outPower);
 
 	}
 
