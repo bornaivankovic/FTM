@@ -218,6 +218,15 @@ public class Canvas extends JPanel {
 				return true;
 			}
 		}
+		for (Fiber f : vlakna) {
+			if (f.contains(mousePt)) {
+				if (!f.isSelected()) {
+					selectNone();
+					f.setSelected(true);
+				}
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -237,6 +246,14 @@ public class Canvas extends JPanel {
 					c.setSelected(false);
 				else
 					c.setSelected(true);
+			}
+		}
+		for (Fiber f : vlakna) {
+			if (f.contains(mousePt)) {
+				if (f.isSelected())
+					f.setSelected(false);
+				else
+					f.setSelected(true);
 			}
 		}
 	}

@@ -5,11 +5,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.geom.Ellipse2D;
 import java.io.Serializable;
 
-import gui.Console;
-
-public class Fiber implements Serializable{
+public class Fiber implements Serializable {
 	private double length; // length in km
 	private double attenuance; // loss in dB/km
 	public OpticalComponent inC;
@@ -19,6 +18,7 @@ public class Fiber implements Serializable{
 	private boolean selected = false;
 	private Point fiberP;
 	private Fiber f;
+
 	public Fiber(OpticalComponent c1, OpticalComponent c2) {
 		inC = c1;
 		outC = c2;
@@ -124,9 +124,16 @@ public class Fiber implements Serializable{
 	public void setFiberP(Point fiberP) {
 		this.fiberP = fiberP;
 	}
-	
-	public void setOwnReference (Fiber fib) {
-		this.f=fib;
+
+	public void setOwnReference(Fiber fib) {
+		f = fib;
+	}
+
+	public boolean contains(Point p) {
+		if (new Ellipse2D.Double(fiberP.x - 15, fiberP.y - 25, 50, 50).contains(p)) {
+			return true;
+		} else
+			return false;
 	}
 
 }
