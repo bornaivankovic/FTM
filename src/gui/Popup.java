@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -15,8 +16,11 @@ import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import components.AddDropMux;
 import components.Amplifier;
 import components.Coupler;
 import components.CrossConnect;
@@ -72,6 +76,9 @@ public class Popup extends JFrame {
 	private JTextField textWCMaxW;
 	private JTextField textWCMinOutW;
 	private JTextField textWCMaxOutW;
+	//ADM vars
+	private JTextField textADMadd;
+	private JTextField textADMrem;
 	
 
 	public Popup(MouseEvent e, ArrayList<OpticalComponent> komponente) {
@@ -159,6 +166,7 @@ public class Popup extends JFrame {
 							wc.setOutMinBandwidth(Integer.parseInt(textWCMinOutW.getText()));
 							wc.setOutMaxBandwidth(Integer.parseInt(textWCMaxOutW.getText()));
 						}
+						
 						
 					}
 				}
@@ -697,6 +705,88 @@ public class Popup extends JFrame {
 			        gbc_inPort4Button.gridx = 1;
 			        gbc_inPort4Button.gridy = 8;
 					getContentPane().add(inPort4Button, gbc_inPort4Button);
+				}
+				
+				else if (c instanceof AddDropMux) {
+					AddDropMux adm = (AddDropMux) c;
+					
+					final JPopupMenu popup = new JPopupMenu();
+					JTextArea textArea1 = new JTextArea(15, 25);
+					JScrollPane scrollPane = new JScrollPane(textArea1); 
+					textArea1.setEditable(false);
+					popup.add(scrollPane);
+					
+					final JButton AddWave = new JButton("Add Wav.");
+					AddWave.addMouseListener(new MouseAdapter() {
+			            public void mousePressed(MouseEvent e) {
+			            	String txt = textADMadd.getText();
+			            	if (!txt.isEmpty())
+			            		adm.setAddWavelengths(Integer.parseInt(txt));
+			            }
+			        });
+			        
+			        GridBagConstraints gbc_AddWave = new GridBagConstraints();
+			        gbc_AddWave.insets = new Insets(5, 0, 0, 5);
+			        gbc_AddWave.gridx = 1;
+			        gbc_AddWave.gridy = 5;
+					getContentPane().add(AddWave, gbc_AddWave);
+					
+					final JButton remWave = new JButton("Remove Wav.");
+					remWave.addMouseListener(new MouseAdapter() {
+			            public void mousePressed(MouseEvent e) {
+			            	String txt = textADMrem.getText();
+			            	if (!txt.isEmpty())
+			            		adm.setDropWavelengths(Integer.parseInt(txt));
+			            }
+			        });
+			        
+			        GridBagConstraints gbc_remWave = new GridBagConstraints();
+			        gbc_remWave.insets = new Insets(5, 0, 0, 5);
+			        gbc_remWave.gridx = 1;
+			        gbc_remWave.gridy = 6;
+					getContentPane().add(remWave, gbc_remWave);
+					
+					final JButton showAD = new JButton("Show add/drop");
+					showAD.addMouseListener(new MouseAdapter() {
+			            public void mousePressed(MouseEvent e) {
+			            	popup.show(e.getComponent(), e.getX(), e.getY());
+			            	textArea1.setText("Wavelengths to add: \n");
+			            	for (int i = 0; i<adm.getAddWavelengthListSize(); i++) {
+			            		textArea1.append(" "+adm.getAddWavelengths(i)+" ");
+			            	}
+			            	textArea1.append("\n");
+			            	textArea1.append("Wavelengths to remove: \n");
+			            	for (int i = 0; i<adm.getDropWavelengthListSize(); i++) {
+			            		textArea1.append(" "+adm.getDropWavelengths(i)+" ");
+			            	}
+			            	
+			            }
+			        });
+			        
+			        GridBagConstraints gbc_showAD = new GridBagConstraints();
+			        gbc_showAD.insets = new Insets(5, 0, 0, 5);
+			        gbc_showAD.gridx = 1;
+			        gbc_showAD.gridy = 7;
+					getContentPane().add(showAD, gbc_showAD);
+					
+					textADMadd = new JTextField();
+					GridBagConstraints gbc_textADMadd = new GridBagConstraints();
+					gbc_textADMadd.anchor = GridBagConstraints.NORTHWEST;
+					gbc_textADMadd.insets = new Insets(7, 0, 5, 0);
+					gbc_textADMadd.gridx = 2;
+					gbc_textADMadd.gridy = 5;
+					getContentPane().add(textADMadd, gbc_textADMadd);
+					textADMadd.setColumns(10);
+					
+					textADMrem = new JTextField();
+					GridBagConstraints gbc_textADMrem = new GridBagConstraints();
+					gbc_textADMrem.anchor = GridBagConstraints.NORTHWEST;
+					gbc_textADMrem.insets = new Insets(9, 0, 5, 0);
+					gbc_textADMrem.gridx = 2;
+					gbc_textADMrem.gridy = 6;
+					getContentPane().add(textADMrem, gbc_textADMrem);
+					textADMrem.setColumns(10);
+					
 				}
 				
 			}

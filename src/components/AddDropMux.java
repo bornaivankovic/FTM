@@ -60,6 +60,14 @@ public class AddDropMux extends OpticalComponent {
 	public int getAddWavelengths(int index) {
 		return addWavelengths.get(index);
 	}
+	
+	public int getAddWavelengthListSize () {
+		return addWavelengths.size();
+	}
+	
+	public int getDropWavelengthListSize () {
+		return dropWavelengths.size();
+	}
 
 	/*
 	 * isti scenarij kao i za dodane valne duljine
@@ -104,8 +112,10 @@ public class AddDropMux extends OpticalComponent {
 		for (int i = 0; i < dropWavelengths.size(); i++) {
 			int wave = dropWavelengths.get(i);
 			for (int j = 0; j < s.getWavelengthListSize(); j++) {
-				if (s.getWavelength(j) == wave)
+				if (s.getWavelength(j) == wave) {
 					s.dropWavelength(wave);
+					break;
+				}
 			}
 		}
 	}
