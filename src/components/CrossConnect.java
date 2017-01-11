@@ -13,6 +13,8 @@ public class CrossConnect extends OpticalComponent implements Serializable{
 	private int[][] switchingMatrix;
 	private ArrayList<Fiber> inPorts = new ArrayList<Fiber>();
 	private ArrayList<Fiber> outPorts = new ArrayList<Fiber>();
+	private int selectedInPort;
+	private int selectedOutPort;
 
 	public CrossConnect(String str, Point p, int height, int width, int inputs, int outputs) {
 		super(str, p, height, width);
@@ -104,4 +106,27 @@ public class CrossConnect extends OpticalComponent implements Serializable{
 		outPorts.add(f);
 	}
 
+	public int getSelectedInPort() {
+		return selectedInPort;
+	}
+
+	public void setSelectedInPort(int selectedInPort) {
+		this.selectedInPort = selectedInPort;
+	}
+
+	public int getSelectedOutPort() {
+		return selectedOutPort;
+	}
+
+	public void setSelectedOutPort(int selectedOutPort) {
+		this.selectedOutPort = selectedOutPort;
+	}
+
+	public void configSwitchingMatrix() {
+		for (int j=0; j<numOutputs; j++) {
+			switchingMatrix[selectedInPort][j] = 0;
+		}
+		switchingMatrix[selectedInPort][selectedOutPort] = 0;
+	}
+	
 }

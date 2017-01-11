@@ -377,6 +377,7 @@ public class Canvas extends JPanel {
 		ArrayListSerialization save = new ArrayListSerialization();
 		save.serializeList(komponente, vlakna, allTransmitters, file);
 		Console.getConsoleInstance().println("\nSaving...");
+		Console.getConsoleInstance().println("Saved successfully to file: " + file.toString());
 	}
 
 	public void loadSimulation(File file) {

@@ -3,17 +3,23 @@ package gui;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 
 import components.Amplifier;
 import components.Coupler;
+import components.CrossConnect;
 import components.Decoupler;
 import components.Demultiplexer;
 import components.Filter;
@@ -597,9 +603,100 @@ public class Popup extends JFrame {
 					textWCMinW.setText(Integer.toString(wc.getMinBandwidth()));
 					textWCMaxW.setText(Integer.toString(wc.getMaxBandwidth()));
 					textWCMinOutW.setText(Integer.toString(wc.getOutMinBandwidth()));
-					textWCMaxOutW.setText(Integer.toString(wc.getOutMaxBandwidth()));
+					textWCMaxOutW.setText(Integer.toString(wc.getOutMaxBandwidth()));	
+				}
+				else if (c instanceof CrossConnect) {
+					CrossConnect cc = (CrossConnect) c;
 					
+					final JPopupMenu popup = new JPopupMenu();
+			        popup.add(new JMenuItem(new AbstractAction("Out port 1") {
+			            public void actionPerformed(ActionEvent e) {
+			            	cc.setSelectedOutPort(0);
+			            	cc.configSwitchingMatrix();
+			            	String msg = "In port " + (cc.getSelectedInPort()+1) + " set to out port " + (cc.getSelectedOutPort()+1) +".";
+			                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), msg);
+			            }
+			        }));
+			        popup.add(new JMenuItem(new AbstractAction("Out port 2") {
+			            public void actionPerformed(ActionEvent e) {
+			            	cc.setSelectedOutPort(1);
+			            	cc.configSwitchingMatrix();
+			            	String msg = "In port " + (cc.getSelectedInPort()+1) + " set to out port " + (cc.getSelectedOutPort()+1) +".";
+			                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), msg);
+			            }
+			        }));
+			        popup.add(new JMenuItem(new AbstractAction("Out port 3") {
+			            public void actionPerformed(ActionEvent e) {
+			            	cc.setSelectedOutPort(2);
+			            	cc.configSwitchingMatrix();
+			            	String msg = "In port " + (cc.getSelectedInPort()+1) + " set to out port " + (cc.getSelectedOutPort()+1) +".";
+			                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), msg);
+			            }
+			        }));
+			        popup.add(new JMenuItem(new AbstractAction("Out port 4") {
+			            public void actionPerformed(ActionEvent e) {
+			            	cc.setSelectedOutPort(3);
+			            	cc.configSwitchingMatrix();
+			            	String msg = "In port " + (cc.getSelectedInPort()+1) + " set to out port " + (cc.getSelectedOutPort()+1) +".";
+			                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), msg);
+			            }
+			        }));
 					
+					final JButton inPort1Button = new JButton("In port 1 to:");
+					inPort1Button.addMouseListener(new MouseAdapter() {
+			            public void mousePressed(MouseEvent e) {
+			            	cc.setSelectedInPort(0);
+			                popup.show(e.getComponent(), e.getX(), e.getY());
+			            }
+			        });
+			        
+			        GridBagConstraints gbc_inPort1Button = new GridBagConstraints();
+					gbc_inPort1Button.insets = new Insets(5, 0, 0, 5);
+					gbc_inPort1Button.gridx = 1;
+					gbc_inPort1Button.gridy = 5;
+					getContentPane().add(inPort1Button, gbc_inPort1Button);
+					
+					final JButton inPort2Button = new JButton("In port 2 to:");
+					inPort2Button.addMouseListener(new MouseAdapter() {
+			            public void mousePressed(MouseEvent e) {
+			            	cc.setSelectedInPort(1);
+			                popup.show(e.getComponent(), e.getX(), e.getY());
+			            }
+			        });
+			        
+			        GridBagConstraints gbc_inPort2Button = new GridBagConstraints();
+			        gbc_inPort2Button.insets = new Insets(5, 0, 0, 5);
+			        gbc_inPort2Button.gridx = 1;
+			        gbc_inPort2Button.gridy = 6;
+					getContentPane().add(inPort2Button, gbc_inPort2Button);
+					
+					final JButton inPort3Button = new JButton("In port 3 to:");
+					inPort3Button.addMouseListener(new MouseAdapter() {
+			            public void mousePressed(MouseEvent e) {
+			            	cc.setSelectedInPort(2);
+			                popup.show(e.getComponent(), e.getX(), e.getY());
+			            }
+			        });
+			        
+			        GridBagConstraints gbc_inPort3Button = new GridBagConstraints();
+			        gbc_inPort3Button.insets = new Insets(5, 0, 0, 5);
+			        gbc_inPort3Button.gridx = 1;
+			        gbc_inPort3Button.gridy = 7;
+					getContentPane().add(inPort3Button, gbc_inPort3Button);
+					
+					final JButton inPort4Button = new JButton("In port 4 to:");
+					inPort4Button.addMouseListener(new MouseAdapter() {
+			            public void mousePressed(MouseEvent e) {
+			            	cc.setSelectedInPort(3);
+			                popup.show(e.getComponent(), e.getX(), e.getY());
+			            }
+			        });
+			        
+			        GridBagConstraints gbc_inPort4Button = new GridBagConstraints();
+			        gbc_inPort4Button.insets = new Insets(0, 0, 0, 5);
+			        gbc_inPort4Button.gridx = 1;
+			        gbc_inPort4Button.gridy = 8;
+					getContentPane().add(inPort4Button, gbc_inPort4Button);
 				}
 				
 			}
