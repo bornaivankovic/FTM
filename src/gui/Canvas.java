@@ -2,12 +2,16 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -38,19 +42,39 @@ public class Canvas extends JPanel {
 	private static ArrayList<Fiber> vlakna;
 	private static ArrayList<Transmitter> allTransmitters;
 
-	private Point mousePt = new Point(800 / 2, 600 / 2);
+	private Point mousePt = new Point();
 	private Rectangle mouseRect = new Rectangle();
 	private boolean selecting = false;
 	Console console = null;
+	private double scale = 1;
 
 	public Canvas() {
+		addMouseWheelListener(new MouseWheelListener() {
+			@Override
+			public void mouseWheelMoved(MouseWheelEvent arg0) {
+				if (arg0.isControlDown()) {
+					int i = arg0.getWheelRotation();
+					if (i > 0) {
+						for (int j = 0; j < i; j++) {
+							scale += 0.1;
+							repaint();
+						}
+					} else {
+						for (int j = 0; j < Math.abs(i); j++) {
+							scale -= 0.1;
+							repaint();
+						}
+					}
+				}
+			}
+		});
 
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				mousePt = e.getPoint();
 				if (e.isShiftDown()) {
-					// Node.selectToggle(nodes, mousePt);
+					selectToggle(mousePt);
 				} else if (e.isPopupTrigger()) {
 					selectOne(mousePt);
 					showPopup(e);
@@ -145,6 +169,13 @@ public class Canvas extends JPanel {
 
 	@Override
 	public void paintComponent(Graphics g) {
+		Graphics2D g2 = (Graphics2D) g;
+		int w = getWidth();// real width of canvas
+		int h = getHeight();// real height of canvas
+		// Translate used to make sure scale is centered
+		g2.translate(w / 2, h / 2);
+		g2.scale(scale, scale);
+		g2.translate(-w / 2, -h / 2);
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, getWidth(), getHeight());
 		for (OpticalComponent opticalComponent : komponente) {
@@ -157,6 +188,7 @@ public class Canvas extends JPanel {
 			g.setColor(Color.darkGray);
 			g.drawRect(mouseRect.x, mouseRect.y, mouseRect.width, mouseRect.height);
 		}
+
 	}
 
 	private void updatePosition(Point delta) {
@@ -183,8 +215,6 @@ public class Canvas extends JPanel {
 					selectNone();
 					c.setSelected(true);
 				}
-				// console.println(c.getLabel() + "|" + c.getInsertionLoss() +
-				// "|" + c.getReturnLoss());
 				return true;
 			}
 		}
@@ -194,6 +224,20 @@ public class Canvas extends JPanel {
 	private void selectNone() {
 		for (OpticalComponent c : komponente) {
 			c.setSelected(false);
+		}
+		for (Fiber f : vlakna) {
+			f.setSelected(false);
+		}
+	}
+
+	private void selectToggle(Point mousePt) {
+		for (OpticalComponent c : komponente) {
+			if (c.contains(mousePt)) {
+				if (c.isSelected())
+					c.setSelected(false);
+				else
+					c.setSelected(true);
+			}
 		}
 	}
 
@@ -312,18 +356,18 @@ public class Canvas extends JPanel {
 		repaint();
 	}
 
-	public void saveSimulation() {
+	public void saveSimulation(File file) {
 		ArrayListSerialization save = new ArrayListSerialization();
-		save.serializeList(komponente, vlakna, allTransmitters, "simulacija");
+		save.serializeList(komponente, vlakna, allTransmitters, file);
 		Console.getConsoleInstance().println("\nSaving...");
 	}
 
-	public void loadSimulation() {
+	public void loadSimulation(File file) {
 		Map<String, ArrayList> map;
 		ArrayListDeserialization load = new ArrayListDeserialization();
 
 		try {
-			map = load.deserializeList("simulacija");
+			map = load.deserializeList(file);
 			komponente = map.get("components");
 			vlakna = map.get("fibers");
 			allTransmitters = map.get("transmitters");

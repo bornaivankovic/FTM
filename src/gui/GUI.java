@@ -44,12 +44,15 @@ public class GUI extends JComponent implements DragGestureListener {
 		frame.getContentPane().add(gui.toolbar, BorderLayout.NORTH);
 		JScrollPane s1 = new JScrollPane(gui.toolbox, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		s1.getVerticalScrollBar().setUnitIncrement(16);
 		s1.getViewport().putClientProperty("EnableWindowBlit", Boolean.TRUE);
 		frame.getContentPane().add(s1, BorderLayout.WEST);
 		JScrollPane s2 = new JScrollPane(gui.console, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		frame.getContentPane().add(s2, BorderLayout.SOUTH);
-		frame.getContentPane().add(gui.canvas, BorderLayout.CENTER);
+		JScrollPane s3 = new JScrollPane(gui.canvas, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		frame.getContentPane().add(s3, BorderLayout.CENTER);
 		gui.canvas.console = gui.console;
 		gui.toolbar.gui = gui;
 		DragSource ds = new DragSource();

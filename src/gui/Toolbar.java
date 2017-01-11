@@ -1,9 +1,11 @@
 package gui;
 
 import java.awt.event.ActionEvent;
+import java.io.File;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JToolBar;
 
 public class Toolbar extends JToolBar {
@@ -44,48 +46,58 @@ public class Toolbar extends JToolBar {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			
+
 			gui.canvas.startSimulation();
 		}
 
 	}
-	
-	private class ResetAction extends  AbstractAction{
+
+	private class ResetAction extends AbstractAction {
 		public ResetAction(String name) {
 			super(name);
 		}
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
+
 			gui.canvas.resetSimulation();
 		}
-		
+
 	}
-	
-	private class SaveAction extends  AbstractAction{
+
+	private class SaveAction extends AbstractAction {
 		public SaveAction(String name) {
 			super(name);
 		}
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
-			gui.canvas.saveSimulation();
+			JFileChooser fc = new JFileChooser();
+			int returnVal = fc.showSaveDialog(Toolbar.this);
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				File file = fc.getSelectedFile();
+				gui.canvas.saveSimulation(file);
+			}
+
 		}
-		
+
 	}
-	
-	private class LoadAction extends  AbstractAction{
+
+	private class LoadAction extends AbstractAction {
 		public LoadAction(String name) {
 			super(name);
 		}
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
-			gui.canvas.loadSimulation();
+			JFileChooser fc = new JFileChooser();
+			int returnVal = fc.showOpenDialog(Toolbar.this);
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				File file = fc.getSelectedFile();
+				gui.canvas.loadSimulation(file);
+			}
+
 		}
-		
+
 	}
 }

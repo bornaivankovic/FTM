@@ -1,32 +1,27 @@
 package util;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
-import components.Fiber;
-import components.OpticalComponent;
-import components.Transmitter;
-
-import java.io.*;
-
 public class ArrayListDeserialization {
-	
-	private static String modelFolderPath = System.getProperty("user.dir") + File.separator + "Saved models" + File.separator;
-	
-	public ArrayListDeserialization () {
-		
+
+	public ArrayListDeserialization() {
+
 	}
-	
-	public Map deserializeList (String name) throws ClassNotFoundException, IOException {
+
+	public Map deserializeList(File f) throws ClassNotFoundException, IOException {
 		Map<String, ArrayList> map;
 		FileInputStream fis;
 		ObjectInputStream ois;
-        fis = new FileInputStream(modelFolderPath+name);
-        ois = new ObjectInputStream(fis);
+		fis = new FileInputStream(f);
+		ois = new ObjectInputStream(fis);
 		map = (Map<String, ArrayList>) ois.readObject();
-        ois.close();
-        fis.close();
-        return map;
+		ois.close();
+		fis.close();
+		return map;
 	}
 }
