@@ -111,6 +111,7 @@ public class Multiplexer extends OpticalComponent {
 				totalInputPower += sig.getPower();
 			}
 			outputPower = totalInputPower / numOfInputs;
+			this.inSignals.clear();
 			this.setHandleMethodCallTimes(0);
 			sendSignal(outputPower);
 		}

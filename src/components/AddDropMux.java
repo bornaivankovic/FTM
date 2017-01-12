@@ -112,6 +112,8 @@ public class AddDropMux extends OpticalComponent {
 		removeDoubleWavelengths(outputSignal);
 		addWavelengthsToSignal(outputSignal);
 		dropWavelengthsFromSignal(outputSignal);
+		this.inSignals.clear();
+		this.handleMethodCallTimes=0;
 		getOutConnector().handleSignal(outputSignal);
 	}
 

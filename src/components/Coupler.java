@@ -75,6 +75,7 @@ public class Coupler extends OpticalComponent {
 			}
 			outputPower = totalInputPower / numberOfInputs;
 			this.setHandleMethodCallTimes(0);
+			this.inSignals.clear();
 			sendSignal(outputPower);
 		}
 	}
