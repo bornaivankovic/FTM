@@ -685,7 +685,7 @@ public class Popup extends JFrame {
 			        GridBagConstraints gbc_AddWave = new GridBagConstraints();
 			        gbc_AddWave.insets = new Insets(5, 0, 0, 5);
 			        gbc_AddWave.gridx = 1;
-			        gbc_AddWave.gridy = 5;
+			        gbc_AddWave.gridy = 6;
 					getContentPane().add(AddWave, gbc_AddWave);
 					
 					final JButton remWave = new JButton("Remove Wav.");
@@ -700,7 +700,7 @@ public class Popup extends JFrame {
 			        GridBagConstraints gbc_remWave = new GridBagConstraints();
 			        gbc_remWave.insets = new Insets(5, 0, 0, 5);
 			        gbc_remWave.gridx = 1;
-			        gbc_remWave.gridy = 6;
+			        gbc_remWave.gridy = 7;
 					getContentPane().add(remWave, gbc_remWave);
 					
 					final JButton showAD = new JButton("Show add/drop");
@@ -723,7 +723,7 @@ public class Popup extends JFrame {
 			        GridBagConstraints gbc_showAD = new GridBagConstraints();
 			        gbc_showAD.insets = new Insets(5, 0, 0, 5);
 			        gbc_showAD.gridx = 1;
-			        gbc_showAD.gridy = 7;
+			        gbc_showAD.gridy = 8;
 					getContentPane().add(showAD, gbc_showAD);
 					
 					textADMadd = new JTextField();
@@ -731,7 +731,7 @@ public class Popup extends JFrame {
 					gbc_textADMadd.anchor = GridBagConstraints.NORTHWEST;
 					gbc_textADMadd.insets = new Insets(7, 0, 5, 0);
 					gbc_textADMadd.gridx = 2;
-					gbc_textADMadd.gridy = 5;
+					gbc_textADMadd.gridy = 6;
 					getContentPane().add(textADMadd, gbc_textADMadd);
 					textADMadd.setColumns(10);
 					
@@ -740,7 +740,7 @@ public class Popup extends JFrame {
 					gbc_textADMrem.anchor = GridBagConstraints.NORTHWEST;
 					gbc_textADMrem.insets = new Insets(9, 0, 5, 0);
 					gbc_textADMrem.gridx = 2;
-					gbc_textADMrem.gridy = 6;
+					gbc_textADMrem.gridy = 7;
 					getContentPane().add(textADMrem, gbc_textADMrem);
 					textADMrem.setColumns(10);
 					

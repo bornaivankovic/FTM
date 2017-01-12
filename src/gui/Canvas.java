@@ -340,6 +340,11 @@ public class Canvas extends JPanel {
 				f.setOwnReference(f);
 				CrossConnect cc = (CrossConnect) c2;
 				cc.addInPortFiber(f);
+			} 
+			else if (c2 instanceof AddDropMux) {
+				f.setOwnReference(f);
+				AddDropMux adm = (AddDropMux) c2;
+				adm.addInputFiber(f);
 			}
 			vlakna.add(f);
 			c1.setOutConnector(f);

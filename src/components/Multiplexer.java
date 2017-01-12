@@ -56,6 +56,16 @@ public class Multiplexer extends OpticalComponent {
 	public int getMinChanBand(int chan) {
 		return minWavelength.get(chan);
 	}
+	
+	
+
+	public int getHandleMethodCallTimes() {
+		return handleMethodCallTimes;
+	}
+
+	public void setHandleMethodCallTimes(int handleMethodCallTimes) {
+		this.handleMethodCallTimes = handleMethodCallTimes;
+	}
 
 	public int getMaxChanBand(int chan) {
 		return maxWavelength.get(chan);
@@ -100,6 +110,7 @@ public class Multiplexer extends OpticalComponent {
 				totalInputPower += sig.getPower();
 			}
 			outputPower = totalInputPower / numOfInputs;
+			this.setHandleMethodCallTimes(0);
 			sendSignal(outputPower);
 		}
 	}

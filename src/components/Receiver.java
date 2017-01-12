@@ -80,6 +80,7 @@ public class Receiver extends OpticalComponent implements Serializable {
 
 	public void handleSignal(Signal s) {
 		attenuateSignal(s);
+		s.sortWavelenght();
 		Console.getConsoleInstance().println("_______________");
 		Console.getConsoleInstance().println(getLabel() + ":");
 		if (s.getPower() < minSensitivity || s.getPower() > maxSensitivity)

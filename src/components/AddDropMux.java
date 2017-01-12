@@ -14,6 +14,7 @@ public class AddDropMux extends OpticalComponent {
 	private double inSigPowerLoss = 0.2; // Nekakva DEFAULT vrijednost gubitka
 											// snage za svaki ulazni signal
 	private ArrayList<Signal> inSignals = new ArrayList<Signal>();
+	private ArrayList<Fiber> inputFibers = new ArrayList<Fiber>();
 	private int handleMethodCallTimes = 0;
 
 	public double getInSigPowerLoss() {
@@ -22,6 +23,11 @@ public class AddDropMux extends OpticalComponent {
 
 	public void setInSigPowerLoss(double inSigPowerLoss) {
 		this.inSigPowerLoss = inSigPowerLoss;
+	}
+	
+	public void addInputFiber(Fiber f) {
+		this.inputFibers.add(f);
+		this.numOfInputs = inputFibers.size();
 	}
 
 	public int getNumOfInputs() {

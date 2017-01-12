@@ -36,6 +36,15 @@ public class Coupler extends OpticalComponent {
 	public void setNumberOfInputs(int i) {
 		numberOfInputs = i;
 	}
+	
+
+	public int getHandleMethodCallTimes() {
+		return handleMethodCallTimes;
+	}
+
+	public void setHandleMethodCallTimes(int handleMethodCallTimes) {
+		this.handleMethodCallTimes = handleMethodCallTimes;
+	}
 
 	public double getCouplingLoss() {
 		return couplingLoss;
@@ -59,6 +68,7 @@ public class Coupler extends OpticalComponent {
 				totalInputPower += sig.getPower();
 			}
 			outputPower = totalInputPower / numberOfInputs;
+			this.setHandleMethodCallTimes(0);
 			sendSignal(outputPower);
 		}
 	}
