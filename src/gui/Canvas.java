@@ -346,6 +346,16 @@ public class Canvas extends JPanel {
 				AddDropMux adm = (AddDropMux) c2;
 				adm.addInputFiber(f);
 			}
+			else if (c2 instanceof Multiplexer) {
+				f.setOwnReference(f);
+				Multiplexer mux = (Multiplexer) c2;
+				mux.addInputFiber(f);
+			}
+			else if (c2 instanceof Coupler) {
+				f.setOwnReference(f);
+				Coupler coup = (Coupler) c2;
+				coup.addInputFiber(f);
+			}
 			vlakna.add(f);
 			c1.setOutConnector(f);
 			c2.setInConnector(f);

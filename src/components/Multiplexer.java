@@ -44,6 +44,7 @@ public class Multiplexer extends OpticalComponent {
 	
 	public void addInputFiber (Fiber f) {
 		inputFibers.add(f);
+		this.numOfInputs = inputFibers.size();
 	}
 
 	public void setChanBand(int chan, int min, int max) {

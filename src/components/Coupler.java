@@ -11,6 +11,7 @@ public class Coupler extends OpticalComponent {
 	private double couplingLoss; // loss of signal's power in dB
 	private int handleMethodCallTimes = 0;
 	private ArrayList<Signal> inSignals = new ArrayList<Signal>();
+	private ArrayList<Fiber> inputFibers = new ArrayList<Fiber>();
 
 	public Coupler(String str, Point p, int height, int width, int numberOfInputs, int couplingLoss) {
 		super(str, p, height, width);
@@ -27,6 +28,11 @@ public class Coupler extends OpticalComponent {
 		this.setInsertionLoss(0.2);
 		this.setReturnLoss(0.3);
 		setImgPath("coup.png");
+	}
+	
+	public void addInputFiber (Fiber f) {
+		inputFibers.add(f);
+		this.numberOfInputs = inputFibers.size();
 	}
 
 	public int getNumberOfInputs() {
