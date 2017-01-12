@@ -109,9 +109,24 @@ public class AddDropMux extends OpticalComponent {
 			for (int i = 0; i < size; i++)
 				outputSignal.addWavelength(s.getWavelength(i));
 		}
+		removeDoubleWavelengths(outputSignal);
 		addWavelengthsToSignal(outputSignal);
 		dropWavelengthsFromSignal(outputSignal);
 		getOutConnector().handleSignal(outputSignal);
+	}
+
+	private void removeDoubleWavelengths(Signal outputSignal) {
+		for (int i = outputSignal.getWavelengthListSize()-1; i>-1; i--) {
+			int wav = outputSignal.getWavelength(i);
+			for (int j = i-1; j>-1; j--) { 
+				if (wav == outputSignal.getWavelength(j)) {
+					outputSignal.dropWavelength(wav);
+					j--;
+					i--;
+				}
+			}
+		}
+		
 	}
 
 	private void dropWavelengthsFromSignal(Signal s) {

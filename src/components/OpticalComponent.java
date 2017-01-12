@@ -19,7 +19,7 @@ public class OpticalComponent implements Serializable {
 	private int height;
 	private int width;
 	private boolean selected = false;
-	private String imgPath = "Sad_Pepe.png";
+	private String imgPath;
 	private Fiber outConnector;
 	private Fiber inConnector;
 	private boolean hasInConnector = false;
