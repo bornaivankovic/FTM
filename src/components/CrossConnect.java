@@ -126,7 +126,7 @@ public class CrossConnect extends OpticalComponent implements Serializable{
 		for (int j=0; j<numOutputs; j++) {
 			switchingMatrix[selectedInPort][j] = 0;
 		}
-		switchingMatrix[selectedInPort][selectedOutPort] = 0;
+		switchingMatrix[selectedInPort][selectedOutPort] = 1;
 	}
 	
 }
