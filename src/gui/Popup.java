@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -77,17 +76,15 @@ public class Popup extends JFrame {
 	private JTextField textWCMinOutW;
 	private JTextField textWCMaxOutW;
 
-	//ADM vars
+	// ADM vars
 	private JTextField textADMadd;
 	private JTextField textADMrem;
-	
 
 	// crossConnect vars
 	private JTextField textInPorts;
 	private JTextField textOutPorts;
 
 	private int Gy = 1;
-
 
 	public Popup(MouseEvent e, ArrayList<OpticalComponent> komponente) {
 
@@ -172,9 +169,6 @@ public class Popup extends JFrame {
 							cc.setNumInputs(Integer.parseInt(textInPorts.getText()));
 							cc.setNumOutputs(Integer.parseInt(textOutPorts.getText()));
 						}
-
-						
-						
 
 					}
 				}
@@ -499,8 +493,8 @@ public class Popup extends JFrame {
 					GridBagConstraints gbc_lblMuxNumOfInputs = new GridBagConstraints();
 					textMuxNumOfInputs = new JTextField();
 					GridBagConstraints gbc_textMuxNumOfInputs = new GridBagConstraints();
-					createField(lblMuxNumOfInputs, gbc_lblMuxNumOfInputs, 1, Gy, textMuxNumOfInputs,
-							gbc_lblMuxNumOfInputs);
+					createField(lblMuxNumOfInputs, gbc_lblMuxNumOfInputs, 1, ++Gy, textMuxNumOfInputs,
+							gbc_textMuxNumOfInputs);
 
 					JLabel lblMuxLoss = new JLabel("Multiplexing loss");
 					GridBagConstraints gbc_lblMuxLoss = new GridBagConstraints();
@@ -663,69 +657,71 @@ public class Popup extends JFrame {
 					}
 				}
 
-				
 				else if (c instanceof AddDropMux) {
 					AddDropMux adm = (AddDropMux) c;
-					
+
 					final JPopupMenu popup = new JPopupMenu();
 					JTextArea textArea1 = new JTextArea(15, 25);
-					JScrollPane scrollPane = new JScrollPane(textArea1); 
+					JScrollPane scrollPane = new JScrollPane(textArea1);
 					textArea1.setEditable(false);
 					popup.add(scrollPane);
-					
+
 					final JButton AddWave = new JButton("Add Wav.");
 					AddWave.addMouseListener(new MouseAdapter() {
-			            public void mousePressed(MouseEvent e) {
-			            	String txt = textADMadd.getText();
-			            	if (!txt.isEmpty())
-			            		adm.setAddWavelengths(Integer.parseInt(txt));
-			            }
-			        });
-			        
-			        GridBagConstraints gbc_AddWave = new GridBagConstraints();
-			        gbc_AddWave.insets = new Insets(5, 0, 0, 5);
-			        gbc_AddWave.gridx = 1;
-			        gbc_AddWave.gridy = 6;
+						@Override
+						public void mousePressed(MouseEvent e) {
+							String txt = textADMadd.getText();
+							if (!txt.isEmpty())
+								adm.setAddWavelengths(Integer.parseInt(txt));
+						}
+					});
+
+					GridBagConstraints gbc_AddWave = new GridBagConstraints();
+					gbc_AddWave.insets = new Insets(5, 0, 0, 5);
+					gbc_AddWave.gridx = 1;
+					gbc_AddWave.gridy = 6;
 					getContentPane().add(AddWave, gbc_AddWave);
-					
+
 					final JButton remWave = new JButton("Remove Wav.");
 					remWave.addMouseListener(new MouseAdapter() {
-			            public void mousePressed(MouseEvent e) {
-			            	String txt = textADMrem.getText();
-			            	if (!txt.isEmpty())
-			            		adm.setDropWavelengths(Integer.parseInt(txt));
-			            }
-			        });
-			        
-			        GridBagConstraints gbc_remWave = new GridBagConstraints();
-			        gbc_remWave.insets = new Insets(5, 0, 0, 5);
-			        gbc_remWave.gridx = 1;
-			        gbc_remWave.gridy = 7;
+						@Override
+						public void mousePressed(MouseEvent e) {
+							String txt = textADMrem.getText();
+							if (!txt.isEmpty())
+								adm.setDropWavelengths(Integer.parseInt(txt));
+						}
+					});
+
+					GridBagConstraints gbc_remWave = new GridBagConstraints();
+					gbc_remWave.insets = new Insets(5, 0, 0, 5);
+					gbc_remWave.gridx = 1;
+					gbc_remWave.gridy = 7;
 					getContentPane().add(remWave, gbc_remWave);
-					
+
 					final JButton showAD = new JButton("Show add/drop");
 					showAD.addMouseListener(new MouseAdapter() {
-			            public void mousePressed(MouseEvent e) {
-			            	popup.show(e.getComponent(), e.getX(), e.getY());
-			            	textArea1.setText("Wavelengths to add: \n");
-			            	for (int i = 0; i<adm.getAddWavelengthListSize(); i++) {
-			            		textArea1.append(" "+adm.getAddWavelengths(i)+" ");
-			            	}
-			            	textArea1.append("\n");
-			            	textArea1.append("Wavelengths to remove: \n");
-			            	for (int i = 0; i<adm.getDropWavelengthListSize(); i++) {
-			            		textArea1.append(" "+adm.getDropWavelengths(i)+" ");
-			            	}
-			            	
-			            }
-			        });
-			        
-			        GridBagConstraints gbc_showAD = new GridBagConstraints();
-			        gbc_showAD.insets = new Insets(5, 0, 0, 5);
-			        gbc_showAD.gridx = 1;
-			        gbc_showAD.gridy = 8;
+						@Override
+						public void mousePressed(MouseEvent e) {
+							popup.show(e.getComponent(), e.getX(), e.getY());
+							textArea1.setText("Wavelengths to add: \n");
+							for (int i = 0; i < adm.getAddWavelengthListSize(); i++) {
+								textArea1.append(" " + adm.getAddWavelengths(i) + " ");
+							}
+							textArea1.append("\n");
+							textArea1.append("Wavelengths to remove: \n");
+							for (int i = 0; i < adm.getDropWavelengthListSize(); i++) {
+								textArea1.append(" " + adm.getDropWavelengths(i) + " ");
+							}
+
+						}
+					});
+
+					GridBagConstraints gbc_showAD = new GridBagConstraints();
+					gbc_showAD.insets = new Insets(5, 0, 0, 5);
+					gbc_showAD.gridx = 1;
+					gbc_showAD.gridy = 8;
 					getContentPane().add(showAD, gbc_showAD);
-					
+
 					textADMadd = new JTextField();
 					GridBagConstraints gbc_textADMadd = new GridBagConstraints();
 					gbc_textADMadd.anchor = GridBagConstraints.NORTHWEST;
@@ -734,7 +730,7 @@ public class Popup extends JFrame {
 					gbc_textADMadd.gridy = 6;
 					getContentPane().add(textADMadd, gbc_textADMadd);
 					textADMadd.setColumns(10);
-					
+
 					textADMrem = new JTextField();
 					GridBagConstraints gbc_textADMrem = new GridBagConstraints();
 					gbc_textADMrem.anchor = GridBagConstraints.NORTHWEST;
@@ -743,9 +739,8 @@ public class Popup extends JFrame {
 					gbc_textADMrem.gridy = 7;
 					getContentPane().add(textADMrem, gbc_textADMrem);
 					textADMrem.setColumns(10);
-					
+
 				}
-				
 
 			}
 		}
