@@ -9,24 +9,24 @@ public class Multiplexer extends OpticalComponent {
 	private double multiPlexingLoss; // loss of signal's power in dB
 	private int min = 1500;
 	private int max = 1600;
-	private ArrayList<Integer> minWavelength = new ArrayList<Integer>();
-	private ArrayList<Integer> maxWavelength = new ArrayList<Integer>();
-	private ArrayList<Signal> inSignals = new ArrayList<Signal>();
-	private ArrayList<Integer> outputWavelengths = new ArrayList<Integer>();
+	private ArrayList<Integer> minWavelength = new ArrayList<>();
+	private ArrayList<Integer> maxWavelength = new ArrayList<>();
+	private ArrayList<Signal> inSignals = new ArrayList<>();
+	private ArrayList<Integer> outputWavelengths = new ArrayList<>();
 	private int handleMethodCallTimes = 0;
 	private int selectedPort = 0;
-	private ArrayList<Fiber> inputFibers = new ArrayList<Fiber>();
+	private ArrayList<Fiber> inputFibers = new ArrayList<>();
 
 	public Multiplexer(OpticalComponent c) {
 		super(c);
 		numOfInputs = 4;
 		multiPlexingLoss = 0.25;
 		setImgPath("mux.png");
-		this.setInsertionLoss(0.3);
-		this.setReturnLoss(0.2);
+		setInsertionLoss(0.3);
+		setReturnLoss(0.2);
 		for (int i = 0; i < numOfInputs; i++) {
-			minWavelength.add(i, min + i*5);
-			maxWavelength.add(i, max - i*5);
+			minWavelength.add(i, min + i * 5);
+			maxWavelength.add(i, max - i * 5);
 		}
 	}
 
@@ -34,17 +34,17 @@ public class Multiplexer extends OpticalComponent {
 		super(str, p, height, width);
 		numOfInputs = inputs;
 		multiPlexingLoss = loss;
-		this.setInsertionLoss(0.3);
-		this.setReturnLoss(0.2);
+		setInsertionLoss(0.3);
+		setReturnLoss(0.2);
 		for (int i = 0; i < inputs; i++) {
 			minWavelength.add(i, min);
 			maxWavelength.add(i, max);
 		}
 	}
-	
-	public void addInputFiber (Fiber f) {
+
+	public void addInputFiber(Fiber f) {
 		inputFibers.add(f);
-		this.numOfInputs = inputFibers.size();
+		numOfInputs = inputFibers.size();
 	}
 
 	public void setChanBand(int chan, int min, int max) {
@@ -57,8 +57,6 @@ public class Multiplexer extends OpticalComponent {
 	public int getMinChanBand(int chan) {
 		return minWavelength.get(chan);
 	}
-	
-	
 
 	public int getHandleMethodCallTimes() {
 		return handleMethodCallTimes;
@@ -83,7 +81,7 @@ public class Multiplexer extends OpticalComponent {
 	public double getMultiplexingLoss() {
 		return multiPlexingLoss;
 	}
-	
+
 	public int getSelectedPort() {
 		return selectedPort;
 	}
@@ -111,9 +109,10 @@ public class Multiplexer extends OpticalComponent {
 				totalInputPower += sig.getPower();
 			}
 			outputPower = totalInputPower / numOfInputs;
-			this.inSignals.clear();
-			this.setHandleMethodCallTimes(0);
 			sendSignal(outputPower);
+			inSignals.clear();
+			setHandleMethodCallTimes(0);
+
 		}
 	}
 
@@ -133,10 +132,8 @@ public class Multiplexer extends OpticalComponent {
 
 	private void attenuateSignal(Signal s) {
 		double outPower = s.getPower();
-		outPower = outPower - multiPlexingLoss - this.getReturnLoss() - this.getInsertionLoss();
+		outPower = outPower - multiPlexingLoss - getReturnLoss() - getInsertionLoss();
 		s.setPower(outPower);
 	}
-	
-	
 
 }

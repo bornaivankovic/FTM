@@ -10,29 +10,29 @@ public class Coupler extends OpticalComponent {
 	private int numberOfInputs;
 	private double couplingLoss; // loss of signal's power in dB
 	private int handleMethodCallTimes = 0;
-	private ArrayList<Signal> inSignals = new ArrayList<Signal>();
-	private ArrayList<Fiber> inputFibers = new ArrayList<Fiber>();
+	private ArrayList<Signal> inSignals = new ArrayList<>();
+	private ArrayList<Fiber> inputFibers = new ArrayList<>();
 
 	public Coupler(String str, Point p, int height, int width, int numberOfInputs, int couplingLoss) {
 		super(str, p, height, width);
 		this.numberOfInputs = numberOfInputs;
 		this.couplingLoss = couplingLoss;
-		this.setInsertionLoss(0.2);
-		this.setReturnLoss(0.3);
+		setInsertionLoss(0.2);
+		setReturnLoss(0.3);
 	}
 
 	public Coupler(OpticalComponent c) {
 		super(c);
 		numberOfInputs = 2;
 		couplingLoss = 0.4;
-		this.setInsertionLoss(0.2);
-		this.setReturnLoss(0.3);
+		setInsertionLoss(0.2);
+		setReturnLoss(0.3);
 		setImgPath("coup.png");
 	}
-	
-	public void addInputFiber (Fiber f) {
+
+	public void addInputFiber(Fiber f) {
 		inputFibers.add(f);
-		this.numberOfInputs = inputFibers.size();
+		numberOfInputs = inputFibers.size();
 	}
 
 	public int getNumberOfInputs() {
@@ -42,7 +42,6 @@ public class Coupler extends OpticalComponent {
 	public void setNumberOfInputs(int i) {
 		numberOfInputs = i;
 	}
-	
 
 	public int getHandleMethodCallTimes() {
 		return handleMethodCallTimes;
@@ -74,9 +73,10 @@ public class Coupler extends OpticalComponent {
 				totalInputPower += sig.getPower();
 			}
 			outputPower = totalInputPower / numberOfInputs;
-			this.setHandleMethodCallTimes(0);
-			this.inSignals.clear();
 			sendSignal(outputPower);
+			setHandleMethodCallTimes(0);
+			inSignals.clear();
+
 		}
 	}
 
@@ -97,7 +97,7 @@ public class Coupler extends OpticalComponent {
 
 	private void attenuateSignal(Signal s) {
 		double outPower = s.getPower();
-		outPower = outPower -this.getInsertionLoss() - this.getReturnLoss() -couplingLoss;
+		outPower = outPower - getInsertionLoss() - getReturnLoss() - couplingLoss;
 		s.setPower(outPower);
 	}
 

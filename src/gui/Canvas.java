@@ -121,8 +121,8 @@ public class Canvas extends JPanel {
 		getActionMap().put("connect", new ConnectAction("connect"));
 
 		setBackground(Color.WHITE);
-		komponente = new ArrayList<OpticalComponent>();
-		vlakna = new ArrayList<Fiber>();
+		komponente = new ArrayList<>();
+		vlakna = new ArrayList<>();
 		allTransmitters = new ArrayList<>();
 	}
 
@@ -340,18 +340,15 @@ public class Canvas extends JPanel {
 				f.setOwnReference(f);
 				CrossConnect cc = (CrossConnect) c2;
 				cc.addInPortFiber(f);
-			} 
-			else if (c2 instanceof AddDropMux) {
+			} else if (c2 instanceof AddDropMux) {
 				f.setOwnReference(f);
 				AddDropMux adm = (AddDropMux) c2;
 				adm.addInputFiber(f);
-			}
-			else if (c2 instanceof Multiplexer) {
+			} else if (c2 instanceof Multiplexer) {
 				f.setOwnReference(f);
 				Multiplexer mux = (Multiplexer) c2;
 				mux.addInputFiber(f);
-			}
-			else if (c2 instanceof Coupler) {
+			} else if (c2 instanceof Coupler) {
 				f.setOwnReference(f);
 				Coupler coup = (Coupler) c2;
 				coup.addInputFiber(f);
